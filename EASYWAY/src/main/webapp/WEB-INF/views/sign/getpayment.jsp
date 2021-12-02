@@ -29,8 +29,8 @@
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
-<%-- <jsp:include page="../public/sidebar.jsp" />
- --%>
+<jsp:include page="../public/sidebar.jsp" />
+
 	<div id="wrap">
 		<div class="sign">
 	
