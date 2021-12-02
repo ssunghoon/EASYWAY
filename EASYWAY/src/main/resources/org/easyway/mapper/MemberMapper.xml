@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="org.easyway.mapper.MemberMapper">
+
+	<resultMap id="memberVOResultMap" type="org.easyway.domain.member.MemberVO">
+		<id property="memberId" column="member_id" />
+		<result property="memberEmail" column="member_email" />
+		<result property="memberPassword" column="member_pw" />
+		<result property="memberName" column="member_name" />
+		<result property="memberAuth" column="member_auth" />
+		<result property="memberPhone" column="member_phone" />
+	</resultMap>
+
+	<!-- 이사& 수정하면서 : 아직 안쓰는 부분은 주석처리해가며 수정해야 에러 안 남 -->
+	<insert id="insertMember">
+		insert into member(
+		member_id, member_email,
+		member_pw, member_name, member_auth, member_phone
+		)
+		values(
+		member_seq.nextval,
+		#{memberEmail}, #{memberPassword}, #{memberName},
+		#{memberAuth}, #{memberPhone}
+		)
+	</insert>
+	<select id="login" resultMap="memberVOResultMap">
+		select * from member where
+		member_email = #{memberId}
+	</select>
+
+	<select id="readEmail" resultType="long">
+		select member_id from member where member_email = #{tempEmail}
+	</select>
+	
+	<select id="read" resultMap="memberVOResultMap">
+		select * from member where member_email = #{enteredEmail}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

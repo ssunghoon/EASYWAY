@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+
+<mapper namespace="org.easyway.mapper.SignMapper">
+	
+	<!-- 검색 (기안종류) -->
+	<sql id="search1">
+		<choose>
+	    		<when test="keyword1 == 0">
+					and sf_id in (1,2,3)
+				</when>
+		    	<when test="keyword1 == 1"> 
+					and sf_id = 1
+				</when>
+				<when test="keyword1 == 2"> 
+					and sf_id = 2
+				</when>
+				<when test="keyword1 == 3"> 
+					and sf_id = 3
+				</when>
+			</choose> 
+	</sql>
+	
+	<!-- 검색 (제목) -->
+	<sql id="search2">
+		<if test="keyword2 != null">
+			and sign_title like '%'||#{keyword2}||'%'
+		</if>
+	</sql>
+	
+	
+	<cache />
+	<insert id="insert">
+		insert into sign(
+				sign_id,sf_id,employee_id,sign_title,sign_content,sign_date
+			)
+			values (
+				sign_seq.nextval,#{signFormId},1,#{signTitle},#{signContent},SYSDATE
+			)
+		<selectKey keyProperty="signId" resultType="long" order="AFTER">
+         	select sign_seq.CURRVAL FROM DUAL
+      	</selectKey>	
+	</insert>
+	
+	<!-- 지출결의서 작성 -->
+	<insert id="insertSpend">
+		insert into si_spend(
+				ss_id, sf_id, ss_range,ss_importance,sign_id
+			)
+			values (
+				ss_seq.nextval,#{signFormId},#{signSpendRange},#{signSpendImportance},#{signId}
+			)
+	</insert>
+	
+	<!-- 휴가신청서 작성 -->
+	<insert id="insertVacation">
+		insert into si_vacation(
+				sv_id, sf_id, sv_type,sv_importance,sv_start,sv_end,sign_id
+			)
+			values (
+				sv_seq.nextval,#{signFormId},#{signVacationType},#{signVacationImportance},TO_DATE(#{signVacationStart},'yyyy/mm/dd')
+				,TO_DATE(#{signVacationEnd},'yyyy/mm/dd'), #{signId}
+			)
+	</insert>
+
+	<!-- 기본기안서 작성 -->
+	<insert id="insertBasic" >
+		insert into si_basic(
+			sb_id, sf_id, sb_range, sb_start, sb_end,sb_importance, sign_id
+		)
+		values (
+			si_basic_seq.nextval,#{signFormId},#{signBasicRange},TO_DATE(#{signBasicStart},'yyyy/mm/dd')
+			,TO_DATE(#{signBasicEnd},'yyyy/mm/dd'),#{signBasicImportance}, #{signId}
+		)
+	</insert>
+	
+	<!-- 기안함 목록 -->
+	<select id="getListDraft" resultType="org.easyway.domain.sign.SignVO">
+		<![CDATA[
+		select 
+			sign_id AS signId,
+			sf_id AS signFormId, 
+			sign_title AS signTitle, 
+			sign_content AS signContent,
+			sign_check AS signCheck,
+			sign_date AS signDate 
+		from sign 
+		where sign_id > 0
+		]]>
+	</select> 
+	
+	<!-- 페이징  -->
+	<select id="getListWithPaging" resultType="org.easyway.domain.sign.SignVO">
+		<![CDATA[
+		select 
+			sign_id AS signId,
+			sf_id AS signFormId, 
+			sign_title AS signTitle, 
+			sign_content AS signContent,
+			sign_check AS signCheck,
+			sign_date AS signDate 
+		from
+			(select /*INDEX_DESC(sign pk_sign) */
+	    		rownum rn, sign_id, sf_id, sign_title, sign_content, sign_check, sign_date
+	    	from 
+	    		sign
+	    	where
+	    	 rownum <= #{pageNum} * #{amount}
+	    	]]>
+	    	<include refid="search1"></include>
+			<include refid="search2"></include> 
+			<![CDATA[
+	    	)
+	    	where rn > (#{pageNum} -1) * #{amount}
+	    	]]>
+	</select>
+		
+	<!-- 기안함 상세 (기본기안서) -->
+	<select id="getDraftBasic" resultType="org.easyway.domain.sign.BasicSignVO">
+		SELECT
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,
+			B.SB_RANGE AS signBasicRange,B.SB_START AS signBasicStart ,B.SB_END AS signBasicEnd ,B.SB_IMPORTANCE AS signBasicImportance,B.SIGN_ID AS signID, B.SF_ID AS signFormId
+		FROM SIGN A
+		JOIN SI_BASIC B
+		ON 
+			A.SIGN_ID = B.SIGN_ID
+		WHERE 
+			A.SIGN_ID = #{signId}	
+	</select> 
+	
+	<!-- 기안함 상세 (지출결의서) -->
+	<select id="getDraftSpend" resultType="org.easyway.domain.sign.SpendSignVO">
+		SELECT
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,
+			C.SS_RANGE AS signSpendRange,C.SS_IMPORTANCE AS signSpendImportance,C.SIGN_ID AS signId,C.SF_ID AS signFormId
+		FROM SIGN A
+		JOIN SI_SPEND C
+		ON 
+			A.SIGN_ID = C.SIGN_ID
+		WHERE 
+			A.SIGN_ID = #{signId}	
+	</select> 
+	
+	<!-- 기안함 상세 (휴가신청서) -->
+	<select id="getDraftVacation" resultType="org.easyway.domain.sign.VacationSignVO">
+		SELECT
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,
+			D.SV_TYPE AS signVacationType, D.SV_START AS signVacationStart ,D.SV_END AS signVacationEnd ,D.SF_ID AS signFormId, D.SV_IMPORTANCE AS signVacationImportance
+		FROM SIGN A
+		JOIN SI_VACATION D
+		ON 
+			A.SIGN_ID = D.SIGN_ID
+		WHERE 
+			A.SIGN_ID = #{signId}	
+	</select>
+	
+	<!-- 기안 갯수  -->
+	<select id="getTotalCount"  resultType="int">
+	<![CDATA[
+		select count(*) from sign
+		where 
+		sign_id > 0
+	]]>
+		<include refid="search1"></include>
+		<include refid="search2"></include> 
+	</select>
+	 
+	 <select id="getListEmployee" resultType="org.easyway.domain.sign.EmployeeVO">
+	 	SELECT 
+	 		EMPLOYEE_ID AS employeeId,
+	 		EMPLOYEE_NAME AS employeeName,
+	 		DEPARTMENT_ID AS departmentId,
+	 		POSITION_ID AS positionId	
+	 	FROM EMPLOYEE
+	 </select>
+	 
+	 <!-- 결재선 설정 -->
+	 <!-- employeeId는 임의로 24로 넣은 것 -->
+	 <insert id="insertLineFirst">
+	 	insert into 
+	 		si_list(
+ 				sl_id, employee_id, sign_id, sl_order
+			)
+			values (
+				si_list_seq.nextval, #{employeeId}, #{signId}, 1
+			)
+	 </insert>
+	<!--   <insert id="insertLineSecond">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, 24, #{signId}, 2);
+	 </insert>
+	  <insert id="insertLineThird">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, 24, #{signId}, 3);
+	 </insert>
+	  <insert id="insertLineFourth">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, 24, #{signId}, 4);
+	 </insert> -->
+	 
+	 <select id="getListPayment" resultType="org.easyway.domain.sign.SignListVO">
+ 		SELECT 
+     		A.SL_ID AS signListId,
+		  	A.SIGN_ID AS signId,
+		  	A.EMPLOYEE_ID as employeeId,
+		  	A.SL_ORDER AS signListOrder,
+		  	A.SL_CHECK AS signListCheck,
+		  	B.EMPLOYEE_NAME AS employeeName,
+		  	C.SIGN_TITLE AS signTitle,
+		  	C.SIGN_CONTENT AS signContent,
+		  	C.SIGN_DATE AS signDate,
+		  	C.SF_ID AS signFormId
+		FROM
+		  	SI_LIST A
+		JOIN
+		  	EMPLOYEE B
+		ON 
+		  A.EMPLOYEE_ID = B.EMPLOYEE_ID
+		JOIN 
+		  	SIGN C
+		ON
+		  A.SIGN_ID = C.SIGN_ID
+		  WHERE A.SIGN_ID IN
+		 <include refid="searchBeforeEmp"></include>
+	 </select>
+	 
+	 <!-- 결재순서 -->
+	 <sql id="searchBeforeEmp">
+ 	(SELECT SIGN_ID FROM (SELECT 
+		 A.SIGN_ID,
+		 A.EMPLOYEE_ID,
+		 A.SL_ORDER,
+		 A.SL_CHECK
+	FROM
+  	 	SI_LIST A
+	JOIN
+ 	 	EMPLOYEE B
+	ON 
+	  	A.EMPLOYEE_ID = B.EMPLOYEE_ID
+	JOIN 
+	  	SIGN C
+	ON
+	  	A.SIGN_ID = C.SIGN_ID
+	  	WHERE 
+	  		A.SL_ORDER IN (select (SL_ORDER -1) FROM SI_LIST WHERE EMPLOYEE_ID = 24) 
+ 			AND SL_CHECK = 'Y' ))
+	        AND A.EMPLOYEE_ID = 24
+	        OR (A.SL_ORDER = 1 AND A.SL_CHECK = 'N' AND A.EMPLOYEE_ID = 24)
+	 </sql>
+</mapper>
