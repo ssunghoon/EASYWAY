@@ -50,7 +50,7 @@
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
-<%-- 	<jsp:include page="../public/sidebar.jsp" /> --%>
+	<jsp:include page="../public/sidebar.jsp" />
 	<!-- 	<div style="height: 300px; width: 200px; background: yellow; margin-left: 500px; display:none;"> -->
 	<!-- 	</div> -->
 	<div class="wrapper">
