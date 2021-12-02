@@ -48,7 +48,7 @@
 </head>
 <body>
 <!-- sidebar ------------------------------------------------------------------------------->
-   <%-- <jsp:include page="../public/sidebar.jsp" /> --%>
+   <jsp:include page="../public/sidebar.jsp" />
    
    <div class= "page-divider">
     <div class="sidebar-background"></div>
