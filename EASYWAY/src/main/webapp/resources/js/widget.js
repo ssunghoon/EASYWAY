@@ -253,16 +253,13 @@ function getTest6(){
 	
 
 	// 위치값 저장하는 함수
-	function saveOffset(){
-		
-		document.getElementById('save-btn').onclick = function () {
-			var saveBtn = document.getElementById("save-btn");
-			cosole.log(saveBtn.offsetTop);
-		};
-		
+	//function saveOffset(){
+	//	document.getElementById('save-btn').onclick = function () {
+	//		var saveBtn = document.getElementById("save-btn");
+	//		cosole.log(saveBtn.offsetTop);
+	//	};
 	//	cosole.log(saveBtn.offsetTop);
-		
-	}
+	//}
 	
 	//document.getElementById("save-btn").addEventListener('click', saveOffset);
 	
