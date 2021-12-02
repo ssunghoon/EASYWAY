@@ -65,7 +65,7 @@
 
 	<select id="getListPaging" resultType="org.easyway.domain.notice.NoticeVO">
 	<![CDATA[
-		SELECT 
+	SELECT 
 		OB_ID AS obId,
 		EMPLOYEE_ID AS employeeId,
 		DEPARTMENT_ID AS departmentId,
@@ -77,10 +77,11 @@
 		OB_FIXED_CHECK AS obFixedCheck
 		FROM 
 		(SELECT /*+INDEX_DESC(OF_BOARD PK_BOARD) */
-			ROWNUM RN, obId, employeeId, departmentId, obTitle, obContent, obFilePath, obDate, obFixedCheck 
+			ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
 		FROM OF_BOARD
-		WHERE ROWNUM  < = 15)
+		WHERE ROWNUM  < = 20)
 		WHERE RN > 10
+<!-- 			ORDER BY OB_FIXED_CHECK DESC -->
 		]]>
 	</select>
 </mapper>
