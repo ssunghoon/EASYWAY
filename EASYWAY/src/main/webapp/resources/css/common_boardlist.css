@@ -1,0 +1,190 @@
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 목록 출력 (공지사항 게시판, 프로젝트 게시판 공통) ------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+
+/* 게시물 목록 - 레이아웃 세부 */
+/* 해당 세부 레이아웃은 프로젝트와 공지사항 게시판을 위해 제작되어 있음 */
+
+.easyway-wrapper {
+	margin-bottom: 100px;
+}
+
+.easyway-container {
+  /* 게시물 목록 grid 행부분. 맨 윗줄부터 원하는 크기로 지정해서 사용 */
+  grid-template-rows: 18px 30px auto 24px 30px;
+}
+
+.easyway-board-item {
+  font-size: 14px;
+}
+
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 이하 easyway-container의 자식인 easyway-board-item가 차지하는 영역을 정의한 부분 */
+/* ----------------------------------------------------------------------------------------------- */
+.easyway-board-item:NTH-CHILD(1) {
+  /* 게시물 목록 이름 */
+  grid-column: 1 / 13;
+}
+
+.easyway-board-item:NTH-CHILD(2) {
+  /* 필터 1 */
+  grid-column: 1 / 4;
+}
+
+.easyway-board-item:NTH-CHILD(3) {
+  /* 필터 2 */
+  grid-column: 4 / 7;
+}
+
+.easyway-board-item:NTH-CHILD(4) {
+  /* 필터 3 */
+  grid-column: 7 / 10;
+}
+
+.easyway-board-item:NTH-CHILD(5) {
+  /* 버튼 3순위 */
+  grid-column: 10 / 11;
+}
+
+.easyway-board-item:NTH-CHILD(6) {
+  /* 버튼 2순위 */
+  grid-column: 11 / 12;
+}
+
+.easyway-board-item:NTH-CHILD(7) {
+  /* 버튼 1순위 (글쓰기버튼) */
+  grid-column: 12 / 13;
+}
+
+.easyway-board-item:NTH-CHILD(8) {
+  /* 게시물 목록 테이블 (여기가 진짜 게시물 리스트) */
+  grid-column: 1 / 13;
+}
+
+.easyway-board-item:NTH-CHILD(9) {
+  /* 페이징 버튼 */
+  grid-column: 2 / 12;
+  justify-self: center;
+}
+
+.easyway-board-item:NTH-CHILD(10) {
+  /* 검색 : 타입 선택 */
+  grid-column: 4 / 10;
+  display: flex;
+  justify-self: center;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 목록 - 게시물 목록 테이블 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+.board-list {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  font-size: 14px;
+}
+
+.board-list th {
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+  height: 35px;
+  text-align: center;
+}
+
+/* 각 컬럼의 가로길이는 가급적 % 단위를 사용하세요 */
+.board-list th:NTH-CHILD(1) {
+  /* 게시물 목록 컬럼 1 */
+  width: 6%;
+}
+
+.board-list th:NTH-CHILD(2) {
+  /* 게시물 목록 컬럼 2 */
+  width: 10%;
+}
+
+.board-list th:NTH-CHILD(3) {
+  /* 게시물 목록 컬럼 3 */
+  width: 30%;
+}
+
+.board-list tr td:NTH-CHILD(3) {
+  /* 제목은 왼쪽 정렬로 하기 위함 */
+  text-align: start;
+  padding-left: 15px;
+}
+
+.board-list th:NTH-CHILD(4) {
+  /* 게시물 목록 컬럼 4 */
+  width: 10%;
+}
+
+.board-list th:NTH-CHILD(5) {
+  /* 게시물 목록 컬럼 5 */
+  width: 6%;
+}
+
+.board-list td {
+  border-bottom: 1px solid #ccc;
+  height: 30px;
+  text-align: center;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 목록 - 페이징 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+.page-click {
+  display: block;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 2px 8px;
+  margin: 3px;
+  font-size: 13px;
+}
+
+.page-click:HOVER {
+  background: #eee;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 목록 - 검색 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+form.search-form {
+    display: flex;
+}
+
+.dropdown-toggle {
+  width: 90px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 3px;
+  color: #666;
+  font-size: 13px;
+}
+
+.dropdown-item {
+  color: #666;
+  padding: 5px;
+}
+
+.search-keyword {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 2px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */

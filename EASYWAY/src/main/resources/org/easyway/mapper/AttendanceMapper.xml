@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="org.easyway.mapper.AttendanceMapper">
+	<cache />
+	
+<insert id="add">
+		insert into attendance(
+			attendance_id, employee_id, attendance_start
+		)
+		values(
+			attendance_seq.nextval, '1', TO_DATE(#{attendance_start},'yyyy/mm/dd hh24:mi:ss')
+		)
+	</insert>
+	
+ 		
+	<update id="updateAttendanceOut">
+		UPDATE attendance SET attendance_out = TO_DATE(#{attendance_out},'yyyy/mm/dd hh24:mi:ss')
+		WHERE employee_id = 1
+		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
+			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
+	</update>
+	
+	
+	<update id="updateAttendanceEnd">
+		UPDATE attendance SET attendance_end = TO_DATE(#{attendance_end},'yyyy/mm/dd hh24:mi:ss')
+		WHERE employee_id = 1
+		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
+			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
+	</update>
+	
+	
+	<select id="main" resultType="org.easyway.domain.attendance.AttendanceVO">
+		SELECT * FROM attendance
+		WHERE EMPLOYEE_ID = 1
+		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
+			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
+	</select>
+	
+	
+</mapper>
