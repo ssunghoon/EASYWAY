@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+/* 전체 공통부 CSS - 태그 */
+/* 자주 쓰이는 a태그나 버튼태그 등에 사용할 수 있는 CSS 제작 */
+
+/* a태그에 마우스를 올렸을 때, EASYWAY 주색으로 표시 */
+a:hover {
+  color: #0397ed;
+}
+
+/* 아래 클래스는 78*30 사이즈 '버튼'으로 사용할 수 있음 */
+.easyway-btn {
+  background: #0397ed;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+  width: 78px;
+  height: 30px;
+  font-size: 14px;
+}
+
+/* 아래 클래스는 각 페이지의 첫 번째 레벨의 '제목'으로 사용할 수 있음 */
+.easyway-title1 {
+  font-size: 16px;
+  font-weight: bold;
+  border-left: 5px solid #0397ed;
+  padding-left: 10px;
+}
+
+/* 아래 클래스는 각 페이지의 두 번째 레벨의 '제목'으로 사용할 수 있음 */
+.easyway-title2 {
+  font-size: 14px;
+  font-weight: bold;
+  border-left: 5px solid #0397ed;
+  padding-left: 10px;
+}
+
+/* 전체공통부 CSS - 레이아웃 */
+/* (오피스 들어오기 전 페이지들 제외) */
+/* body 이하 : flex로 좌측의 sidebar와 우측의 내용부분으로 구분 */
+/* sidebar : px로 고정 */
+/* 내용부분 : 유연한 너비로 제작. wrapper 클래스로 싸여있음 */
+/* container 이하 : grid (12 * n)으로 구성되어 있음. 열은 12조각 고정. 행은 주석 달아놨으니 자유롭게 쓰도록. */
+
+.page-divider {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-background {
+  width: 230px;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+.easyway-wrapper {
+  width: 70%;
+  flex-grow: 1;
+  padding: 0px 10px;
+  margin: 30px 80px 0 80px;
+}
+
+.easyway-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: 30px;
+  column-gap: 10px;
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="org.easyway.mapper.OfficeMapper">
+
+	<resultMap id="officeVOResultMap" type="org.easyway.domain.office.OfficeVO">
+		<id property="officeId" column="office_id" />
+		<result property="officeName" column="office_name" />
+		<result property="officeCode" column="office_code" />
+	</resultMap>
+
+	<insert id="insertOffice">
+		insert into office(
+		office_id, office_name, office_code
+		)
+		values(
+		office_seq.nextval, #{officeName}, #{officeCode}
+		)
+		<selectKey keyProperty="officeId" resultType="long" order="AFTER">
+			select office_seq.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertOfficeCreate">
+		insert into office_create(oc_id, member_id,
+		office_id)
+		values( oc_seq.nextval, #{memberId}, #{officeId} )
+	</insert>
+
+	<insert id="insertPosition">
+		insert into position(position_id, office_id,
+		position_name, position_level)
+		values( position_seq.nextval,
+		#{officeId}, #{positionName}, #{positionLevel} )
+	</insert>
+	<insert id="insertAnnualVacation">
+		insert into annual_vacation(av_id, office_id, annual,
+		vacations)
+		values( av_seq.nextval, #{officeId}, #{annual},
+		#{vacations})
+	</insert>
+
+
+	<select id="get" resultMap="officeVOResultMap">
+		select * from office where office_id = #{officeId}
+	</select>
+	<select id="getList" resultMap="officeVOResultMap">
+		select o.office_id,o.office_name,
+		o.office_code from office o
+		join office_create c on o.office_id = c.office_id where c.member_id =
+		#{memberId}
+	</select>
+
+	<select id="detailOffice" parameterType="long"
+		resultType="org.easyway.domain.office.OfficeVO">
+		select * from office where office_id = #{officeId}
+	</select>
+
+	<!-- <update id="updateBoard" parameterType="Board"> update board set title 
+		= #{title}, contents = #{contents} where seq = #{seq} </update> -->
+
+	<delete id="deleteOffice" parameterType="int">
+		delete from office
+		where
+		office_id = #{office_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
