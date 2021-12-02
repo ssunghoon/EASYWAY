@@ -45,8 +45,7 @@
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
-	<div class="container"></div>
-<%-- 	<jsp:include page="../public/sidebar.jsp" /> --%>
+	<jsp:include page="../public/sidebar.jsp" />
 
 	<div class="container">
 		<div class="row">
