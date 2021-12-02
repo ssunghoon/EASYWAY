@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 보드를 그냥쓰면 오류가 뜨기 때문에 콘피그에 typeAlias -->
+<mapper namespace="org.easyway.mapper.ProjectMapper">
+	
+	<insert id="insertProject">
+		insert into project(
+			project_id, project_name, project_start, project_end, project_content
+		)
+		values(
+			project_seq.nextval, #{projectName}, #{projectStart}, #{projectEnd}, #{projectContent}
+		)
+	</insert>
+
+	<update id="updateProject">
+		update project set project_name = #{projectName}, project_end = #{projectEnd}, project_content = #{projectContent} WHERE project_id = #{projectId}
+	</update>
+	
+	<select id="getListProject" resultType="org.easyway.domain.project.Project">
+		SELECT
+			project_id AS projectId,
+			project_name AS projectName,
+			project_start AS projectStart,
+			project_end AS projectEnd,
+			project_content AS projectContent
+		FROM
+			PROJECT
+	</select>
+	
+	<insert id="insertProjectBoard">
+		INSERT INTO P_BOARD VALUES(P_BOARD_SEQ.nextval, #{projectId}, #{projectBoardName})
+	</insert>
+	
+	<select id="getListProjectBoard" resultType="org.easyway.domain.project.ProjectBoard">
+		SELECT
+			pb_id AS projectBoardId,
+			project_id AS projectId,
+			pb_name AS projectBoardName
+		FROM
+			P_BOARD WHERE PROJECT_ID = #{projectId}
+	</select>
+	
+	<insert id="insertProjectPost">
+		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE)
+	</insert>
+
+<!-- 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost"> -->
+<!-- 		SELECT -->
+<!-- 			pp_id AS projectPostId, -->
+<!-- 			pb_id AS projectBoardId, -->
+<!-- 			pm_id AS projectMemberId, -->
+<!-- 			pp_title AS projectPostTitle, -->
+<!-- 			pp_content projectPostContent, -->
+<!-- 			pp_file_path projectPostFilePath, -->
+<!-- 			pp_date projectPostDate -->
+<!-- 		FROM -->
+<!-- 			P_POST WHERE PB_ID = #{projectBoardId} -->
+<!-- 	</select> -->
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
