@@ -1,0 +1,188 @@
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* 근태관리--------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+
+
+/* 근태관리 - 레이아웃 세부 */
+
+ .easyway-container {
+  grid-template-rows: 18px 150px 18px 230px 18px 150px;
+  column-gap: 60px;
+}
+
+/* 이하 easyway-container의 자식인 easyway-board-item가 차지하는 영역을 정의한 부분 */
+.easyway-attendance-item:NTH-CHILD(even) {
+	/* 근태 현황 내용 */
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	margin-bottom: 30px;
+	font-size: 13px;
+}
+
+.easyway-attendance-item:NTH-CHILD(1) {
+	/* 근태 현황 타이틀 */
+	grid-column: 1 / 13;
+}
+
+.easyway-attendance-item:NTH-CHILD(2) {
+	/* 근태 현황 내용 */
+	grid-column: 1 / 13;
+}
+
+.easyway-attendance-item:NTH-CHILD(3) {
+	/* 근무 체크 타이틀 */
+	grid-column: 1 / 7;
+	grid-row: 3 / 4;
+}
+
+.easyway-attendance-item:NTH-CHILD(4) {
+	/* 근무 체크 내용 */
+	grid-column: 1 / 7;
+	grid-row: 4 / 5;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.easyway-attendance-item:NTH-CHILD(5) {
+	/* 근무 현황 타이틀 */
+	grid-column: 7 / 13;
+	grid-row: 3 / 4;
+}
+
+.easyway-attendance-item:NTH-CHILD(6) {
+	/* 근무 현황 내용 */
+	grid-column: 7 / 13;
+	grid-row: 4 / 5;
+}
+
+.easyway-attendance-item:NTH-CHILD(7) {
+	/* 휴가 현황 타이틀 */
+	grid-column: 1 / 13;
+}
+
+.easyway-attendance-item:NTH-CHILD(8) {
+	/* 휴가 현황 내용 */
+	grid-column: 1 / 13;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 근태 관리 - 근태 현황 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+ul.attendance-status {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 100px;
+}
+
+.attendance-status li {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-right: 1px solid #eee;
+}
+
+.attendance-status li:LAST-CHILD {
+	border-right: none;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 근무 체크 - 근무 체크 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+.work-check-clock {
+    font-family: 'Oxanium', cursive;
+    font-size: 45px;
+    color: #0397ed;
+}
+
+ul.work-check {
+    display: flex;
+    width: 100%;
+    padding: 0 85px;
+}
+
+.work-check li {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.work-check li a {
+	display: block;
+    text-align: center;
+    font-size: 3em;
+    color: #0397ed;
+}
+
+.work-check li a:HOVER {
+	color: #aaa;
+}
+
+.work-check li span {
+	color: #888;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 근무 현황 - 근무 현황 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+ul.work-status {
+	display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+    padding: 20px 60px;
+    color: #666;
+}
+
+.work-status li {
+	color: #0397ed;
+}
+
+.work-status li span {
+	margin-left: 30px;
+	color: #666;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 근무 현황 - 근무 현황 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+ul.vacation-status {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    padding: 0 100px;
+}
+
+.vacation-status li {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-right: 1px solid #eee;
+}
+
+.vacation-status li:LAST-CHILD {
+	border-right: none;
+	align-items: center;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
