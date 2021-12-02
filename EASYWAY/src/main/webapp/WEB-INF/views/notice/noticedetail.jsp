@@ -63,12 +63,9 @@
 
 <!-- Custom styles for this template -->
 <link href="/resources/css/sidebars.css" rel="stylesheet">
-<div name="wrap"></div>
 </head>
 <body>
-	<div class="container"></div>
-<body>
-	<%-- 	<jsp:include page="../public/sidebar.jsp" /> --%>
+		<jsp:include page="../public/sidebar.jsp" />
 
 
 	<div class="container">
