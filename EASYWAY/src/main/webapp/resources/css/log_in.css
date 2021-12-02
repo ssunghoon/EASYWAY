@@ -38,3 +38,7 @@ body {
 #register{
   margin-top: 50px;
 }
+.btn{
+	background-color: #0397ed;
+	color: white;
+}

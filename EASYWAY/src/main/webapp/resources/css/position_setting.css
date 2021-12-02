@@ -1,0 +1,129 @@
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 상세 조회 (공지사항 게시판, 프로젝트 게시판, 전자결재 공통) --------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+
+/* 게시물 상세 조회 - 레이아웃 세부 */
+/* 해당 세부 레이아웃은 프로젝트와 공지사항 게시판과 전자결재를 위해 제작되어 있음 */
+
+.easyway-wrapper {
+  margin-bottom: 100px;
+}
+
+.easyway-container {
+  /* 게시물 상세 조회 grid 행부분. 맨 윗줄부터 원하는 크기로 지정해서 사용 */
+  grid-template-rows: 40px 70px auto 80px auto;
+  row-gap: 10px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 이하 easyway-container의 자식인 easyway-boarddetail가 차지하는 영역을 정의한 부분 */
+/* ----------------------------------------------------------------------------------------------- */
+
+.tab-header {
+  grid-column: 1 / 13;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  justify-content: space-around;
+  border-bottom: 1px solid #999;
+  padding: 0 100px;
+}
+.tab-label {
+  height: 40px;
+  padding: 0 15px;
+  padding-bottom: 10px;
+}
+.tab-label-choice {
+  height: 40px;
+  padding-bottom: 10px;
+  padding: 0 15px;
+  color: #0397ed;
+  font-weight: 600;
+  border-bottom: 3px solid #0397ed;
+  box-sizing: border-box;
+}
+.easyway-title1 {
+  font-size: 20px;
+}
+.easyway-btn {
+  grid-column: 2/ 13;
+  align-self: flex-end;
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+}
+.setting-title {
+  grid-column: 1/ 13;
+  padding: 10px 20px;
+  align-self: flex-end;
+}
+.position-setting-table {
+  grid-column: 2/ 11;
+}
+.position-add-btn {
+  color: #0397ed;
+}
+
+.position-level-item {
+  font-size: 15px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 목록 - 게시물 목록 테이블 CSS */
+/* ----------------------------------------------------------------------------------------------- */
+
+.position-list {
+  margin-top: 30px;
+  grid-column: 1/ 13;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  width: 100%;
+}
+
+.position-list th {
+  border-bottom: 1px solid #ccc;
+  height: 35px;
+  text-align: center;
+}
+
+/* 각 컬럼의 가로길이는 가급적 % 단위를 사용하세요 */
+.position-list th:nth-child(1) {
+  /* 게시물 목록 컬럼 1 */
+  width: 6%;
+  background: #eee;
+}
+
+.position-list th:nth-child(2) {
+  /* 게시물 목록 컬럼 2 */
+  width: 30%;
+  background: #fff;
+}
+
+.position-list td {
+  border-bottom: 1px solid #ccc;
+  height: 35px;
+}
+
+.position-list td:nth-child(1) {
+  /* 게시물 목록 컬럼내용 1 */
+  background-color: #0397ed1e;
+  text-align: center;
+}
+
+.position-list td:nth-child(2) {
+  /* 게시물 목록 컬럼내용 2 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: content-box;
+  height: 35px;
+  padding: 0 30px 0 40px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */ ;
