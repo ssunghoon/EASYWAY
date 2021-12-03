@@ -16,25 +16,29 @@
 <meta name="generator" content="Hugo 0.84.0">
 <title>편하게 오피스 작업을! EasyWay!</title>
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+    <!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
+    <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		crossorigin="anonymous">
+	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+	
+    <!-- EASYWAY CSS, JS -->
+    <link href="/resources/css/reset.css" rel="stylesheet">
+    <link href="/resources/css/sidebars.css" rel="stylesheet">
+    <link href="/resources/css/common.css" rel="stylesheet">
+    <script src="/resources/js/menu.js"></script>
+    
+    <!-- CALENDAR CSS, JS -->
+	<link href="/resources/css/calendarMain.css" rel="stylesheet">
+	<script src="/resources/js/calendarMain.js"></script>
 
-<!-- Bootstrap core CSS -->
-<link href="/resources/css/reset.css" rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<!--FullCalender CDN  -->
-<link href="/resources/css/calendarMain.css" rel="stylesheet">
-<script src="/resources/js/calendarMain.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
-<script src="/resources/js/menu.js"></script>
-<script src="/resources/js/sidebars.js"></script>
 <script>
 //ajax 통신 예제 
 /* $.ajax({
@@ -204,21 +208,26 @@
 // 	  function button_click() {
 		
 // 	}
+	  $("a").click(function(evt){
+		    evt.stopPropagation();
+		    evt.preventDefault();
+		    $(".lightUp").toggle();
+		});
 	</script>
 	
 	
 <style>
-body {
+/* body {
 	margin-top: 40px;
 	margin: 0px;
 	padding: 0;
 	/*  font-family: Arial, Helvetica Neue, Helvetica, sans-serif; */
 	position: relative;
 }
-
+ */
 #calendar {
 	max-width: 1100px;
-	margin: 0 auto;
+/* 	margin: 100px, auto; */
 }
 
 #title { /*캘린더제목수정하기*/
@@ -231,10 +240,10 @@ body {
 	padding-top: 20px;
 }
 
-p {
+/* p {
 	text-align: center;
 	color: black;
-}
+} */
 
 #modalwrapper {
 	position: absolute;
@@ -277,7 +286,7 @@ p {
 }
 
 #calendar-wrap {
-	margin-left: 300px;
+	/* margin-left: 300px; */
 	font-size: 14px;
 }
 
@@ -291,260 +300,141 @@ p {
 	margin-bottom: 100px;
 	padding-bottom: 100px;
 }
+
+.table-container {
+	margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+/*일정 목록*/
+.easyway-title1 {
+    margin-bottom: 20px;
+    font-size: 20pt;
+    margin-top: 20px;
+}
+/*일정추가버튼*/
+.btn-primary {
+	color: #fff;
+    background-color: #0397ed;
+}
+
 </style>
-<!-- Custom styles for this template -->
-<link href="/resources/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../public/sidebar.jsp" />
 
-	<p id="title">
-		캘린더
-	</p>
+	<!-- sidebar ------------------------------------------------------------------------------->
+    <jsp:include page="../public/sidebar.jsp" />
+    
+    <div class= "page-divider">
+		<div class="sidebar-background"></div>
+	
+	
+		<!-- 페이지 표현 부분 -------------------------------------------------------------------------->
+	    <div class="easyway-wrapper">
 
-	<!--일정추가버튼  -->
-	<div id="modalwrapper">
-		<!-- Button trigger modal -->
+			<h1 class="easyway-title1" height = "10px">
+				캘린더
+			</h1>
+			<!--풀캘린더 달력 폼-->
+			<div id='calendar-wrap'>
+			<div id='calendar'></div>
 		
-	<!-- <input type="button"  onclick="button_click('')"  value="버튼1"/> -->
+			<!--일정추가버튼  -->
+			<div id="modalwrapper">
+				<!-- Button trigger modal -->				
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+					data-bs-target="#exampleModal">일정추가</button>
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">일정 추가</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							
+							<div class="modal-body">
 		
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">일정추가</button>
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">일정 추가</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					
-					<div class="modal-body">
-
-						<!--<form action="scheduleInsertAction.do" method="post">  accept-charset="utf-8" -->
-						
-						<!--UI마스터-->
-						<form action="/schedule/scheduleregister" method="post" >
-                     <!--   accept-charset="utf-8"-->
-	                     <div class="mb-3">
-	                        <label>제목:</label>
-	                            <input type="text" class="form-control" name="scheduleTitle">
-	                        <label>시작시간</label>
-	                            <input type="date" class="form-control" name="scheduleStart">
-	                        <label>종료시간</label>
-	                            <input type="date" class="form-control" name="scheduleEnd">
-	                        <label>내용</label>
-	                            <input type="text" class="form-control" name="scheduleContent">
-	                        <label>중요도 </label>
-	                            <input type="radio" name="scheduleImportance" id="first" value="상">&nbsp;<label for="first">상</label>
-	                            <input type="radio" name="scheduleImportance" id="second" value="중">&nbsp;<label for="second">중</label>
-	                            <input type="radio" name="scheduleImportance" id="third" value="하">&nbsp;<label for="third">하</label>
-	                            <br>
-	                        <label>공사구분</label>
-	                            <input type="text" class="form-control" name="schedulePrivate">
-	                     </div>
-	                     <div class="modal-footer">
-	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	                        <input type="submit" class="btn btn-primary" value="일정 생성"> 
-	                     </div>
-                 		 </form>
+								<!--<form action="scheduleInsertAction.do" method="post">  accept-charset="utf-8" -->
+								
+								<!--UI마스터-->
+								<form action="/schedule/scheduleregister" method="post" >
+		                     <!--   accept-charset="utf-8"-->
+			                     <div class="mb-3">
+			                        <label>제목:</label>
+			                            <input type="text" class="form-control" name="scheduleTitle">
+			                        <label>시작시간</label>
+			                            <input type="date" class="form-control" name="scheduleStart">
+			                        <label>종료시간</label>
+			                            <input type="date" class="form-control" name="scheduleEnd">
+			                        <label>내용</label>
+			                            <input type="text" class="form-control" name="scheduleContent">
+			                        <label>중요도 </label>
+			                            <input type="radio" name="scheduleImportance" id="first" value="상">&nbsp;<label for="first">상</label>
+			                            <input type="radio" name="scheduleImportance" id="second" value="중">&nbsp;<label for="second">중</label>
+			                            <input type="radio" name="scheduleImportance" id="third" value="하">&nbsp;<label for="third">하</label>
+			                            <br>
+			                        <label>공사구분</label>
+			                            <input type="text" class="form-control" name="schedulePrivate">
+			                     </div>
+			                     <div class="modal-footer">
+			                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			                        <input type="submit" class="btn btn-primary" value="일정 생성"> 
+			                     </div>
+		                 		 </form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-<!-- <!--일정조회모달창--> 
-<!-- 	<div id="modalwrapper"> -->
-<!-- 		<!-- Button trigger modal --> 
 		
-<!-- 	<!-- <input type="button"  onclick="button_click('')"  value="버튼1"/> --> 
-<!-- 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" -->
-<!-- 			data-bs-target="#exampleModal">일정조회</button> -->
-<!-- 		<!-- Modal --> 
-<!-- 		<div class="modal fade" id="exampleModal" tabindex="-1" -->
-<!-- 			aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 			<div class="modal-dialog"> -->
-<!-- 				<div class="modal-content"> -->
-<!-- 					<div class="modal-header"> -->
-<!-- 						<h5 class="modal-title" id="exampleModalLabel">일정 조회</h5> -->
-<!-- 						<button type="button" class="btn-close" data-bs-dismiss="modal" -->
-<!-- 							aria-label="Close"></button> -->
-<!-- 					</div> -->
+			<!-- 일정목록 리스트 출력 -->
+				<div class="easyway-title1">
+					일정리스트
+				</div>
 					
-<!-- 					<div class="modal-body"> -->
-
-<!-- 						<form action="scheduleInsertAction.do" method="post">  accept-charset="utf-8" -->
-						
-<!-- 						UI마스터 -->
-<!-- 						<form role=" " action="/schedule/schedulemodify" method="post" > -->
-<!--                        accept-charset="utf-8" -->
-<!-- 	                     <div class="mb-3"> -->
-<!-- 	                       <label>일정번호</label> -->
-<!-- 	                            <input type="text" class="form-control" name="scheduleId"  -->
-<%-- 	                            			value='<c:out value="${schedule.scheduleId}"/>' readonly="readonly"> --%>
-<!-- 	                             <label>직원번호</label> -->
-<!-- 	                            <input type="text" class="form-control" name="employeeId"  -->
-<%-- 	                            			value='<c:out value="${schedule.employeeId}"/>' readonly="readonly"> --%>
-<!-- 	                        <label>제목:</label> -->
-<!-- 	                            <input type="text" class="form-control" name="scheduleTitle" -->
-<%-- 	                            			value='<c:out value="${schedule.scheduleTitle}"/>' readonly="readonly"> --%>
-<!-- 	                        <label>시작시간</label> -->
-<!-- 	                            <input type="date" class="form-control" name="scheduleStart" -->
-<%-- 	                           				 value='<c:out value="${schedule.scheduleStart}"/>' readonly="readonly"> --%>
-<!-- 	                        <label>종료시간</label> -->
-<!-- 	                            <input type="date" class="form-control" name="scheduleEnd" -->
-<%-- 	                            value='<c:out value="${schedule.scheduleEnd}"/>' readonly="readonly"> --%>
-<!-- 	                        <label>내용</label> -->
-<!-- 	                            <input type="text" class="form-control" name="scheduleContent" -->
-<%-- 	                            value='<c:out value="${schedule.scheduleContent}"/>' readonly="readonly"> --%>
-<!-- 	                       <label>중요도 </label> -->
-<!-- 	                            <input type="text"class="form-control"  name="scheduleImportance"   -->
-<%-- 	                            value='<c:out value="${schedule.scheduleImportance}"/>'readonly="readonly">&nbsp;<label for="first">상</label> --%>
-<!-- 	                            <br> -->
-<!-- 	                        <label>공사구분</label> -->
-<!-- 	                            <input type="text" class="form-control" name="schedulePrivate" -->
-<%-- 	                            value='<c:out value="${schedule.scheduleStart}"/>' readonly="readonly"> --%>
-<!-- 	                     </div> -->
-<!-- 	                     <div class="modal-footer"> -->
-<!-- 	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
-<!-- 	                        <input type="submit" class="btn btn-primary" value="일정 생성"> -->
-<!-- 	                     </div> -->
-<!--                  		 </form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-	<!-- <div id='wrap'> -->
-
-	<!-- <div id='external-events'>
-      <h4>Draggable Events</h4>
-
-      <div id='external-events-list'>
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-          <div class='fc-event-main'>My Event 1</div>
-        </div>
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-          <div class='fc-event-main'>My Event 2</div>
-        </div>
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-          <div class='fc-event-main'>My Event 3</div>
-        </div>
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-          <div class='fc-event-main'>My Event 4</div>
-        </div>
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-          <div class='fc-event-main'>My Event 5</div>
-        </div>
-      </div>
-
-      <p>
-        <input type='checkbox' id='drop-remove' />
-        <label for='drop-remove'>체크후 드래그해서 달력에 추가하면 사라집니다</label>
-      </p>
-    </div> -->
-
-	<!--달력 폼-->
-	<div id='calendar-wrap'>
-		<div id='calendar'></div>
-
-
-		<!-- 일정목록 리스트 출력 -->
-		<div class="container">
-			<div class="row">
-				<h3 style="text-align: center; color: #0D6EFD">
-					&lt;일정리스트&gt;
-				</h3>
-				<table style="text-align: center; border: 1px solid #dddddd;">
-					<!--style="-->
-					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">일정번호
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">사원번호
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">시작시간
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">마감시간
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">내용
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">중요도
-						</th>
-						<th style="background-color: #eeeeee; text-align: center;">공사구분
-						</th>
-					</tr>
-
-					<c:forEach var="schedule" items="${list}">
-						<tr style="background-color: #11111; text-align: center; border: 1px;">
-							<td>${schedule.scheduleId}</td>
-							<td>${schedule.employeeId}</td>
-							<td>${schedule.scheduleTitle}</td>
-							<td>${schedule.scheduleStart}</td>
-							<td>${schedule.scheduleEnd}</td>
-							<td>${schedule.scheduleContent}</td>
-							<td>${schedule.scheduleImportance}</td>
-							<td>${schedule.schedulePrivate}</td>
+				<div class="table-container">
+					<table style="text-align: center; border: 1px solid #dddddd;">
+						<!--style="-->
+						<tr>
+							<th style="background-color: #eeeeee; text-align: center;">일정번호
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">사원번호
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">제목
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">시작시간
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">마감시간
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">내용
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">중요도
+							</th>
+							<th style="background-color: #eeeeee; text-align: center;">공사구분
+							</th>
 						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<!--일정추가 모달창-->
-	<!-- <div id="modalwrapper">
-		Button trigger modal
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">일정추가</button>
-		Modal
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">일정 추가</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-
-						<form action="scheduleInsertAction.do" method="post">
-							  accept-charset="utf-8"
-							<div class="mb-3">
-								<label>제목:</label> <input type="text" class="form-control"
-									name="schedule_title"> <label>시작시간</label> <input
-									type="date" class="form-control" name="schedule_start">
-								<label>종료시간</label> <input type="date" class="form-control"
-									name="schedule_end"> <label>내용시간</label> <input
-									type="text" class="form-control" name="schedule_content">
-								<label>중요도 </label> <input type="radio"
-									name="schedule_importance" id="first" value="상">&nbsp;<label
-									for="first">상</label> <input type="radio"
-									name="schedule_importance" id="second" value="중">&nbsp;<label
-									for="second">중</label> <input type="radio"
-									name="schedule_importance" id="third" value="하">&nbsp;<label
-									for="third">하</label> <br> <label>공사구분</label> <input
-									type="text" class="form-control" name="schedule_private">
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">닫기</button>
-								<input type="submit" class="btn btn-primary" value="일정 생성">
-							</div>
-						</form>
-
-					</div>
+	
+						<c:forEach var="schedule" items="${list}">
+							<tr style="background-color: #11111; text-align: center; border: 1px;">
+								<td>${schedule.scheduleId}</td>
+								<td>${schedule.employeeId}</td>
+								<td>${schedule.scheduleTitle}</td>
+								<td>${schedule.scheduleStart}</td>
+								<td>${schedule.scheduleEnd}</td>
+								<td>${schedule.scheduleContent}</td>
+								<td>${schedule.scheduleImportance}</td>
+								<td>${schedule.schedulePrivate}</td>
+							</tr>
+						</c:forEach>
+					</table>
 				</div>
-			</div>
-		</div>
-	</div> -->
-
+				
+	    </div> <!-- end easyway-wrapper -->
+	    
+    </div> <!-- end page-divider -->
 </body>
 
 
