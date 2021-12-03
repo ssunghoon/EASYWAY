@@ -5,7 +5,7 @@
 
 <!-- 보드를 그냥쓰면 오류가 뜨기 때문에 콘피그에 typeAlias -->
 <mapper namespace="org.easyway.mapper.ProjectMapper">
-	
+
 	<insert id="insertProject">
 		insert into project(
 			project_id, project_name, project_start, project_end, project_content

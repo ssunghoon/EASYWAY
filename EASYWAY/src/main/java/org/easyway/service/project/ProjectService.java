@@ -8,25 +8,18 @@ import org.easyway.domain.project.Project;
 
 public interface ProjectService {
 	
-	//프로젝트 생성
-	public void create(Project project);
+	public void create(Project project); // 프로젝트 생성
 	
-	//프로젝트 수정
-	public boolean modifyProject(Project project);
+	public boolean modifyProject(Project project); // 프로젝트 수정
 	
-	//프로젝트 목록
-	public List<Project> getListProject();
+	public List<Project> getListProject(); // 프로젝트 목록
 	
-	//프로젝트 게시판 등록
-	public void registerProjectBoard(ProjectBoard projectBoard);
+	public void registerProjectBoard(ProjectBoard projectBoard); // 프로젝트 게시판 등록
 	
-	//프로젝트 게시판 목록
-	public List<ProjectBoard> getListProjectBoard(Long projectId);
+	public List<ProjectBoard> getListProjectBoard(Long projectId); // 프로젝트 게시판 목록
 	
-	//프로젝트 게시물 등록
-	public void registerProjectPost(ProjectPost projectPost);
+	public void registerProjectPost(ProjectPost projectPost); // 프로젝트 게시물 등록
 	
-	//프로젝트 게시물 목록
-	public List<ProjectPost> getListProjectPost(Long projectBoardId);
+	public List<ProjectPost> getListProjectPost(Long projectBoardId); // 프로젝트 게시물 목록
 	
 }
