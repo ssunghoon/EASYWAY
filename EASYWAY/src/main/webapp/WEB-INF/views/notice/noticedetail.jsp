@@ -72,6 +72,8 @@
 	            	</div>
 	            	
 	            	<div class="buttons">
+	            	<form action="/notice/noticeremove" method="post">
+	            	<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>' >
 						<!--수정페이지로 이동 버튼 -->
 						<a href="/notice/noticemodify?obId=${of_board.obId }"> <input
 							type="button" value="수정" class="modify-btn easyway-btn"></a>
@@ -80,11 +82,10 @@
 						<!-- 리스트로 이동 -->
 						<a href="/notice/noticelist"> <input type="button"
 							value="목록" class="list-btn easyway-btn"></a>
+	            </form>
 					</div>
 	            </div>
-	            
 	            <div class="easyway-boarddetail-content">
-	            	<form action="/notice/noticeremove" method="post">
 	            	
 	            	<label>작성날짜</label>
 					<p>
@@ -92,28 +93,32 @@
 							pattern="yyyy-MM-dd" />${setObDate }
 					<p>
 
-					<label>글번호</label> <input class="form-control" name='obId'
+					<label>글번호</label> <input type="text" class="form-control" name='obId'
 						value='<c:out value="${of_board.obId }"/>' readonly="readonly">
 
 
 
-					<label>제목</label> <input class="form-control" name='obTitle'
+					<label>제목</label> <input  type="text" class="form-control" name='obTitle'
 						value='<c:out value="${of_board.obTitle}"/>' readonly="readonly">
 
 
 
 					<label>내용</label>
-					<textarea class="form-control" rows="3" name='obContent'
+					<textarea class="form-control"  rows="3" name='obContent'
 						readonly="readonly"><c:out
 							value="${of_board.obContent}" /></textarea>
 
 
-				</form>
+				
 	            </div>
 	        </div>
 	
 	    </div>
     </div>
+
+	<script type="text/javascript">
+	</script>
+	
 
 </body>
 </html>

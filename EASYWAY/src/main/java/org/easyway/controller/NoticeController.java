@@ -55,7 +55,7 @@ public class NoticeController {
 	//페이징 처리 리스트
 	@GetMapping("/noticelist")
 	public void noticelist(NoticeCriteria cri, Model model){
-		log.info("페이징처리된 리스트" + cri);
+		log.info("noticelist" + cri);
 		model.addAttribute("noticelist", service.getListAll(cri));
 		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123));
 	}

@@ -68,8 +68,8 @@
 				</div>
 				<div class="easyway-board-item">
 					<!-- 7번째 easyway-board-item : 글쓰기 버튼 들어갈 자리 -->
-					<a href="/notice/noticeregister">
-						<button type="button" class="easyway-btn">글쓰기</button>
+<!-- 					<a href="/notice/noticeregister"> -->
+						<button id="regBtn" type="button" class="easyway-btn">글쓰기</button>
 					</a>
 				</div>
 
@@ -88,13 +88,13 @@
 								<td><c:out value="${of_board.obId }" /></td>
 								<td><c:out value="${of_board.obFilePath }" /></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
-								<td><a class='move' href='<c:out value="${of_board.obId}"/>'>
-										<c:out value="${of_board.obTitle}" /> <c:if
-											test="${of_board.obFixedCheck == 'Y' }">
+								<td><a class="move" href='<c:out value="${of_board.obId}"/>'>
+										<c:out value="${of_board.obTitle}" /> </a>
+										<c:if test="${of_board.obFixedCheck == 'Y' }">
 											<img src="//t1.daumcdn.net/editor/deco/contents/emoticon/things_14.gif?v=2" 
 											border="0" class="txc-emo">
 										</c:if>
-								</a></td>
+								</td>
 								<td><fmt:formatDate var="setObDate"
 										value="${of_board.obDate }" pattern="yyyy-MM-dd" />${setObDate }
 								</td>
@@ -103,6 +103,7 @@
 						</c:forEach>
 
 					</table>
+					
 				</div>
 					
 				<div class="easyway-board-item">
@@ -129,9 +130,9 @@
                   </ul>
                   
                   
-                  <form id="actionForm" action="/notice/noticelist" method='get'>
-					<input type="hidden" name="pageNum" value='${pageMaker.cri.pageNum}'> 
-					<input type="hidden" name="amount" value='${pageMaker.cri.amount}'> 
+                  <form id="actionForm" action="/notice/noticelist" method="get">
+					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'>
+					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'>
 <%-- 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> --%>
 <%-- 					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
 				</form>
@@ -196,9 +197,8 @@
 	</div>
 	
 	<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+	
+	$(document).ready(function() {
 
 						var result = '<c:out value="${result}"/>';
 
@@ -206,56 +206,53 @@
 
 						history.replaceState({}, null, null);
 
-						function checkModal(result) {
+	function checkModal(result) {
 
-							if (result === '' || history.state) {
+							if (result === '' || history.state ) {
 								return;
 							}
 
 							if (parseInt(result) > 0) {
-								$(".modal-body").html(
-										"성공적으로 게시글 " + parseInt(result)
-												+ " 번이 등록되었습니다.");
+								$(".modal-body").html("성공적으로 게시글 " + parseInt(result) + " 번이 등록되었습니다.");
 							}
 
 							$("#myModal").modal("show");
 						}
+						
+						//리스트에서 글쓰기 눌렀을때 글쓰기폼으로 가는 제이쿼리
+						$("#regBtn").on("click", function() {
 
-// 						$("#easyway-btn").on("click", function() {
+							self.location = "/notice/noticeregister";
 
-// 							self.location = "/notice/noticeregister";
+						});
 
-// 						});
+						var actionForm = $("#actionForm");
 
-// 						var actionForm = $("#actionForm");
+						$(".page-click").on(
+								"click",
+								function(e) {
 
-// 						$("a.page-click").on(
-// 								"click",
-// 								function(e) {
+									e.preventDefault();
 
-// 									e.preventDefault();
+									console.log('click');
 
-// 									console.log('click');
+									actionForm.find("input[name='pageNum']")
+											.val($(this).attr("href"));
+									actionForm.submit();
+								});
 
-// 									actionForm.find("input[name='pageNum']")
-// 											.val($(this).attr("href"));
-// 									actionForm.submit();
-// 								});
+						$(".move")
+								.on("click",
+										function(e) {
 
-// 						$(".move")
-// 								.on(
-// 										"click",
-// 										function(e) {
-
-// 											e.preventDefault();
-// 											actionForm
-// 													.append("<input type='hidden' name='obId' value='"
-// 															+ $(this).attr(
-// 																	"href")
-// 															+ "'>");
-// 											actionForm.attr("action",
-// 													"/notice/noticedetail");
-// 											actionForm.submit();
+											e.preventDefault();
+											actionForm.append("<input type="hidden" name="obId" value='"
+															+ $(this).attr(
+																	"href")
+															+ "'>");
+											actionForm.attr("action",
+													"/notice/noticedetail");
+											actionForm.submit();
 
 										});
 </script>
