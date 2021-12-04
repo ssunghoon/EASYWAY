@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="org.easyway.mapper.EmployeeMapper">
+
+	<resultMap id="employeeVOResultMap" type="org.easyway.domain.office.OfficeVO">
+		<id property="employeeId" column="employee_id" />
+		<result property="officeId" column="office_id" />
+		<result property="memberId" column="member_id" />
+		<result property="departmentId" column="department_id" />
+		<result property="positionId" column="position_id" />
+		<result property="employeeName" column="employee_name" />
+		<result property="employeeCall" column="employee_call" />
+		<result property="employeePhone" column="employee_phone" />
+		<result property="employeeHireDate" column="employee_hiredate" />
+		<result property="employeeWorkType" column="employee_work_type" />
+		<result property="employeeBirth" column="employee_birth" />
+		<result property="employeeMaster" column="employee_master" />
+		<result property="employeeLeftDay" column="employee_left_day" />
+	</resultMap>
+
+	<insert id="insertEmployee">
+		insert into office(
+		employee_id, office_id, member_id,department_id,position_id,employee_name,employee_call
+		,employee_phone,employee_hiredate,employee_work_type,employee_birth,employee_master,employee_left_day
+		)
+		values(
+		 employee_seq.nextval, #{officeId}, #{memberId},#{departmentId},#{positionId},#{employeeName},
+		 #{employeeCall},#{employeePhone},#{employeeHireDate},#{employeeWorkType},#{employeeBirth},#{employeeMaster},#{employeeLeftDay}
+		)
+	</insert>
+
+
+	<select id="getEmployee" resultMap="employeeVOResultMap">
+		select * from employee where employee_id = #{employeeId}
+	</select>
+	<select id="getEmployee2" resultMap="employeeVOResultMap">
+		select * from employee where office_id = #{memberId} and member_id = #{officeId}
+	</select>
+
+<!-- 	<update id="updateEmployee"> 
+		update board set title 
+		= #{title}, contents = #{contents} where seq = #{seq} </update> -->
+
+	<delete id="deleteEmployee">
+		delete from employee
+		where
+		employee_id = #{employeeId}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

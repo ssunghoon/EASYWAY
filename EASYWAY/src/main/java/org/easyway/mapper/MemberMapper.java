@@ -11,7 +11,7 @@ public interface MemberMapper {
 	
 	public Long readEmail(String tempEmail);	
 	public int insertMember(MemberVO member);
-	public MemberVO read(String enteredEmail);
+	public MemberVO get(String enteredEmail);
 	public MemberVO login(String memberEmail);
 
 }

@@ -36,7 +36,7 @@
 		select member_id from member where member_email = #{tempEmail}
 	</select>
 	
-	<select id="read" resultMap="memberVOResultMap">
+	<select id="get" resultMap="memberVOResultMap">
 		select * from member where member_email = #{enteredEmail}
 	</select>
 </mapper>

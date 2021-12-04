@@ -15,10 +15,8 @@
 	<!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
     <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-		<!-- 위와 버전만 다른가 -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="./resources/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/resources/js/jquery-ui-1.10.3.custom.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -30,18 +28,18 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 	
     <!-- EASYWAY CSS, JS -->
-	<link href="./resources/css/reset.css" rel="stylesheet">
-	<link href="./resources/css/sidebars.css" rel="stylesheet">
-    <link href="./resources/css/common.css" rel="stylesheet">
-	<link href="./resources/css/widget.css" rel="stylesheet"/>
-    <script src="./resources/js/menu.js"></script>
+	<link href="/resources/css/reset.css" rel="stylesheet">
+	<link href="/resources/css/sidebars.css" rel="stylesheet">
+    <link href="/resources/css/common.css" rel="stylesheet">
+	<link href="/resources/css/widget.css" rel="stylesheet"/>
+    <script src="/resources/js/menu.js"></script>
     
 </head>
 
 <body>
 
 	<!-- sidebar ------------------------------------------------------------------------------->
-	<jsp:include page="./public/sidebar.jsp" />
+	<jsp:include page="../public/sidebar.jsp" />
     
     <div class= "page-divider">
 	    <div class="sidebar-background"></div>
@@ -95,6 +93,6 @@
 	</div>
 </body>
 
-<script src="./resources/js/widget.js"></script>
+<script src="/resources/js/widget.js"></script>
 
 </html>

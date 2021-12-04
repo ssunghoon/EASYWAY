@@ -39,12 +39,41 @@ public class OfficeController {
 		CustomUser member = (CustomUser)auth.getPrincipal();
 		List<OfficeVO> offices = service.getList(member.getMember().getMemberId());
 		offices.forEach((office)->{
-			log.info(office+"zzzzzzzzzzzzzzzzzzzzzzzzz");
+			log.info(office);
 		});
 		
 		model.addAttribute("ofiiceList", offices);
 		log.info("ofiice list...............");
 	}
+	
+	//meanagement pages
+	@GetMapping("/admin/management/employeemanagement")
+	public void employeeManagement(){
+		log.info("admin/employeemanagement Page");
+	}
+	
+	@GetMapping("/admin/management/managementsetting")
+	public void managementSetting(){
+		log.info("admin/managementsetting Page");
+	}
+	
+	//office setting page
+	@GetMapping("/admin/officesetting/departmentsetting")
+	public void departmentSetting(){
+		log.info("admin/departmentsetting Page");
+	}
+	
+	@GetMapping("/admin/officesetting/positionsetting")
+	public void positionSetting(){
+		log.info("admin/positionsetting Page");
+	}
+	
+	@GetMapping("/admin/officesetting/vacationsetting")
+	public void vacationSetting(){
+		log.info("admin/vactionsetting Page");
+	}
+	
+	
 	
 	@PostMapping("/create")
 	public String create(@RequestParam("officeName") String officeName, Authentication auth, RedirectAttributes rttr){

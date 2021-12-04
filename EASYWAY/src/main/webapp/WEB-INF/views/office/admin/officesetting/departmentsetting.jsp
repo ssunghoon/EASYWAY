@@ -27,7 +27,8 @@
 	<link href="/resources/css/reset.css" rel="stylesheet">
 	<link href="/resources/css/sidebars.css" rel="stylesheet">
 	<link href="/resources/css/common.css" rel="stylesheet">
-	<link href="/resources/css/vacation_setting.css" rel="stylesheet">
+	<link href="/resources/css/office/employee_management.css" rel="stylesheet">
+	<link href="/resources/css/common_boardlist.css" rel="stylesheet">
 	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 	<script src="/resources/js/menu.js"></script>
 
@@ -36,7 +37,7 @@
 <body>
 
 	<!-- sidebar ------------------------------------------------------------------------------->
-	<jsp:include page="../../public/sidebar.jsp" />
+	<jsp:include page="../../../public/sidebar.jsp" />
 
 	<div class="page-divider">
 		<div class="sidebar-background"></div>
@@ -46,82 +47,62 @@
 
 			<div class="easyway-container">
 				<div class="tab-header">
+					<div class="tab-label">
+						<a href="/office/admin/officesetting/vacationsetting">휴가 설정</a>
+					</div>
+					<div class="tab-label">
+						<a href="/office/admin/officesetting/positionsetting">직위 설정</a>
+					</div>
 					<div class="tab-label-choice">
-						<p>휴가 설정</p>
-					</div>
-					<div class="tab-label">
-						<p>직위 설정</p>
-					</div>
-					<div class="tab-label">
-						<p>부서 설정</p>
+						<a href="/office/admin/officesetting/departmentsetting">부서 설정</a>
 					</div>
 				</div>
 
-				<div class="setting-title">
-					<div class="easyway-title1">휴가 설정</div>
+				<div class="employee-management-table">
+					<div class="employee-management-title">
+						<h3>부서 설정</h3>
+					</div>
 				</div>
 
-				<div class="vacation-setting-inputs">
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
+				<div class="employee-table">
+					<div class="easyway-board-item">
+						<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
+						<!-- 임의의 5열 x 15줄 태그 (th포함하면 16줄) -->
+						<table class="board-list">
+							<tr>
+								<th>등급</th>
+								<th>직위명</th>
+							</tr>
+							<tr>
+								<td>223</td>
+								<td>전나은</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
 
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
-					</div>
-					<div class="vacation-items">
-						<p>1년차</p>
-						<input class="vacation-item" type="number" value="15">
 					</div>
 				</div>
 				<button class="easyway-btn">
@@ -133,6 +114,10 @@
 	</div>
 
 </body>
+
+
 </html>
+
 </body>
+
 </html>

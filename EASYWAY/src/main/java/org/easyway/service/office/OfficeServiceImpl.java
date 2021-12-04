@@ -34,7 +34,12 @@ public class OfficeServiceImpl implements OfficeService {
 	public List<OfficeVO> getList(Long memberId) {
 		return mapper.getList(memberId);
 	}
-
+	
+	@Override
+	public OfficeVO get(Long officeId) {
+		return mapper.get(officeId);
+	}
+	
 	@Transactional
 	@Override
 	public int create(String officeName, Long memberId) {

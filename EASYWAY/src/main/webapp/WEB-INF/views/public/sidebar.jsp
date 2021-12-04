@@ -10,7 +10,7 @@
 		<a href="/main" class="logo-a">
 			<span class="fs-4">
 				<img alt="LOGO" src="/resources/image/EASYWAY_SYMBOL60.png">
-				<span class="office-name">전나은의 오피스</span>
+				<span class="office-name">${sessionScope.nowOfficeInfo.officeName}</span>
 			</span>
 		</a>
 		
@@ -51,13 +51,13 @@
 		<!-- 관리자 전용 메뉴 -->
 		<ul class="nav nav-manager nav-pills flex-column mb-auto">
 			<li>
-				<a href="" class="nav-link link-dark"> 
+				<a href="/office/admin/officesetting/vacationsetting" class="nav-link link-dark"> 
 					<i class="nav-element fas fa-id-card"></i>
 					<span class="nav-element">오피스 설정</span>
 				</a>
 			</li>
 			<li>
-				<a href="" class="nav-link link-dark">
+				<a href="/office/admin/management/employeemanagement" class="nav-link link-dark">
 					<i class="nav-element fas fa-users-cog"></i>
 					<span class="nav-element">임직원 관리</span>
 				</a>

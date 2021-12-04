@@ -54,14 +54,6 @@
 		#{memberId}
 	</select>
 
-	<select id="detailOffice" parameterType="long"
-		resultType="org.easyway.domain.office.OfficeVO">
-		select * from office where office_id = #{officeId}
-	</select>
-
-	<!-- <update id="updateBoard" parameterType="Board"> update board set title 
-		= #{title}, contents = #{contents} where seq = #{seq} </update> -->
-
 	<delete id="deleteOffice" parameterType="int">
 		delete from office
 		where

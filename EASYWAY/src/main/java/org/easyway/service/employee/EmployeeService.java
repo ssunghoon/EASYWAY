@@ -1,0 +1,13 @@
+package org.easyway.service.employee;
+
+import java.util.List;
+
+import org.easyway.domain.employee.EmployeeVO;
+
+public interface EmployeeService {
+	
+	public EmployeeVO getEmployee(Long employeeId);
+	public List<EmployeeVO> getListEmployee(Long officeId);
+	public int resiter(EmployeeVO employee);
+	public EmployeeVO getEmployee2(Long nowMemberId, Long officeId);
+}
