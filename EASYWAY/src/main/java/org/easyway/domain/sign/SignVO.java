@@ -17,10 +17,10 @@ public class SignVO implements Serializable{
 	private long employeeId; // EMPLOYEE_ID
 	private Date signDate; // SIGN_DATE
 	private File signFilePath; // SIGN_FILE
-	private long seq; // SEQ
+	private long rownum;
 	private String signTitle; // SIGN_TITLE
 	private String signContent; // SIGN_CONTENT
 	private String signCheck; // SIGN_CHECK
-	
+	private String signImportance; // SIGN_IMPORTANCE
 	
 }

@@ -96,13 +96,37 @@ public class SignServiceImpl implements SignService {
 									
 		log.info("getDraftBasic............... signId = " + signId + "signFormId = " + signFormId );
 		return mapper.getDraftVacation(signId);
+	}
+		
+	// 결재함 상세(기본기안서)
+	@Override
+	public BasicSignVO getPaymentBasic(Long signId, Long signFormId){
+									
+		log.info("getPaymentBasic............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentBasic(signId);
+
+	}
+	// 결재함 상세(지출결의서)
+	@Override
+	public SpendSignVO getPaymentSpend(Long signId, Long signFormId){
+									
+		log.info("getPaymentSpend............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentSpend(signId);
+
+	}
+	// 결재함 상세(휴가신청서)
+	@Override
+	public VacationSignVO getPaymentVacation(Long signId, Long signFormId){
+									
+		log.info("getPaymentVacation............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentVacation(signId);
 
 	}
 	
 	// 기안 갯수
-	public int getTotal(Criteria cri) {
+	public int getTotalDraft(Criteria cri) {
 		log.info("get total count");
-		return mapper.getTotalCount(cri);
+		return mapper.getTotalCountDraft(cri);
 	}
 	
 	// 직원 목록
@@ -129,5 +153,19 @@ public class SignServiceImpl implements SignService {
 		log.info("getDraftList..............");
 		
 		return mapper.getListPayment();
+	}
+	
+	// 결재함 결재
+	@Override
+	public boolean modify(SignListVO list) {
+		log.info("paymentModify........" + list);
+		
+		return mapper.payment(list) == 1;
+	}
+	
+	// 기안 갯수
+	public int getTotalPayment(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCountPayment(cri);
 	}
 }

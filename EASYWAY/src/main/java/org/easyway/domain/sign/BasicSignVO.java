@@ -17,10 +17,11 @@ public class BasicSignVO implements Serializable{
 	private String signBasicRange; // SB_RANGE
 	private String signBasicStart; // SB_START
 	private String signBasicEnd; // SB_END
-	private String signBasicImportance; // SB_IMPORTANCE
+
 	private long signId; // SIGN_ID
 	private String signTitle; // SIGN_TITLE
 	private String signContent; // SIGN_CONTENT
+	private String signImportance; // SIGN_IMPORTANCE
 	
 	
 }

@@ -41,7 +41,7 @@
     <link href="/resources/css/reset.css" rel="stylesheet">
     <link href="/resources/css/sidebars.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
-    <link href="/resources/css/applysignbasic.css" rel="stylesheet">
+    <link href="/resources/css/sign/applySignBasic.css" rel="stylesheet">
     <link href="/resources/css/sign.css" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
     <script src="/resources/js/menu.js"></script>
@@ -117,13 +117,13 @@
 			            <div class="form-option2-input">
 			            	<!-- 중요도 : 작성칸 -->
 							<div class="radio-wrapper">
-				            	<input type="radio" name="signBasicImportance" id="first" value="상">&nbsp;<label for="first">상</label>
+				            	<input type="radio" name="signImportance" id="first" value="상">&nbsp;<label for="first">상</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signBasicImportance" id="second" value="중">&nbsp;<label for="second">중</label>
+								<input type="radio" name="signImportance" id="second" value="중">&nbsp;<label for="second">중</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signBasicImportance" id="third" value="하">&nbsp;<label for="third">하</label>
+								<input type="radio" name="signImportance" id="third" value="하">&nbsp;<label for="third">하</label>
 				            </div>
 			            </div>
 

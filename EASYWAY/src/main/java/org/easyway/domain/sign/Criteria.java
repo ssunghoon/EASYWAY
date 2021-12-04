@@ -19,8 +19,6 @@ public class Criteria {
 	private String type;
 	private String keyword1;
 	private String keyword2;
-
-	private String[] arrList; // keyword1목록 담는 곳
 	
 	public Criteria() {
 		this(1, 10);

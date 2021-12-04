@@ -77,7 +77,7 @@
 	            </div>
 	            <div class="easyway-board-item">
 	                <!-- 7번째 easyway-board-item : 글쓰기 버튼 들어갈 자리 -->
-	                <button type="button" class="easyway-btn">기안 작성</button>
+	                <button type="button" class="easyway-btn" onclick="location.href='/sign/signmain'">기안 작성</button>
 	            </div>
 	            <div class="easyway-board-item">
 					<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
@@ -93,11 +93,7 @@
 						<c:forEach var="sign" items="${draftList }">
 						
 							<tr>
-							
-							<!-- No. 들어갈 자리 -->
-								<td>
-								</td>
-								
+								<td>${sign.rownum }</td>
 								<c:set var="sf" value="1" />
 								<c:choose>
 									<c:when test="${sign.signFormId == sf}">
@@ -161,7 +157,7 @@
 						<input type='hidden' name='keyword1' value='<c:out value="${ pageMaker.cri.keyword1 }"/>'>
 					</form>
 	            </div>
-	            
+	           
 	            <div class="easyway-board-item">
 	                <!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
 	                <form id="searchForm" class="search-form" action="/sign/draftlist" method="get" >

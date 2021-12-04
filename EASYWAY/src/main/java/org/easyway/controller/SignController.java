@@ -14,6 +14,7 @@ import org.easyway.service.sign.SignServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer.RedirectionEndpointConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -133,10 +134,9 @@ public class SignController {
 	@GetMapping("/draftlist")
 	public void draftList(Criteria cri, Model model){
 		log.info("draftList : " + cri);
-		log.info("arrList : " + cri.getArrList());
+
 		model.addAttribute("draftList", service.getListDraft(cri));
-		
-		int total = service.getTotal(cri);
+		int total = service.getTotalDraft(cri);
 		
 		log.info("total : " + total);
 		
@@ -145,12 +145,14 @@ public class SignController {
 	}
 		
 	
-	// 기안함상세, 결재함상세
-	@GetMapping(value = {"/getdraft", "/getpayment"})
-	public void getDraft(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, @RequestParam("signFromId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
+	// 기안함상세
+	@GetMapping("/getdraft")
+	public void getDraft(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, 
+						 @RequestParam("signFormId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
 		
 		log.info("getDraft,getpayment");
 		log.info("signFormId = " + signFormId);
+		log.info("signId : " + signId);
 		if(signFormId == 1){
 			model.addAttribute("basicSign", service.getDraftBasic(signId, signFormId));
 		}else if(signFormId == 2) {
@@ -159,6 +161,23 @@ public class SignController {
 			model.addAttribute("vacationSign", service.getDraftVacation(signId, signFormId));
 		}
 	}
+	
+	// 결재함상세
+		@GetMapping("/getpayment")
+		public void getPayment(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, 
+							 @RequestParam("signFormId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
+			
+			log.info("getDraft,getpayment");
+			log.info("signFormId = " + signFormId);
+			log.info("signId : " + signId);
+			if(signFormId == 1){
+				model.addAttribute("basicSign", service.getPaymentBasic(signId, signFormId));
+			}else if(signFormId == 2) {
+				model.addAttribute("spendSign", service.getPaymentSpend(signId, signFormId));
+			}else if(signFormId == 3) {
+				model.addAttribute("vacationSign", service.getPaymentVacation(signId, signFormId));
+			}
+		}
 	
 	// 결재선 등록
 /*	@PostMapping("/applylinefirst")
@@ -179,11 +198,27 @@ public class SignController {
 	
 	// 결재함 목록
 	@GetMapping("/paymentlist")
-	public void getPayment(Model model){
+	public void getPayment(Criteria cri,Model model){
 		
-		log.info("paymentList");
+		log.info("paymentlist : " + cri);
+
 		model.addAttribute("paymentList", service.getListPayment());
+		int total = service.getTotalDraft(cri);
 		
+		log.info("total : " + total);
+		
+		model.addAttribute("pageMaker", new PageVO(cri, total));
+		
+	}
+	
+	// 결재함 결재
+	@PostMapping("/payment")
+	public String modify(SignListVO list, RedirectAttributes rttr){
+		log.info("modifyPayment: " + list);
+		if(service.modify(list)){
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/sign/paymentlist";
 	}
 	
 	

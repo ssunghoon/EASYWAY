@@ -33,6 +33,7 @@
     <!-- EASYWAY CSS, JS -->
     <link href="/resources/css/reset.css" rel="stylesheet">
     <link href="/resources/css/sidebars.css" rel="stylesheet">
+    <link href="/resources/css/sign/getPayment.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
     <link href="/resources/css/common_boardlist.css" rel="stylesheet">
     <script src="/resources/js/menu.js"></script>
@@ -79,7 +80,7 @@
 	                <!-- 7번째 easyway-board-item : 글쓰기 버튼 들어갈 자리 -->
 	              
 	            </div>
-                <div class="easyway-board-item">
+                <div class="easyway-board-item"><!-- begin 기안 목록 테이블 -->
 					<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
 	                <!-- 임의의 5열 x 15줄 태그 (th포함하면 16줄) -->
 					<table class="board-list">
@@ -93,7 +94,7 @@
 						<c:forEach var="payment" items="${paymentList }">
 							<tr>
 							<!-- No. 들어갈 자리 -->
-							<td></td>
+							<td>${payment.rownum }</td>
 								<c:set var="sf" value="1" />
 								<c:choose>
 									<c:when test="${payment.signFormId == sf}">
@@ -108,13 +109,12 @@
 								</c:choose>
 							<td>
 							<a class='move'
-									href='/sign/getpayment?signId=<c:out value="${payment.signId}&signFormId=${payment.signFormId }&signListId=${paymenet.signListId}"/>'>
+									href='/sign/getpayment?signId=<c:out value="${payment.signId}&signFormId=${payment.signFormId }&signListId=${payment.signListId}"/>'>
 								<c:out value="${payment.signTitle }" />
 								</a>
 							</td>
-								<c:set var="ch" value="N" />
 								<c:choose>
-									<c:when test="${payment.signListCheck == ch}">
+									<c:when test="${payment.signListCheck == 'N'}">
 										<td id="sign_check">결재전</td>
 									</c:when>
 									<c:otherwise>
@@ -125,9 +125,56 @@
 								<fmt:formatDate value="${payment.signDate}" pattern="yyyy-MM-dd"/>
 							</td>
 						</tr>
+						<input type="hidden" value="${payment.signId }">
 						</c:forEach>
 					</table>
-         	    </div>
+         	    </div><!-- end 기안목록 테이블 -->
+         	     <div class="easyway-board-item">
+	                <!-- 9번째 easyway-board-item : 페이징 들어갈 자리 -->
+	                
+	                <ul class="pagination pagination-sm">
+		                <c:if test="${pageMaker.prev}">
+							<li class="page page-prev">
+							<a class="page-click" href="${pageMaker.startPage -1}">Previous</a></li>
+						</c:if>
+			
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="page page-num  ${pageMaker.cri.pageNum == num ? "active":""} ">
+								<a class="page-click" href="${num}">${num}</a>
+							</li>
+						</c:forEach>
+			
+						<c:if test="${pageMaker.next}">
+							<li class="page page-next">
+							<a class="page-click" href="${pageMaker.endPage +1 }">Next</a></li>
+						</c:if>
+					</ul>
+					<form id="actionForm" action="/sign/paymentlist" method="get">
+						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+						<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
+						<input type='hidden' name='keyword1' value='<c:out value="${ pageMaker.cri.keyword1 }"/>'>
+					</form>
+	            </div><!-- end 페이징 -->
+	            
+	             <div class="easyway-board-item">
+	                <!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
+	                <form id="searchForm" class="search-form" action="/sign/paymentlist" method="get" >
+						<select name="keyword1" id="keyword1" class="dropdown-toggle" data-toggle="dropdown">
+                            <option value="0" class="dropdown-menu">전체</option> 
+							<option value="1">기본기안서</option>
+							<option value="2">지출결의서</option>
+							<option value="3">휴가신청서</option>
+	                    </select>
+	                    <input type="text" class="search-keyword" name="keyword2" placeholder="제목">
+	                    <input type='hidden' name='pageNum'
+							value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+						<input type='hidden' name='amount'
+							value='<c:out value="${pageMaker.cri.amount}"/>' />
+	                    <button class="easyway-btn">검색</button>
+					</form>
+	            </div><!-- end 검색 -->
+	            
           </div>
         </div>
      </div>
