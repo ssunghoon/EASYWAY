@@ -10,64 +10,67 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j;
 
-@Service
+
 @Log4j
+@Service
 public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	private AttendanceMapper mapper;
-	
+
 	@Override
-	public AttendanceVO main() {
+	public AttendanceVO getList() { // 메인에 출근, 퇴근, 외근 시간 출력
 		
-		log.info("main---------------------------------------------");
+		log.info("근무 현황 출력 --------------------------------------------");
+		System.out.println("mapper: " + mapper.getList());
 		
-		return mapper.main();
+		return mapper.getList();
 	}
 
 	@Override
-	public void add() {
+	public void registerAttendanceStart() { // 출근 시간 등록
 		
-		log.info("add------------------------------------------------");
+		log.info("registerAttendanceStart 출근 시간 등록--------------------------------------------");
 		
 		AttendanceVO attendance = new AttendanceVO();
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-		attendance.setAttendance_start(sdf.format(timestamp));
-		mapper.add(attendance);
+		attendance.setAttendanceStart(sdf.format(timestamp));
+		mapper.insert(attendance);
 		
 	}
 
 	@Override
-	public void updateAttendanceOut() {
+	public void registerAttendanceOut() { // 외근 시간 등록
 		
-		log.info("attendanceOut------------------------------------------------");
+		log.info("registerAttendanceOut 외근 시간 등록 ------------------------------------------------");
 		
 		AttendanceVO attendance = new AttendanceVO();
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-		attendance.setAttendance_out(sdf.format(timestamp));
+		attendance.setAttendanceOut(sdf.format(timestamp));
 		mapper.updateAttendanceOut(attendance);
 		
 	}
 
 	@Override
-	public void updateAttendanceEnd() {
+	public void registerAttendanceEnd() {  // 퇴근 시간 등록
 
-		log.info("attendanceEnd------------------------------------------------");
+		log.info("registerAttendanceEnd 퇴근 시간 등록 ------------------------------------------------");
 		
 		AttendanceVO attendance = new AttendanceVO();
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-		attendance.setAttendance_end(sdf.format(timestamp));
+		attendance.setAttendanceEnd(sdf.format(timestamp));
 		mapper.updateAttendanceEnd(attendance);
 		
 	}
+
 
 }

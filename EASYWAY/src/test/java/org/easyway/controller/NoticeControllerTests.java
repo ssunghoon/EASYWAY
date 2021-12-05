@@ -27,22 +27,43 @@ import lombok.extern.log4j.Log4j;
 @WebAppConfiguration
 public class NoticeControllerTests {
 
-	// @Setter(onMethod_ = {@Autowired} )
+	 @Setter(onMethod_ = {@Autowired} )
 	private NoticeMapper mapper;
 	// private NoticeService service;
-	// private WebApplicationContext ctx;
-	// private MockMvc mockMvc;
-
-	// @Before
-	// public void setup(){
-	// this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-	// }
+//	 private WebApplicationContext ctx;
+//	 private MockMvc mockMvc;
+//
+//	 @Before
+//	 public void setup(){
+//	 this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+//	 }
 
 	// 페이징처리1차 테스트
-	@Test
-	public void testPaging() {
-		NoticeCriteria cri = new NoticeCriteria();
-		List<NoticeVO> list = mapper.getListPaging(cri);
-		list.forEach(notice -> log.info(notice));
-	}
+//	@Test
+//	public void testPaging() {
+//		NoticeCriteria cri = new NoticeCriteria();
+//		cri.setPageNum(3);
+//		cri.setAmount(10);
+//		List<NoticeVO> list = mapper.getListPaging(cri);
+//		list.forEach(notice -> log.info(notice.getObId()));
+//	}
+	 
+	 //페이징 처리 2차 테스트
+//	 @Test
+//	 public void testpsing2() throws Exception{
+//		 log.info(mockMvc.perform(MockMvcRequestBuilders.get("/notice/noticelist")
+//				.param("pageNum", "2")
+//				.param("amount", "50"))
+//				.andReturn().getModelAndView().getModelMap());
+//	 }
+	 
+	 @Test
+	 public void testsearch(){
+		 NoticeCriteria cri = new NoticeCriteria();
+		 cri.setKeyword("공지");
+		 cri.setType("N");
+		 
+		 List<NoticeVO> list = mapper.getListPaging(cri);
+		 list.forEach(notice -> log.info(notice));
+	 }
 }

@@ -4,10 +4,28 @@
 
 <mapper namespace="org.easyway.mapper.NoticeMapper">
 
+<!-- sql문을 저장했다 필요할때 불러올수있다(include) -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							OB_TITLE like '%'||#{keyword}||'%' </when>
+						<when test="type == 'C'.toString()">
+							OB_CONTENT like '%'||#{keyword}||'%' </when>
+						<when test="type == 'N'.toString()">
+							DEPARTMENT_ID like '%'||#{keyword}||'%' </when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<insert id="insert">
 		INSERT INTO
 		OF_BOARD
-		VALUES(ob_seq.nextval,#{employeeId},#{departmentId},#{obTitle},#{obContent},#{obFilePath},SYSDATE,0,#{obFixedCheck})
+		VALUES(ob_seq.nextval,#{employeeId},#{departmentId},#{obFilePath},#{obTitle},#{obContent},0,SYSDATE,#{obFixedCheck})
 	</insert>
 
 	<select id="getListAll" resultType="org.easyway.domain.notice.NoticeVO">
@@ -15,30 +33,27 @@
 		OB_ID AS obId,
 		EMPLOYEE_ID AS employeeId,
 		DEPARTMENT_ID AS departmentId,
-		OB_TITLE AS
-		obTitle,
-		OB_CONTENT AS obContent,
 		OB_FILE_PATH AS obFilePath,
-		OB_DATE AS
-		obDate,
+		OB_TITLE AS obTitle,
+		OB_CONTENT AS obContent,
 		OB_VIEW AS obView,
+		OB_DATE AS obDate,
 		OB_FIXED_CHECK AS obFixedCheck
 		FROM OF_BOARD
-		ORDER BY OB_FIXED_CHECK DESC, OB_DATE DESC
+		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
 	</select>
 
 
 	<select id="read" resultType="org.easyway.domain.notice.NoticeVO">
 		SELECT
 		OB_ID AS obId,
-		EMPLOYEE_ID AS
-		employeeId,
+		EMPLOYEE_ID AS employeeId,
 		DEPARTMENT_ID AS departmentId,
+		OB_FILE_PATH AS obFilePath,
 		OB_TITLE AS obTitle,
 		OB_CONTENT AS obContent,
-		OB_FILE_PATH AS obFilePath,
-		OB_DATE AS obDate,
 		OB_VIEW AS obView,
+		OB_DATE AS obDate,
 		OB_FIXED_CHECK AS obFixedCheck
 		FROM OF_BOARD
 		WHERE
@@ -65,7 +80,7 @@
 
 	<select id="getListPaging" resultType="org.easyway.domain.notice.NoticeVO">
 	<![CDATA[
-	SELECT 
+	SELECT
 		OB_ID AS obId,
 		EMPLOYEE_ID AS employeeId,
 		DEPARTMENT_ID AS departmentId,
@@ -75,13 +90,37 @@
 		OB_DATE AS obDate,
 		OB_VIEW AS obView,
 		OB_FIXED_CHECK AS obFixedCheck
-		FROM 
-		(SELECT /*+INDEX_DESC(OF_BOARD PK_BOARD) */
-			ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
-		FROM OF_BOARD
-		WHERE ROWNUM  < = 20)
-		WHERE RN > 10
-<!-- 			ORDER BY OB_FIXED_CHECK DESC -->
+		FROM
+		OF_BOARD
+		where OB_FIXED_CHECK like 'Y'
+		
+    UNION
+    
+		SELECT 
+			OB_ID AS obId,
+			EMPLOYEE_ID AS employeeId,
+			DEPARTMENT_ID AS departmentId,
+			OB_TITLE AS obTitle,
+			OB_CONTENT AS obContent,
+			OB_FILE_PATH AS obFilePath,
+			OB_DATE AS obDate,
+			OB_VIEW AS obView,
+			OB_FIXED_CHECK AS obFixedCheck
+			FROM 
+			(
+		SELECT /*+INDEX_DESC(OF_BOARD PK_OF_BOARD) */
+					ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
+				FROM OF_BOARD
+				WHERE 
+		]]>
+						
+			<include refid="criteria"></include>
+				
+		<![CDATA[
+				ROWNUM  < = #{pageNum} * #{amount}
+				)
+				WHERE RN > (#{pageNum} -1) * #{amount}
+				ORDER BY obFixedCheck DESC, obId DESC
 		]]>
 	</select>
 </mapper>

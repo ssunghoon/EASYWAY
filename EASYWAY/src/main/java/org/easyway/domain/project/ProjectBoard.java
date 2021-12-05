@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectBoard {
+public class ProjectBoard { // 프로젝트 게시판
 	
-	private long projectBoardId;
-	private long projectId;
-	private String projectBoardName;
+	private long projectBoardId; // 프로젝트 게시판 번호
+	private long projectId;	// 프로젝트 번호
+	private String projectBoardName; // 프로젝트 게시판 명
 
 }
