@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Project {
+public class Project { // 프로젝트
 	
-	private long projectId;	
-	private String projectName;
-	private String projectStart;
-	private String projectEnd;
-	private String projectContent;
+	private long projectId;	// 프로젝트 번호
+	private String projectName; // 프로젝트 명
+	private String projectStart; // 프로젝트 시작일
+	private String projectEnd; // 프로젝트 종료일
+	private String projectContent; // 프로젝트 설명
 
 }

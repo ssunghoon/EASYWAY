@@ -17,7 +17,7 @@ import lombok.ToString;
 
 	  public NoticeCriteria() {
 		  //1페이지에 게시글 10개만 보여주겠다
-	    this(1, 15);
+	    this(1, 10);
 	  }
 
 	  public NoticeCriteria(int pageNum, int amount) {
@@ -25,10 +25,10 @@ import lombok.ToString;
 	    this.amount = amount;
 	  }
 	  
-//	  public String[] getTypeArr() {
-//	    
-//	    return type == null? new String[] {}: type.split("");
-//	  }
+	  public String[] getTypeArr() {
+	    
+	    return type == null? new String[] {}: type.split("");
+	  }
 //	  
 //	  //url 줄여주기(인코딩)
 //	  public String getListLink(){

@@ -234,39 +234,39 @@ public class SignController {
 		return "redirect:/sign/paymentlist";
 	}
 	
-	// summernote 파일 추가
-	@PostMapping(value = "/uploadSummernoteImageFile", produces = "application/json")
-	@ResponseBody
-
-	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
-		
-		System.out.println("파일이 갔으면 좋겠다");
-		JsonObject jsonObject = new JsonObject();
-
-		String fileRoot = "C:\\upload\\"; // 저장될 파일 경로
-		String originalFileName = multipartFile.getOriginalFilename(); // 오리지날
-																		// 파일명
-		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일
-																							// 확장자
-
-		// 랜덤 UUID+확장자로 저장될 savedFileName
-		String savedFileName = UUID.randomUUID() + extension;
-
-		File targetFile = new File(fileRoot + savedFileName);
-
-		try {
-			InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
-			jsonObject.addProperty("url", "/upload/" + savedFileName);
-			jsonObject.addProperty("responseCode", "success");
-
-		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile); // 실패시 저장된 파일 삭제
-			jsonObject.addProperty("responseCode", "error");
-			e.printStackTrace();
-		}
-
-		return jsonObject;
-	}
+//	// summernote 파일 추가
+//	@PostMapping(value = "/uploadSummernoteImageFile", produces = "application/json")
+//	@ResponseBody
+//
+//	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+//		
+//		System.out.println("파일이 갔으면 좋겠다");
+//		JsonObject jsonObject = new JsonObject();
+//
+//		String fileRoot = "C:\\upload\\"; // 저장될 파일 경로
+//		String originalFileName = multipartFile.getOriginalFilename(); // 오리지날
+//																		// 파일명
+//		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일
+//																							// 확장자
+//
+//		// 랜덤 UUID+확장자로 저장될 savedFileName
+//		String savedFileName = UUID.randomUUID() + extension;
+//
+//		File targetFile = new File(fileRoot + savedFileName);
+//
+//		try {
+//			InputStream fileStream = multipartFile.getInputStream();
+//			FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
+//			jsonObject.addProperty("url", "/upload/" + savedFileName);
+//			jsonObject.addProperty("responseCode", "success");
+//
+//		} catch (IOException e) {
+//			FileUtils.deleteQuietly(targetFile); // 실패시 저장된 파일 삭제
+//			jsonObject.addProperty("responseCode", "error");
+//			e.printStackTrace();
+//		}
+//
+//		return jsonObject;
+//	}
 
 	}

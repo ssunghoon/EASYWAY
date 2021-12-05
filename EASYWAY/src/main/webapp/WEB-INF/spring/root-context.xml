@@ -54,6 +54,6 @@
 
 	<tx:annotation-driven />
 
-	<mybatis-spring:scan base-package="org.easyway.mapper" />
-	<context:component-scan base-package="org.easyway.service" />
+	<mybatis-spring:scan base-package="org.easyway.mapper"/>
+	<context:component-scan base-package="org.easyway.service"/>
 </beans>

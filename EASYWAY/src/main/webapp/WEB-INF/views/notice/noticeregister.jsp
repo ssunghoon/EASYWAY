@@ -12,116 +12,168 @@
 <meta name="generator" content="Hugo 0.84.0">
 <title>편하게 오피스 작업을! EasyWay!</title>
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
-
-
-<!-- Bootstrap core CSS -->
-<link href="/resources/css/reset.css" rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+    <!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
+    <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap"
+		rel="stylesheet">
+	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+	 
+	<!-- summernote -->
+	<script src="/resources/js/summernote.js"></script>
+	<script src="/resources/summernote/summernote-lite.js"></script>
+	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+	
+    <!-- EASYWAY CSS, JS -->
+    <link href="/resources/css/reset.css" rel="stylesheet">
+    <link href="/resources/css/sidebars.css" rel="stylesheet">
+    <link href="/resources/css/common.css" rel="stylesheet">
+    <link href="/resources/css/common_boardapply.css" rel="stylesheet">
+    <script src="/resources/js/menu.js"></script>
 
 <style>
-.bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
+
+.easyway-container {
+  grid-template-rows: 18px auto;
 }
 
-@media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
+.form-container {
+	grid-template-rows: 70px 70px 70px auto 70px;
 }
+
+.form-file {
+  /* 첨부 파일 */
+  grid-column: 1 / 3;
+  grid-row: 4 / 5;
+}
+
+.form-file-input {
+  /* 첨부 파일 : 작성칸 */
+  grid-column: 2 / 13;
+  grid-row: 4 / 5;
+}
+
+.form-option1-input {
+    display: flex;
+}
+
+.form-content {
+  /* 내용 */
+  grid-column: 1 / 13;
+  grid-row: 5 / 6;
+}
+
 </style>
 
 
-<!-- Custom styles for this template -->
-<link href="/resources/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../public/sidebar.jsp" />
+	<!-- sidebar ------------------------------------------------------------------------------->
+    <jsp:include page="../public/sidebar.jsp" />
+    
+    <div class= "page-divider">
+	    <div class="sidebar-background"></div>
+	
+	
+		<!-- 페이지 표현 부분 -------------------------------------------------------------------------->
+	    <div class="easyway-wrapper">
+	
+	        <div class="easyway-container">
+	
+	            <div class="easyway-boardapply-pagetitle">
+	                <!-- 게시물 작성 타이틀 -->
+	                <div class="easyway-title1">
+	                    글쓰기
+	                </div>
+	            </div>
+	            
+	         
+	            <div class="easyway-boardapply-form">
+	            
+		            <form class="form-container" action="/notice/noticeregister" method="post">
+		            
+			        	<div class="form-title">
+			                <!-- 제목 -->
+			                	<div class="option-name">제목</div>
+			            </div>
+			            <div class="form-title-input">
+			                <!-- 제목 : 작성칸 -->
+			                <input type="text" class="form-control" placeholder="글제목" name="obTitle">
+			            </div>
+			            <div class="form-writer">
+			                <!-- 작성자 : 작성칸 -->			                
+			            <div class="option-name" name="employeeId" >작성자</div>
+			            </div>
+						<div class="form-writer-input">
+							<!-- 작성자 : 작성칸 -->
+							<!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
+							<input type="hidden" class="form-writer-name" placeholder="" name="employeeId" value="1">
+						전나은</div>
+						<div class="form-dep-input">
+							<!-- 제목 : 작성칸 -->
+							<input type="hidden" class="form-control" placeholder="" name="departmentId" value="1">
+						</div>
+			            
+			            <!-- 이하 옵션 필요한만큼 가져다 쓰고 안 쓰면 지우세요 ----------------------------------->
+			            <div class="form-option1">
+			                <!-- 상단 고정 여부 -->
+			                <div class="option-name">상단 고정 여부</div>
+			            </div>
+			            <div class="form-option1-input">
+							<!-- 상단 고정 여부 : 작성칸 -->
+							<div class="radio-wrapper">
+								<input type="radio" name="obFixedCheck" id="ch1" value="Y">&nbsp;<label for="first">상단 고정</label>
+				            </div>
+							<div class="radio-wrapper">
+					            <input type="radio" name="obFixedCheck" id="ch2" value="N">&nbsp;<label for="second">일반 공지</label>
+				            </div>
+			            </div>
+			            
+			            <div class="form-file">
+			            	<!-- 첨부 파일 -->
+			            	<div class="option-name">첨부 파일</div>
+			            </div>
+			            <div class="form-file-input">
+			            	<!-- 첨부 파일 -->
+			            	<input type="text" class="form-control" placeholder="파일첨부" name="obFilePath">
+			            </div>
+			            
+			            <div class="form-content">
+			            	<!-- 내용 -->
+			            	<div class="option-name">내용</div>
+			            </div>
+			            <div class="form-content-input">
+			            	<!-- 내용 작성칸 -->
+							<!------------------------------------------------------------------------------------------------->
+							<!-- summernote 넣은 부분 ---------------------------------------------------------------------->
+							<!------------------------------------------------------------------------------------------------->
+							<textarea class="summernote" placeholder="글내용" name="obContent"></textarea>
+			            </div><!-- end content -->
+			            <div class="form-submit">
+			            	<!-- 등록 버튼 -->
+			            	<input type="submit" class="easyway-btn" value="글쓰기">
+			            </div>
+			            
+			    	</form>
+			    	
+	            </div> <!-- end easyway-boardapply-form -->
+	            
+	        </div> <!-- end easyway-container -->
+	    </div> <!-- end easyway-wrapper -->
+	    
+    </div> <!-- end page-divider -->
 
-	<div class="container">
-		<div class="row">
-			<form action="/notice/noticeregister" method="post">
-				<table class="table_table-striped"
-					style="text-align: center; border: 1px solid #dddddd; margin-left: 300px; margin-top: 100px; width: 80%;">
-					<thead>
-						<tr>
-							<th
-								style="background-color: #eeeeee; text-align: center; width: 100%;">글쓰기
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-
-						<tr>
-							<td>공지글<input type="checkbox" placeholder="상단고정여부1" id="ch1" name="obFixedCheck" value="Y" onclick="checkOnlyOne(this)">
-									일반글<input type="checkbox" placeholder="상단고정여부2" id="ch2" name="obFixedCheck" value="N" onclick="checkOnlyOne(this)">
-							</td>
-						</tr>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="사원번호" name="employeeId"></td>
-						</tr>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="글제목" name="obTitle"></td>
-						</tr>
-
-						<tr>
-							<td><textarea class="form-control" placeholder="글내용"
-									name="obContent" style="height: 400px;">
-									</textarea></td>
-						</tr>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="파일첨부" name="obFilePath"></td>
-						</tr>
-<!-- 						<tr> -->
-<!-- 							<td><input type="text" class="form-control" placeholder="날짜" -->
-<!-- 								name="ob_date"></td> -->
-<!-- 						</tr> -->
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="부서번호" name="departmentId"></td>
-						</tr>
-						<tr>
-							<td><input type="submit" class="btn btn-primary pull-right"
-								value="글쓰기버튼"></td>
-					</tbody>
-				</table>
-
-			</form>
-		</div>
-	</div>
 </body>
 
-<script type="text/javascript">
-function checkOnlyOne(element) {
-	  
-	  const checkboxes 
-	      = document.getElementsByName("obFixedCheck");
-	  
-	  checkboxes.forEach((cb) => {
-	    cb.checked = false;
-	  })
-	  
-	  element.checked = true;
-	}
-</script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/resources/js/menu.js"></script>
-<script src="/resources/js/sidebars.js"></script>
 </html>

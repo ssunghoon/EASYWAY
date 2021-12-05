@@ -5,20 +5,27 @@
 
 
 <mapper namespace="org.easyway.mapper.AttendanceMapper">
-	<cache />
+
+	<resultMap id="attendanceVOResultMap" type="org.easyway.domain.attendance.AttendanceVO">
+		<id property="attendanceId" column="attendance_id" />
+		<result property="employeeId" column="employee_id" />
+		<result property="attendanceStart" column="attendance_start" />
+		<result property="attendanceOut" column="attendance_out" />
+		<result property="attendanceEnd" column="attendance_end" />
+	</resultMap>
 	
-<insert id="add">
+<insert id="insert">
 		insert into attendance(
 			attendance_id, employee_id, attendance_start
 		)
 		values(
-			attendance_seq.nextval, '1', TO_DATE(#{attendance_start},'yyyy/mm/dd hh24:mi:ss')
+			attendance_seq.nextval, '1', TO_DATE(#{attendanceStart},'yyyy/mm/dd hh24:mi:ss')
 		)
 	</insert>
 	
  		
 	<update id="updateAttendanceOut">
-		UPDATE attendance SET attendance_out = TO_DATE(#{attendance_out},'yyyy/mm/dd hh24:mi:ss')
+		UPDATE attendance SET attendance_out = TO_DATE(#{attendanceOut},'yyyy/mm/dd hh24:mi:ss')
 		WHERE employee_id = 1
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
@@ -26,16 +33,17 @@
 	
 	
 	<update id="updateAttendanceEnd">
-		UPDATE attendance SET attendance_end = TO_DATE(#{attendance_end},'yyyy/mm/dd hh24:mi:ss')
+		UPDATE attendance SET attendance_end = TO_DATE(#{attendanceEnd},'yyyy/mm/dd hh24:mi:ss')
 		WHERE employee_id = 1
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</update>
 	
 	
-	<select id="main" resultType="org.easyway.domain.attendance.AttendanceVO">
-		SELECT * FROM attendance
-		WHERE EMPLOYEE_ID = 1
+	<select id="getList" resultMap="attendanceVOResultMap">
+		SELECT *
+		FROM attendance
+		WHERE employee_id = 1
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</select>

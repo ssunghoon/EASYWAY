@@ -2,6 +2,7 @@ package org.easyway.service.notice;
 
 import java.util.List;
 
+import org.easyway.domain.notice.NoticeCriteria;
 import org.easyway.domain.notice.NoticeVO;
 import org.easyway.mapper.NoticeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,12 @@ public class NoticeServicelmpl implements NoticeService {
 
 	}
 
-	@Override
-	public List<NoticeVO> getListAll() {
-		log.info("getList!!!!!!!!!!!!!!!!!!!!!All!!!!!!!!!!!");
-		return mapper.getListAll();
-	}
+	//페이징 처리 구현으로 기존 getlist 교체
+//	@Override
+//	public List<NoticeVO> getListAll() {
+//		log.info("getList!!!!!!!!!!!!!!!!!!!!!All!!!!!!!!!!!");
+//		return mapper.getListAll();
+//	}
 
 	@Override
 	public NoticeVO detail(int obId) {
@@ -43,6 +45,12 @@ public class NoticeServicelmpl implements NoticeService {
 	@Override
 	public boolean remove(int obId) {
 		return mapper.delete(obId);
+	}
+
+	@Override
+	public List<NoticeVO> getListAll(NoticeCriteria cri) {
+		log.info("페이징 처리합니다^^^^" + cri);
+		return mapper.getListPaging(cri);
 	}
 
 

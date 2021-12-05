@@ -5,7 +5,7 @@
 
 <!-- 보드를 그냥쓰면 오류가 뜨기 때문에 콘피그에 typeAlias -->
 <mapper namespace="org.easyway.mapper.ProjectMapper">
-	
+
 	<insert id="insertProject">
 		insert into project(
 			project_id, project_name, project_start, project_end, project_content
@@ -47,18 +47,31 @@
 		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE)
 	</insert>
 
-<!-- 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost"> -->
-<!-- 		SELECT -->
-<!-- 			pp_id AS projectPostId, -->
-<!-- 			pb_id AS projectBoardId, -->
-<!-- 			pm_id AS projectMemberId, -->
-<!-- 			pp_title AS projectPostTitle, -->
-<!-- 			pp_content projectPostContent, -->
-<!-- 			pp_file_path projectPostFilePath, -->
-<!-- 			pp_date projectPostDate -->
-<!-- 		FROM -->
-<!-- 			P_POST WHERE PB_ID = #{projectBoardId} -->
-<!-- 	</select> -->
+	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost">
+		SELECT
+			pp_id AS projectPostId,
+			pb_id AS projectBoardId,
+			pm_id AS projectMemberId,
+			pp_title AS projectPostTitle,
+			pp_content AS projectPostContent,
+			pp_file_path AS projectPostFilePath,
+			pp_date AS projectPostDate
+		FROM
+			P_POST WHERE PB_ID = #{projectBoardId}
+	</select>
+	
+	<select id="readProjectPost" resultType="org.easyway.domain.project.ProjectPost">
+		SELECT
+			pp_id AS projectPostId,
+			pb_id AS projectBoardId,
+			pm_id AS projectMemberId,
+			pp_title AS projectPostTitle,
+			pp_content AS projectPostContent,
+			pp_file_path AS projectPostFilePath,
+			pp_date AS projectPostDate
+		FROM
+			P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID = ${projectPostId}
+	</select>
 	
 </mapper>
 
