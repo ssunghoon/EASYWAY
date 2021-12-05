@@ -15,35 +15,36 @@
 <title>편하게 오피스 작업을! EasyWay!</title>
 
 <!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
-    <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-	<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-		rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-		crossorigin="anonymous">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap"
-		rel="stylesheet">
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	 
-	<!-- summernote -->
-	<script src="/resources/js/summernote.js"></script>
-	<script src="/resources/summernote/summernote-lite.js"></script>
-	<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-	
-    <!-- EASYWAY CSS, JS -->
-    <link href="/resources/css/reset.css" rel="stylesheet">
-    <link href="/resources/css/sidebars.css" rel="stylesheet">
-    <link href="/resources/css/common.css" rel="stylesheet">
-    <link href="/resources/css/applysignvacation.css" rel="stylesheet">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
-    <script src="/resources/js/menu.js"></script>
+<!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap"
+	rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+ 
+<!-- summernote -->
+<script src="/resources/js/summernote.js"></script>
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+
+   <!-- EASYWAY CSS, JS -->
+<link href="/resources/css/reset.css" rel="stylesheet">
+<link href="/resources/css/sidebars.css" rel="stylesheet">
+<link href="/resources/css/common.css" rel="stylesheet">
+<link href="/resources/css/sign/sign.css" rel="stylesheet">
+<link href="/resources/css/sign/applySignVacation.css" rel="stylesheet">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+<script src="/resources/js/menu.js"></script>
 
 </head>
 <body>
@@ -116,13 +117,13 @@
 			            <div class="form-option2-input">
 			            	<!-- 중요도 : 작성칸 -->
 							<div class="radio-wrapper">
-				            	<input type="radio" name="signVacationImportance" id="first" value="상">&nbsp;<label for="first">상</label>
+				            	<input type="radio" name="signImportance" id="first" value="상">&nbsp;<label for="first">상</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signVacationImportance" id="second" value="중">&nbsp;<label for="second">중</label>
+								<input type="radio" name="signImportance" id="second" value="중">&nbsp;<label for="second">중</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signVacationImportance" id="third" value="하">&nbsp;<label for="third">하</label>
+								<input type="radio" name="signImportance" id="third" value="하">&nbsp;<label for="third">하</label>
 				            </div>
 			            </div>
 			            <div class="form-option3">

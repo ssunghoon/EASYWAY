@@ -1,7 +1,17 @@
 package org.easyway.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
 import org.easyway.domain.sign.EmployeeVO;
@@ -14,6 +24,7 @@ import org.easyway.service.sign.SignServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer.RedirectionEndpointConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +33,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.gson.JsonObject;
 
 import lombok.extern.log4j.Log4j;
 
@@ -133,10 +147,9 @@ public class SignController {
 	@GetMapping("/draftlist")
 	public void draftList(Criteria cri, Model model){
 		log.info("draftList : " + cri);
-		log.info("arrList : " + cri.getArrList());
+
 		model.addAttribute("draftList", service.getListDraft(cri));
-		
-		int total = service.getTotal(cri);
+		int total = service.getTotalDraft(cri);
 		
 		log.info("total : " + total);
 		
@@ -145,12 +158,14 @@ public class SignController {
 	}
 		
 	
-	// 기안함상세, 결재함상세
-	@GetMapping(value = {"/getdraft", "/getpayment"})
-	public void getDraft(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, @RequestParam("signFromId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
+	// 기안함상세
+	@GetMapping("/getdraft")
+	public void getDraft(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, 
+						 @RequestParam("signFormId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
 		
-		log.info("getDraft,getpayment");
+		log.info("getDraft");
 		log.info("signFormId = " + signFormId);
+		log.info("signId : " + signId);
 		if(signFormId == 1){
 			model.addAttribute("basicSign", service.getDraftBasic(signId, signFormId));
 		}else if(signFormId == 2) {
@@ -159,6 +174,23 @@ public class SignController {
 			model.addAttribute("vacationSign", service.getDraftVacation(signId, signFormId));
 		}
 	}
+	
+	// 결재함상세
+		@GetMapping("/getpayment")
+		public void getPayment(@RequestParam("signId") Long signId, @RequestParam(value="signFormId", required=false) Long signFormId, 
+							 @RequestParam("signFormId") Long signFromId, @ModelAttribute("cri") Criteria cri, Model model){
+			
+			log.info("getpayment");
+			log.info("signFormId = " + signFormId);
+			log.info("signId : " + signId);
+			if(signFormId == 1){
+				model.addAttribute("basicSign", service.getPaymentBasic(signId, signFormId));
+			}else if(signFormId == 2) {
+				model.addAttribute("spendSign", service.getPaymentSpend(signId, signFormId));
+			}else if(signFormId == 3) {
+				model.addAttribute("vacationSign", service.getPaymentVacation(signId, signFormId));
+			}
+		}
 	
 	// 결재선 등록
 /*	@PostMapping("/applylinefirst")
@@ -179,12 +211,62 @@ public class SignController {
 	
 	// 결재함 목록
 	@GetMapping("/paymentlist")
-	public void getPayment(Model model){
+	public void getPayment(Criteria cri,Model model){
 		
-		log.info("paymentList");
-		model.addAttribute("paymentList", service.getListPayment());
+		log.info("paymentlist : " + cri);
+
+		model.addAttribute("paymentList", service.getListPayment(cri));
+		int total = service.getTotalPayment(cri);
+		
+		log.info("total : " + total);
+		
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 	}
 	
+	// 결재함 결재
+	@PostMapping("/payment")
+	public String modify(SignListVO list, SignVO sign, RedirectAttributes rttr){
+		log.info("modifyPayment: " + list);
+		if(service.modify(list) && service.modifySignCheck(sign)){
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/sign/paymentlist";
+	}
 	
-}
+	// summernote 파일 추가
+	@PostMapping(value = "/uploadSummernoteImageFile", produces = "application/json")
+	@ResponseBody
+
+	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+		
+		System.out.println("파일이 갔으면 좋겠다");
+		JsonObject jsonObject = new JsonObject();
+
+		String fileRoot = "C:\\upload\\"; // 저장될 파일 경로
+		String originalFileName = multipartFile.getOriginalFilename(); // 오리지날
+																		// 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일
+																							// 확장자
+
+		// 랜덤 UUID+확장자로 저장될 savedFileName
+		String savedFileName = UUID.randomUUID() + extension;
+
+		File targetFile = new File(fileRoot + savedFileName);
+
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
+			jsonObject.addProperty("url", "/upload/" + savedFileName);
+			jsonObject.addProperty("responseCode", "success");
+
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile); // 실패시 저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+
+		return jsonObject;
+	}
+
+	}

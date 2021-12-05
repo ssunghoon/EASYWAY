@@ -26,7 +26,7 @@ public interface SignMapper {
 	// 기안함 목록
 	public List<SignVO> getListDraft();
 	
-	// 페이징 
+	// 기안함 페이징 
 	public List<SignVO> getListWithPaging(Criteria cri);
 	
 	// 기안함 상세(기본기안서)
@@ -36,8 +36,16 @@ public interface SignMapper {
 	// 기안함 상세(휴가신청서)
 	public VacationSignVO getDraftVacation(Long signId);
 	
-
-	public int getTotalCount(Criteria cri);
+	// 결재함 상세(기본기안서)
+	public BasicSignVO getPaymentBasic(Long signId);
+	// 결재함 상세(지출결의서)
+	public SpendSignVO getPaymentSpend(Long signId);
+	// 결재함 상세(휴가신청서)
+	public VacationSignVO getPaymentVacation(Long signId);
+		
+	
+	// 기안 갯수
+	public int getTotalCountDraft(Criteria cri);
 	
 	// 직원 목록
 	public List<EmployeeVO> getListEmployee();
@@ -50,5 +58,15 @@ public interface SignMapper {
 	
 	// 결재함 목록
 	public List<SignListVO> getListPayment();
+
+	// 결재함 페이징 
+	public List<SignVO> getListPaymentWithPaging(Criteria cri);
+	// 결재 갯수
+	public int getTotalCountPayment(Criteria cri);
+	// 결재함 결재
+	public int payment(SignListVO list);
+	
+	// 결재완료여부 변경
+	public int updateSignCheck(SignVO sign);
 	
 }
