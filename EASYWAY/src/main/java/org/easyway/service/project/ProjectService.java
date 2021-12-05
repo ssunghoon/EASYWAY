@@ -22,4 +22,6 @@ public interface ProjectService {
 	
 	public List<ProjectPost> getListProjectPost(Long projectBoardId); // 프로젝트 게시물 목록
 	
+	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId); // 프로젝트 게시물 상세
+	
 }

@@ -53,6 +53,11 @@ public class ProjectServiceImpl implements ProjectService{
 		return mapper.getListProjectPost(projectBoardId);
 	}
 
+	@Override
+	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId) { // 프로젝트 게시물 상세
+		return mapper.readProjectPost(projectBoardId, projectPostId);
+	}
+
 	
 	
 

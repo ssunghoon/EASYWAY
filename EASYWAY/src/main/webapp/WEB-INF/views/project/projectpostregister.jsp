@@ -117,9 +117,9 @@ input.easy-btn {
 	            <!-- form -->
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="projectpostregister?projectBoardId=1" method="post">
+		            <form class="form-container" action="projectpostregister" method="post">
 		            	<input type="hidden" name="projectId" value="${projectId }">
-		            
+		            	<input type="hidden" name="projectBoardId" value="${projectBoardId }">
 			        	<div class="form-title">
 			                <!-- 제목 -->
 			                <div class="option-name">제목</div>
