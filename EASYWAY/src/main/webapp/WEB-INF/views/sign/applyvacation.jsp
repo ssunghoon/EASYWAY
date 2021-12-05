@@ -41,6 +41,7 @@
 <link href="/resources/css/reset.css" rel="stylesheet">
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 <link href="/resources/css/common.css" rel="stylesheet">
+<link href="/resources/css/sign/sign.css" rel="stylesheet">
 <link href="/resources/css/sign/applySignVacation.css" rel="stylesheet">
 <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 <script src="/resources/js/menu.js"></script>

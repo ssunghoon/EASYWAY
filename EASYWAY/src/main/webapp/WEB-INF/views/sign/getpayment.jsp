@@ -66,41 +66,47 @@
 							기본 기안서
 		                </div>
 	            	</div>
-					<table class="table table-bordered easyway-boarddetail-content">
-					<tr>
-						<th class="col-lg-3 sign-th">제목</th>
-						<td>${basicSign.signTitle }</td>
-					</tr>
-					<tr class="sign-content">
-						<th class="sign-th">내용</th>
-						<td><c:out value="${basicSign.signContent }" escapeXml="false" /></td>
-					</tr>
-					<tr>
-						<th class="sign-th">공개범위</th>
-						<c:choose>
-							<c:when test="${basicSign.signBasicRange == '1'}">
-								<td>전체공개</td>
-							</c:when>
-							<c:when test="${basicSign.signBasicRange == '2'}">
-								<td>부서공개</td>
-							</c:when>
-							<c:when test="${basicSign.signBasicRange == '3'}">
-								<td>비공개</td>
-							</c:when>
-						</c:choose>
-					</tr>
-					<tr>
-						<th class="sign-th">기간</th>
-						<td>
-							<fmt:formatDate value="${basicSign.signBasicStart}" pattern="yyyy-MM-dd"/>
-							<fmt:formatDate value="${basicSign.signBasicEnd}" pattern="yyyy-MM-dd"/> ~
-						</td>
-					</tr>
-					<tr>
-						<th class="sign-th">중요도</th>
-						<td>${basicSign.signImportance }</td>
-					</tr>
-					</table>
+	            	<form class="easyway-boarddetail-content" action="/sign/payment" method="post">
+						<table class="table table-bordered easyway-boarddetail-content">
+						<tr>
+							<th class="col-lg-3 sign-th">제목</th>
+							<td>${basicSign.signTitle }</td>
+						</tr>
+						<tr class="sign-content">
+							<th class="sign-th">내용</th>
+							<td><c:out value="${basicSign.signContent }" escapeXml="false" /></td>
+						</tr>
+						<tr>
+							<th class="sign-th">공개범위</th>
+							<c:choose>
+								<c:when test="${basicSign.signBasicRange == '1'}">
+									<td>전체공개</td>
+								</c:when>
+								<c:when test="${basicSign.signBasicRange == '2'}">
+									<td>부서공개</td>
+								</c:when>
+								<c:when test="${basicSign.signBasicRange == '3'}">
+									<td>비공개</td>
+								</c:when>
+							</c:choose>
+						</tr>
+						<tr>
+							<th class="sign-th">기간</th>
+							<td>
+								<fmt:formatDate value="${basicSign.signBasicStart}" pattern="yyyy-MM-dd"/>
+								<fmt:formatDate value="${basicSign.signBasicEnd}" pattern="yyyy-MM-dd"/> ~
+							</td>
+						</tr>
+						<tr>
+							<th class="sign-th">중요도</th>
+							<td>${basicSign.signImportance }</td>
+						</tr>
+						</table>
+					<input type="hidden"  value="${basicSign.signId }" name="signId">
+					<c:if test="${basicSign.signListCheck == 'N'}">
+					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
+					</c:if>
+					</form> 
 					</c:when>
 					<c:when test="${spendSign.signFormId == '2'}">
 					<div class="easyway-boarddetail-pagetitle">
@@ -109,34 +115,40 @@
 							지출 결의서
 		                </div>
 	            	</div>
-					<table class="table table-bordered easyway-boarddetail-content">
-					<tr>
-						<th class="col-lg-3 sign-th">제목</th>
-						<td>${spendSign.signTitle }</td>
-					</tr>
-					<tr class="sign-content">
-						<th class="sign-th">내용</th>
-						<td><c:out value="${spendSign.signContent }" escapeXml="false" /></td>
-					</tr>
-					<tr>
-						<th class="sign-th">공개범위</th>
-						<c:choose>
-							<c:when test="${spendSign.signSpendRange == '1'}">
-								<td>전체공개</td>
-							</c:when>
-							<c:when test="${spendSign.signSpendRange == '2'}">
-								<td>부서공개</td>
-							</c:when>
-							<c:when test="${spendSign.signSpendRange == '3'}">
-								<td>비공개</td>
-							</c:when>
-						</c:choose>
-					</tr>
-					<tr>
-						<th class="sign-th">중요도</th>
-						<td>${spendSign.signImportance }</td>
-					</tr>
-					</table>
+	            	 <form class="easyway-boarddetail-content" action="/sign/payment" method="post">
+						<table class="table table-bordered easyway-boarddetail-content">
+						<tr>
+							<th class="col-lg-3 sign-th">제목</th>
+							<td>${spendSign.signTitle }</td>
+						</tr>
+						<tr class="sign-content">
+							<th class="sign-th">내용</th>
+							<td><c:out value="${spendSign.signContent }" escapeXml="false" /></td>
+						</tr>
+						<tr>
+							<th class="sign-th">공개범위</th>
+							<c:choose>
+								<c:when test="${spendSign.signSpendRange == '1'}">
+									<td>전체공개</td>
+								</c:when>
+								<c:when test="${spendSign.signSpendRange == '2'}">
+									<td>부서공개</td>
+								</c:when>
+								<c:when test="${spendSign.signSpendRange == '3'}">
+									<td>비공개</td>
+								</c:when>
+							</c:choose>
+						</tr>
+						<tr>
+							<th class="sign-th">중요도</th>
+							<td>${spendSign.signImportance }</td>
+						</tr>
+						</table>
+					<input type="hidden"  value="${spendSign.signId }" name="signId">
+					<c:if test="${spendSign.signListCheck == 'N'}">
+					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
+					</c:if> 
+					</form>  
 					</c:when>
 					<c:when test="${vacationSign.signFormId == '3'}">
 					<div class="easyway-boarddetail-pagetitle">
@@ -146,35 +158,35 @@
 		                </div>
 		            </div>
 		            <form class="easyway-boarddetail-content" action="/sign/payment" method="post">
-					<table class="table table-bordered">		
-						<tr>
-							<th class="col-lg-3 sign-th">제목</th>
-							<td>${vacationSign.signTitle }</td>
+						<table class="table table-bordered">		
+							<tr>
+								<th class="col-lg-3 sign-th">제목</th>
+								<td>${vacationSign.signTitle }</td>
+							</tr>
+							<tr class="sign-content">
+								<th class="sign-th">내용</th>
+								<td><c:out value="${vacationSign.signContent }" escapeXml="false" /></td>
+							</tr>
+							<tr>
+								<th class="sign-th">종류</th>
+								<td>${vacationSign.signVacationType}</td>
+							</tr>
+							<tr>
+							<th class="sign-th">기간</th>
+							<td>
+								${vacationSign.signVacationStart} ~ ${vacationSign.signVacationEnd}
+								<%-- <fmt:formatDate value="${vacationSign.signVacationStart}" pattern="yyyy-MM-dd"/> --%>
+								<%-- <fmt:formatDate value="${vacationSign.signVacationEnd}" pattern="yyyy-MM-dd"/> --%>
+							</td>
 						</tr>
-						<tr class="sign-content">
-							<th class="sign-th">내용</th>
-							<td><c:out value="${vacationSign.signContent }" escapeXml="false" /></td>
-						</tr>
 						<tr>
-							<th class="sign-th">공개범위</th>
-							<td>${vacationSign.signVacationType}</td>
+							<th class="sign-th">중요도</th>
+							<td>${vacationSign.signImportance }</td>
 						</tr>
-						<tr>
-						<th class="sign-th">기간</th>
-						<td>
-							${vacationSign.signVacationStart} ~ ${vacationSign.signVacationEnd}
-							<%-- <fmt:formatDate value="${vacationSign.signVacationStart}" pattern="yyyy-MM-dd"/> --%>
-							<%-- <fmt:formatDate value="${vacationSign.signVacationEnd}" pattern="yyyy-MM-dd"/> --%>
-						</td>
-					</tr>
-					<tr>
-						<th class="sign-th">중요도</th>
-						<td>${vacationSign.signImportance }</td>
-					</tr>
-					</table>
+						</table>
 					<input type="hidden"  value="${vacationSign.signId }" name="signId">
 					<c:if test="${vacationSign.signListCheck == 'N'}">
-					 	<button type="submit" data-oper='payment' class="easyway-btn form-submit">결재확인</button>
+					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
 					</c:if>  
 					</form> 
 					</c:when>
@@ -183,6 +195,11 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function signOk() {
+			alert('결제되었습니다');
+		}
+	</script>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

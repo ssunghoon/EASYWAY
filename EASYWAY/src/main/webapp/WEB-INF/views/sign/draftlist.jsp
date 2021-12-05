@@ -207,11 +207,6 @@
 	$("#searchForm button").on(
 			"click",
 			function(e) {
-			if (!searchForm.find("option:selected")
-					.val()) {
-				alert("기안종류를 선택하세요");
-				return false;
-			}
 				searchForm.find("nput[name='pageNum']")
 					.val("1");
 				e.preventDefault();

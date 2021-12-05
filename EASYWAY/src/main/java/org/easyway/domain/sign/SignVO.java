@@ -19,6 +19,7 @@ public class SignVO implements Serializable{
 	private File signFilePath; // SIGN_FILE
 	private long rownum;
 	private String signTitle; // SIGN_TITLE
+
 	private String signContent; // SIGN_CONTENT
 	private String signCheck; // SIGN_CHECK
 	private String signImportance; // SIGN_IMPORTANCE

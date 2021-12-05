@@ -22,6 +22,7 @@ public class BasicSignVO implements Serializable{
 	private String signTitle; // SIGN_TITLE
 	private String signContent; // SIGN_CONTENT
 	private String signImportance; // SIGN_IMPORTANCE
+	private String signListCheck; // SL_CHECK
 	
 	
 }

@@ -67,7 +67,7 @@ public class SignServiceImpl implements SignService {
 		
 		return mapper.getListDraft();
 	}*/
-	
+	// 기안함 목록 + 페이징
 	@Override
 	public List<SignVO> getListDraft(Criteria cri){
 		log.info("getList with Criteria" + cri);
@@ -148,18 +148,24 @@ public class SignServiceImpl implements SignService {
 		
 	}
 	// 결재함 목록
-	@Override
+	/*@Override
 	public List<SignListVO> getListPayment() {
 		log.info("getDraftList..............");
 		
 		return mapper.getListPayment();
+	}*/
+	// 결재함 목록 + 페이징
+	@Override
+	public List<SignVO> getListPayment(Criteria cri){
+		log.info("getList with Criteria" + cri);
+		return mapper.getListPaymentWithPaging(cri);
 	}
-	
+		
 	// 결재함 결재
 	@Override
 	public boolean modify(SignListVO list) {
 		log.info("paymentModify........" + list);
-		
+		System.out.println("결재 signId : " + list.getSignId());
 		return mapper.payment(list) == 1;
 	}
 	
@@ -167,5 +173,12 @@ public class SignServiceImpl implements SignService {
 	public int getTotalPayment(Criteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCountPayment(cri);
+	}
+	
+	// 결재함 결재
+	@Override
+	public boolean modifySignCheck(SignVO sign) {
+		log.info("modifySignCheck........" + sign);
+		return mapper.updateSignCheck(sign) == 1;
 	}
 }

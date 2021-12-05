@@ -93,7 +93,6 @@
 						</tr>
 						<c:forEach var="payment" items="${paymentList }">
 							<tr>
-							<!-- No. 들어갈 자리 -->
 							<td>${payment.rownum }</td>
 								<c:set var="sf" value="1" />
 								<c:choose>
@@ -108,6 +107,9 @@
 									</c:when>
 								</c:choose>
 							<td>
+							<c:if test="${payment.signImportance == '상' }">
+								<i class="fas fa-hand-rock" style="color: red"></i>&nbsp;
+							</c:if>
 							<a class='move'
 									href='/sign/getpayment?signId=<c:out value="${payment.signId}&signFormId=${payment.signFormId }&signListId=${payment.signListId}"/>'>
 								<c:out value="${payment.signTitle }" />
@@ -178,6 +180,37 @@
           </div>
         </div>
      </div>
-        
+      <script type="text/javascript">
+      $(document)
+		.ready(
+				function() {
+		   // 페이징					
+		  	$(".page a").on(
+		  			"click",
+		  			function(e) {
+		  	
+		  				e.preventDefault();
+		  	
+		  				console.log('click');
+		  	
+		  				$("#actionForm").find("input[name='pageNum']")
+		  						.val($(this).attr("href"));
+		  				$("#actionForm").submit();
+		  		});
+		  	// 검색
+		  	var key = $("#keyword1 option:selected").val();
+		  	var searchForm = $("#searchForm");
+		  	$("#searchForm button").on(
+		  			"click",
+		  			function(e) {
+		  				searchForm.find("nput[name='pageNum']")
+		  					.val("1");
+		  				e.preventDefault();
+		  				
+		  				searchForm.submit();
+		  			});
+		  		});
+		  	
+      </script>  
 </body>
 </html>

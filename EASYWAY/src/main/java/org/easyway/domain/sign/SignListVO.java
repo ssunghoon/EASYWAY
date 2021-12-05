@@ -25,6 +25,7 @@ public class SignListVO implements Serializable{
 	private String signContent; // SIGN_CONTENT
 	private Date signDate; // SIGN_DATE
 	private String signFormId; // SF_ID
+	private String signImportance; // SIGN_IMPORTANCE
 	
 
 }

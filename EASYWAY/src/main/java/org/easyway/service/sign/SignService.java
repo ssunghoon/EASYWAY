@@ -49,11 +49,17 @@ public interface SignService {
 //	public void applyLineFourth(SignListVO list, SignVO sign);
 	
 	// 결재함 목록
-	public List<SignListVO> getListPayment();
+	//public List<SignListVO> getListPayment();
+	// 결재함 페이징
+	public List<SignVO> getListPayment(Criteria cri);
 	
 	// 결재함 결재
 	public boolean modify(SignListVO list);
 	
 	// 결재 갯수
 	public int getTotalPayment(Criteria cri);
+	
+	// 결재완료여부 변경
+	public boolean modifySignCheck(SignVO sign);
+
 }

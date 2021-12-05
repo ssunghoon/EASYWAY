@@ -42,9 +42,10 @@
     <link href="/resources/css/sidebars.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
     <link href="/resources/css/sign/applySignBasic.css" rel="stylesheet">
-    <link href="/resources/css/sign.css" rel="stylesheet">
+    <link href="/resources/css/sign/sign.css" rel="stylesheet">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
     <script src="/resources/js/menu.js"></script>
+    <script src="/resources/js/sign/sign.js"></script>
 
 </head>
 <body>
@@ -167,132 +168,141 @@
 			    	</form>
 			    </div> <!-- end easyway-boardapply-form -->
 	            
-			<!-- 결재선 모달 -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">×</button>
-							<h4 class="modal-title" id="myModalLabel">결재선</h4>
-						</div>
-						<div class="modal-body">
-							<div class="col-lg-6 sign-list-box">
-								<h5>결재선 설정</h5>
-								<c:forEach var="employee" items="${employeeList }">
-									<input type="radio" value="${employee.employeeId }" name="employeeId" id="${employee.employeeId }">
-									<label for="${employee.employeeId }">
-										<c:out value="${employee.employeeName}" />
-									</label><br>
-									<input type="hidden" value="${employee.employeeName }" id="employeeId">
-								</c:forEach>
+				<!-- 결재선 모달 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								<h4 class="modal-title" id="myModalLabel">결재선</h4>
 							</div>
-							<div class="col-lg-1">
-								<div class="in-out-box">
-									<a id="firstIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
-									<a><i class="fas fa-caret-square-left fa-2x"></i></a>
+							<div class="modal-body">
+								<div class="col-lg-6 sign-list-box">
+									<h5>결재선 설정</h5>
+									<c:forEach var="employee" items="${employeeList }">
+										<input type="radio" value="${employee.employeeId }" name="employeeId" id="${employee.employeeId }">
+										<label for="${employee.employeeId }">
+											<c:out value="${employee.employeeName}" />
+										</label><br>
+										<input type="hidden" value="${employee.employeeName }" id="employeeId">
+									</c:forEach>
 								</div>
-								<div class="in-out-box">
-									<a id="secondIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
-									<a><i class="fas fa-caret-square-left fa-2x"></i></a>
+								<div class="col-lg-1">
+									<div class="in-out-box">
+										<a id="firstIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="firstOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="secondIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="secondOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="thirdIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="thirdOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="fourthIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="fourthOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
 								</div>
-								<div class="in-out-box">
-									<a id="thirdIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
-									<a><i class="fas fa-caret-square-left fa-2x"></i></a>
-								</div>
-								<div class="in-out-box">
-									<a id=""><i class="fas fa-caret-square-right fa-2x"></i></a>
-									<a><i class="fas fa-caret-square-left fa-2x"></i></a>
+								<div class="col-lg-5">
+									<div class="sign-box" >
+										<p id="firstResult" align="center"></p>
+									</div>
+									<div class="sign-box">
+										<p id="secondResult" align="center"></p>
+									</div>
+									<div class="sign-box">
+										<p id="thirdResult" align="center"></p>
+									</div>
+									<div class="sign-box">
+										<p id="fourthResult" align="center"></p>
+									</div>
 								</div>
 							</div>
-							<div class="col-lg-5">
-								<div class="sign-box" >
-									<p id="firstResult" align="center"></p>
-								</div>
-								<div class="sign-box">
-									<p id="secondResult" align="center"></p>
-								</div>
-								<div class="sign-box">
-									<p id="thirdResult" align="center"></p>
-								</div>
-								<div class="sign-box">
-									<p id="fourthResult" align="center"></p>
-								</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-gray"
+									data-dismiss="modal">닫기</button>
+								<button type="button" class="btn btn-primary">저장</button>
 							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-gray"
-								data-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">저장</button>
-						</div>
+						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal-content -->
+					<!-- /.modal-dialog -->
 				</div>
-				<!-- /.modal-dialog -->
+				<!-- /.modal -->
 			</div>
-			<!-- /.modal -->
 		</div>
 	</div>
-</div>	
-			
-</body>
 
-<script type="text/javascript">
-
-	var employeeData = null;
+	<script type="text/javascript">
 	$("#signLine").on("click", function() {
 		$("#myModal").modal("show");
 	});
 	
+	var employeeData = null;
 	// 첫번째 결재선 등록
-	/* $('#firstIn').on("click",function() {
+ 	$('#firstIn').on("click",function() {
 		// firstResult 자리
 		const firstResult = document.getElementById('firstResult').value;
 		// 선택된 값
 		var firstVal = $('input[name="employeeId"]:checked').val();
-		//var firstVal = $('input[type="hidden"]').val();
 		alert("firstVal : " + firstVal);
 		// firstResult자리에 선택된 값을 넣음
 		document.getElementById("firstResult").innerHTML = firstVal;
-	}); */
+	});
+	// 첫번째 결재선 해제
+ 		$('#firstOut').on("click", function() {
+			// firstResult 자리
+			document.getElementById("firstResult").innerHTML = "";
+		});
 
-/*
-	$('#secondIn').click(function() {
-		val secondVal = $('input[name="employeeId"]:checked').val();
-		alert("secondVal" + secondVal);
-	});
+		$('#secondIn').on("click", function() {
+			const
+			secondResult = document.getElementById('secondResult').value;
+			var secondVal = $('input[name="employeeId"]:checked').val();
+			alert("secondVal : " + secondVal);
+			document.getElementById("secondResult").innerHTML = secondVal;
+		});
 
-	$('#thirdIn').click(function() {
-		val thirdVal = $('input[name="employeeId"]:checked').val();
-		alert("thirdVal" + thirdVal);
-	});
-	$('#fourthIn').click(function() {
-		val fourthVal = $('input[name="employeeId"]:checked').val();
-		alert("fourthVal" +fourthVal);
-	});
-	 */
-	 
-	// 첫번째 결재선 등록
-	$('#firstIn').click(function() {
-		var radioVal = $('input[name="employeeId"]:checked').val();
-		alert(radioVal);
-		$.ajax({
-	        url:"/sign/applylinefirst",
-	        type:"post",
-	        data: radioVal,
-	        dataType: "text",
-	        success:function(data){
-	        	//employeeData = data;//{id, name ....}
-	        	alert(radioVal);
-	        },
-	        error: function (error){
-	            alert("에러");
-	        }
-	    });
-	}); 
-	
-	
-	
-</script>
+		$('#secondOut').on("click", function() {
+			document.getElementById("secondResult").innerHTML = "";
+		});
+
+		$('#thirdIn').on("click", function() {
+			const
+			thirdResult = document.getElementById('thirdResult').value;
+			var thirdVal = $('input[name="employeeId"]:checked').val();
+			alert("thirdVal : " + thirdVal);
+			document.getElementById("thirdResult").innerHTML = thirdVal;
+		});
+
+		$('#thridOut').on("click", function() {
+			document.getElementById("thridResult").innerHTML = "";
+		});
+
+		$('#fourthIn').on("click", function() {
+			const
+			fourthResult = document.getElementById('fourthResult').value;
+			var fourthVal = $('input[name="employeeId"]:checked').val();
+			alert("fourthVal : " + fourthVal);
+			document.getElementById("fourthResult").innerHTML = fourthVal;
+		});
+
+		$('#fourthOut').on("click", function() {
+			document.getElementById("fourthResult").innerHTML = "";
+			alert(document.getElementById("firstResult").innerHTML);
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+</body>
  
 </html>
