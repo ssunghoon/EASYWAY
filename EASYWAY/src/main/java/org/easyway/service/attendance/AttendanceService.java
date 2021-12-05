@@ -4,8 +4,8 @@ import org.easyway.domain.attendance.AttendanceVO;
 
 public interface AttendanceService {
 
-	public void add();
-	public void updateAttendanceOut();
-	public void updateAttendanceEnd();
-	public AttendanceVO main();
+	public AttendanceVO getList();  // 메인에 출근, 퇴근, 외근 시간 출력
+	public void registerAttendanceStart();  // 출근 시간 등록
+	public void registerAttendanceOut(); // 외근 시간 등록
+	public void registerAttendanceEnd(); // 퇴근 시간 등록
 }
