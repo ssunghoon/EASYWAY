@@ -67,7 +67,7 @@ public class SignServiceImpl implements SignService {
 		
 		return mapper.getListDraft();
 	}*/
-	
+	// 기안함 목록 + 페이징
 	@Override
 	public List<SignVO> getListDraft(Criteria cri){
 		log.info("getList with Criteria" + cri);
@@ -96,13 +96,37 @@ public class SignServiceImpl implements SignService {
 									
 		log.info("getDraftBasic............... signId = " + signId + "signFormId = " + signFormId );
 		return mapper.getDraftVacation(signId);
+	}
+		
+	// 결재함 상세(기본기안서)
+	@Override
+	public BasicSignVO getPaymentBasic(Long signId, Long signFormId){
+									
+		log.info("getPaymentBasic............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentBasic(signId);
+
+	}
+	// 결재함 상세(지출결의서)
+	@Override
+	public SpendSignVO getPaymentSpend(Long signId, Long signFormId){
+									
+		log.info("getPaymentSpend............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentSpend(signId);
+
+	}
+	// 결재함 상세(휴가신청서)
+	@Override
+	public VacationSignVO getPaymentVacation(Long signId, Long signFormId){
+									
+		log.info("getPaymentVacation............... signId = " + signId + "signFormId = " + signFormId );
+		return mapper.getPaymentVacation(signId);
 
 	}
 	
 	// 기안 갯수
-	public int getTotal(Criteria cri) {
+	public int getTotalDraft(Criteria cri) {
 		log.info("get total count");
-		return mapper.getTotalCount(cri);
+		return mapper.getTotalCountDraft(cri);
 	}
 	
 	// 직원 목록
@@ -124,10 +148,37 @@ public class SignServiceImpl implements SignService {
 		
 	}
 	// 결재함 목록
-	@Override
+	/*@Override
 	public List<SignListVO> getListPayment() {
 		log.info("getDraftList..............");
 		
 		return mapper.getListPayment();
+	}*/
+	// 결재함 목록 + 페이징
+	@Override
+	public List<SignVO> getListPayment(Criteria cri){
+		log.info("getList with Criteria" + cri);
+		return mapper.getListPaymentWithPaging(cri);
+	}
+		
+	// 결재함 결재
+	@Override
+	public boolean modify(SignListVO list) {
+		log.info("paymentModify........" + list);
+		System.out.println("결재 signId : " + list.getSignId());
+		return mapper.payment(list) == 1;
+	}
+	
+	// 기안 갯수
+	public int getTotalPayment(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCountPayment(cri);
+	}
+	
+	// 결재함 결재
+	@Override
+	public boolean modifySignCheck(SignVO sign) {
+		log.info("modifySignCheck........" + sign);
+		return mapper.updateSignCheck(sign) == 1;
 	}
 }

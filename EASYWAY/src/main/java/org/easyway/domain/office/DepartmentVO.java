@@ -1,4 +1,4 @@
-package org.easyway.domain.department;
+package org.easyway.domain.office;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

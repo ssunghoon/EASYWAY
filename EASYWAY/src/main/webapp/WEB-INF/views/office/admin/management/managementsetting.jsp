@@ -27,7 +27,7 @@
 	<link href="/resources/css/reset.css" rel="stylesheet">
 	<link href="/resources/css/sidebars.css" rel="stylesheet">
 	<link href="/resources/css/common.css" rel="stylesheet">
-	<link href="/resources/css/employee_management.css" rel="stylesheet">
+	<link href="/resources/css/office/employee_management.css" rel="stylesheet">
 	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 	<script src="/resources/js/menu.js"></script>
 
@@ -36,7 +36,7 @@
 <body>
 
 	<!-- sidebar ------------------------------------------------------------------------------->
-	<jsp:include page="../../public/sidebar.jsp" />
+	<jsp:include page="../../../public/sidebar.jsp" />
 
 	<div class="page-divider">
 		<div class="sidebar-background"></div>

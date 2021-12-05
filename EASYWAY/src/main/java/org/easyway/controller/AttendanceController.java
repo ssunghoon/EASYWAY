@@ -1,5 +1,6 @@
 package org.easyway.controller;
 
+import org.easyway.domain.attendance.AttendanceVO;
 import org.easyway.service.attendance.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,42 +18,47 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService service;
 	
-	@GetMapping("/main")
-	public void main(Model model){
+	@GetMapping("/attendancemain")
+	public void getList(Model model){
 		  
-		log.info("controller/main--------------------------------");
+		log.info("controller/attendancemain--------------------------------");
 		
-		model.addAttribute("attendance", service.main());
+		AttendanceVO attendance = service.getList();
+		
+		System.out.println(attendance);
+		
+		model.addAttribute("attendance", attendance);
+		
 	}
 	
-	@GetMapping("/add")
-	public String add(){
+	@GetMapping("/registerAttendanceStart")
+	public String registerAttendanceStart(){
 		
 		log.info("attendance : 출근 시간 체크!!!");
 		
-		service.add();
+		service.registerAttendanceStart();
 		
-		return "redirect:/attendance/main";
+		return "redirect:/attendance/attendancemain";
 	}
 	
-	@GetMapping("/updateAttendanceOut")
-	public String updateAttendanceOut(){
+	@GetMapping("/registerAttendanceOut")
+	public String registerAttendanceOut(){
 		
 		log.info("attendance : 외근 시간 체크!!!");
 		
-		service.updateAttendanceOut();
+		service.registerAttendanceOut();
 		
-		return "redirect:/attendance/main";
+		return "redirect:/attendance/attendancemain";
 	}
 	
-	@GetMapping("/updateAttendanceEnd")
-	public String updateAttendanceEnd(){
+	@GetMapping("/registerAttendanceEnd")
+	public String registerAttendanceEnd(){
 		
 		log.info("attendance : 퇴근 시간 체크!!!");
 		
-		service.updateAttendanceEnd();
+		service.registerAttendanceEnd();
 		
-		return "redirect:/attendance/main";
+		return "redirect:/attendance/attendancemain";
 	}
 	
 //	이거 테스트다 지워라!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

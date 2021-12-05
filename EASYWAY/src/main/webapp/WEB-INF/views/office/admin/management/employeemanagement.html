@@ -13,6 +13,7 @@
     <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -55,7 +56,7 @@
                 <div class="setting-title">
                     <div class="easyway-title1">사원 등록</div>
                 </div>
-                <button class="employee-add-btn">추가하기</button>
+                <button type="button" class="employee-add-btn" data-bs-toggle="modal" data-bs-target="#employee-resite-model">추가하기</button>
 
 
                 <div class="employee-table">
@@ -98,15 +99,46 @@
                     저장
                 </button>
             </div>
+    </div>
+    <div class="modal fade" id="employee-resite-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">새로운 사원 추가</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/office/create" method="post">
+                                <div class="input-group">
+                                    <input type="search" class="form-control rounded" placeholder="초대할 맴버 이메일을 작성해주세요" aria-label="Search"
+                                        aria-describedby="search-addon" />
+                                    <button type="button" class="btn easyway-btn">search</button>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">검색 결과:</label>
+                                    <div class="search-member-info">
+                                        <p>임동혁</p>
+                                        <p>as0387@naver.com</p>
+                                        <input type="radio" value="1">
+                                    </div>                     
+                                    <div class="search-member-info">
+                                        <p>임동혁</p>
+                                        <p>as0387@naver.com</p>
+                                        <input type="radio" value="1">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <input type="submit" class="btn easyway-btn" value="추가하기">
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
         </div>
-    </div>
 
 </body>
-
-
-</html>
-
-</body>
-
 </html>
