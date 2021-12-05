@@ -108,9 +108,19 @@
 						readonly="readonly"><c:out
 							value="${of_board.obContent}" /></textarea>
 
+	
+					<form id='operForm' action="/notice/noticedetail" method="get">
+						<input type="hidden" id='obId' name="obId" value='<c:out value="${of_board.obId}"/>'> 
+							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> 
+<!-- 							<input type='hidden' name='amount'  -->
+<%-- 							value='<c:out value="${cri.amount}"/>'> <input --%>
+<!-- 							type='hidden' name='keyword' -->
+<%-- 							value='<c:out value="${cri.keyword}"/>'> <input --%>
+<%-- 							type='hidden' name='type' value='<c:out value="${cri.type}"/>'> --%>
 
-				
-	            </div>
+					</form>
+
+				</div>
 	        </div>
 	
 	    </div>

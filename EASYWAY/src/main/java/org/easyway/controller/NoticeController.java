@@ -61,7 +61,7 @@ public class NoticeController {
 	}
 
 	@GetMapping({ "/noticedetail", "/noticemodify" })
-	public void noticedetail(@RequestParam("obId") int obId, Model model) {
+	public void noticedetail(@RequestParam("obId") int obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
 		log.info("/noticedetail or noticemodify");
 		model.addAttribute("of_board", service.detail(obId));
 		log.info("조회폼 잘 떴나요");

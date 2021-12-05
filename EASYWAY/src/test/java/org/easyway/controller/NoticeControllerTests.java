@@ -28,15 +28,15 @@ import lombok.extern.log4j.Log4j;
 public class NoticeControllerTests {
 
 	 @Setter(onMethod_ = {@Autowired} )
-//	private NoticeMapper mapper;
+	private NoticeMapper mapper;
 	// private NoticeService service;
-	 private WebApplicationContext ctx;
-	 private MockMvc mockMvc;
-
-	 @Before
-	 public void setup(){
-	 this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-	 }
+//	 private WebApplicationContext ctx;
+//	 private MockMvc mockMvc;
+//
+//	 @Before
+//	 public void setup(){
+//	 this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+//	 }
 
 	// 페이징처리1차 테스트
 //	@Test
@@ -56,4 +56,14 @@ public class NoticeControllerTests {
 //				.param("amount", "50"))
 //				.andReturn().getModelAndView().getModelMap());
 //	 }
+	 
+	 @Test
+	 public void testsearch(){
+		 NoticeCriteria cri = new NoticeCriteria();
+		 cri.setKeyword("공지");
+		 cri.setType("N");
+		 
+		 List<NoticeVO> list = mapper.getListPaging(cri);
+		 list.forEach(notice -> log.info(notice));
+	 }
 }

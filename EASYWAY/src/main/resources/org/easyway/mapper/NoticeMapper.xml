@@ -4,6 +4,24 @@
 
 <mapper namespace="org.easyway.mapper.NoticeMapper">
 
+<!-- sql문을 저장했다 필요할때 불러올수있다(include) -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							OB_TITLE like '%'||#{keyword}||'%' </when>
+						<when test="type == 'C'.toString()">
+							OB_CONTENT like '%'||#{keyword}||'%' </when>
+						<when test="type == 'N'.toString()">
+							DEPARTMENT_ID like '%'||#{keyword}||'%' </when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<insert id="insert">
 		INSERT INTO
 		OF_BOARD
@@ -93,7 +111,13 @@
 		SELECT /*+INDEX_DESC(OF_BOARD PK_OF_BOARD) */
 					ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
 				FROM OF_BOARD
-				WHERE ROWNUM  < = #{pageNum} * #{amount}
+				WHERE 
+		]]>
+						
+			<include refid="criteria"></include>
+				
+		<![CDATA[
+				ROWNUM  < = #{pageNum} * #{amount}
 				)
 				WHERE RN > (#{pageNum} -1) * #{amount}
 				ORDER BY obFixedCheck DESC, obId DESC
