@@ -15,11 +15,15 @@
 		margin:50px;
 		margin-left: 70px;
 	}
+	.btnGray:hover {
+		color:#0397ed;
+		border: 1px solid #0397ed;
+	}
 	.btnGray {
-		padding:110px;
+		padding:70px;
 		margin:15px;
 		border: 1px solid #D5D5D5;
-		border-radius: 30px;
+		border-radius: 20px;
 		font-size: 20px;
 	}
 	.sign {
@@ -32,7 +36,7 @@
 		height: 400px;
 	}
 	.modal-content {
-		margin-top:100px;
+		margin-top:65px;
 		width: 800px;
 		height: 600px;
 		margin-left:-150px;
@@ -63,3 +67,26 @@
 		padding:10px;
 		border-radius: 10px;
 	}
+	#firstResult, #secondResult, #thirdResult, #fourthResult {
+		font-size: large;
+		padding-top: 29px;
+	}
+	.btn-group {
+		margin: 0;
+		margin-bottom: 50px;
+	}
+	.white-box-group {
+		/*padding:10px;*/
+		width:80%;
+		
+	}
+	.btn-sign {
+		font-weight: bold;
+		background-color:#0397ed;
+		color: white;
+	}
+	.sign-th {
+		background-color: #dee2e6;
+	}
+	
+	

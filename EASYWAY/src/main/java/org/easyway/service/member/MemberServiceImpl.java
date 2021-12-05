@@ -33,14 +33,17 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Long checkEmail(String tempEmail) {
-		
 		return mapper.readEmail(tempEmail);
 	}
 
 	@Override
 	public MemberDTO get(String enteredEmail) {
 		
-		MemberVO findMember = mapper.read(enteredEmail);
+		MemberVO findMember = mapper.get(enteredEmail);
+		
+		if(findMember == null){
+			return null;
+		}
 		
 		MemberDTO memberDTO = MemberDTO.builder()
 								.memberEmail(findMember.getMemberEmail())

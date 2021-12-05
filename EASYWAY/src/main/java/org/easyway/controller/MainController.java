@@ -1,5 +1,14 @@
 package org.easyway.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.office.OfficeVO;
+import org.easyway.security.domain.CustomUser;
+import org.easyway.service.employee.EmployeeService;
+import org.easyway.service.office.OfficeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,24 +39,41 @@ import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Log4j
+@RequestMapping("/office")
 public class MainController {
 	
 	@Autowired
 	private WidgetService service;
 
-	// 위젯 메인 불러오기
-	@GetMapping("/office/main")
-	public void main(Model model){
+	@Autowired
+	private OfficeService officeService;
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
+	
+	@GetMapping("/main/{officeId}")
+	public String main(@PathVariable Long officeId, Authentication auth , HttpSession session){
 		
-		log.info("메인에 오신 것을 환영합니다 여러분!!!!!!--------------------------------");
+		//오피스 정보 모델이 전달
+		log.info("오피스 정보 불러오기");
+		OfficeVO nowOfficeInfo = officeService.getOffice(officeId);
+		session.setAttribute("nowOfficeInfo", nowOfficeInfo);
 		
-		/*WidgetCustom widgetCustom = new WidgetCustom();
-		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
-		widgetCustom.setMemberId(818L);
-		widgetCustom.setOfficeId(616L);
+		//맴버id와 office id를 이용해 사원 정보 조회
+		log.info("사원 정보 불러오기");
+		CustomUser member = (CustomUser)auth.getPrincipal();
+		Long nowMemberId = member.getMember().getMemberId();
+		EmployeeVO nowEmployeeInfo = employeeService.getEmployee2(nowMemberId, officeId);
+		session.setAttribute("nowEmployeeInfo", nowEmployeeInfo);
 		
-		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
-		model.addAttribute("WidgetList", service.getListWidget(widgetCustom));*/
+		return "redirect:/office/main";
+	}
+	
+	@GetMapping("/main")
+	public void main(){
+		
+		log.info("이렇게 하는 거 맞아?");
 	}
 	
 	// 위젯 불러오기 요청

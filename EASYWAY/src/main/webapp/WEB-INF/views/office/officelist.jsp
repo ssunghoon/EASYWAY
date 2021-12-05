@@ -103,7 +103,7 @@ body {
 					<div class="card-body">
 						<h4 class="card-title">${officeCard.officeName}</h4>
 						<p class="card-text">${officeCard.officeName}입니다.</p>
-						<a href="/easyway/main/mainAction.do" class="btn">입장하기</a>
+						<a href="/office/main/${officeCard.officeId}" class="btn">입장하기</a>
 					</div>
 				</div>
 			</c:forEach>
@@ -150,7 +150,6 @@ body {
 							<button type="button" class="btn btn-secondary"
 								data-bs-dismiss="modal">닫기</button>
 							<input type="submit" class="btn" value="오피스 생성">
-							</button>
 						</div>
 					</form>
 				</div>

@@ -4,29 +4,25 @@ import java.util.List;
 
 import org.easyway.domain.project.ProjectBoard;
 import org.easyway.domain.project.ProjectPost;
+import org.apache.ibatis.annotations.Param;
 import org.easyway.domain.project.Project;
 
 public interface ProjectMapper {
 	
-	//프로젝트 생성
-	int insertProject(Project project);
+	public int insertProject(Project project); // 프로젝트 생성
 	
-	//프로젝트 수정
-	int updateProject(Project project);
+	public int updateProject(Project project); // 프로젝트 수정
 	
-	//프로젝트 목록
-	List<Project> getListProject();
+	public List<Project> getListProject(); // 프로젝트 목록
 	
-	//프로젝트 게시판 등록
-	int insertProjectBoard(ProjectBoard projectBoard);
+	public int insertProjectBoard(ProjectBoard projectBoard); // 프로젝트 게시판 등록
 	
-	//프로젝트 게시판 목록
-	List<ProjectBoard> getListProjectBoard(long projectId);
+	public List<ProjectBoard> getListProjectBoard(Long projectId); // 프로젝트 게시판 목록
 	
-	//프로젝트 게시물 등록
-	int insertProjectPost(ProjectPost projectPost);
+	public int insertProjectPost(ProjectPost projectPost); // 프로젝트 게시물 등록
 	
-	//프로젝트 게시물 목록
-	List<ProjectPost> getListProjectPost(long projectBoardId);
+	public List<ProjectPost> getListProjectPost(Long projectBoardId); // 프로젝트 게시물 목록
+	
+	public ProjectPost readProjectPost(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 프로젝트 게시물 상세 
 	
 }

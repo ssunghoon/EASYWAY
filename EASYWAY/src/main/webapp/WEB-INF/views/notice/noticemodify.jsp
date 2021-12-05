@@ -58,9 +58,9 @@
 					<thead>
 						<tr>
 							<th
-								style="background-color: #eeeeee; text-align: center; width: 100%; height: 50px;">현재
+								style="background-color: #eeeeee; text-align: center; width: 100%; height: 50px;">현재 수정하고 있는 게시물 번호는 
 								<c:out value="${of_board.obId }">
-								</c:out>번 게시글을 수정하고 있습니다
+								</c:out>번 입니다.
 							</th>
 						</tr>
 					</thead>
@@ -83,10 +83,10 @@
 								value='<c:out value="${of_board.obTitle }"/>'></td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글내용"
-									name='obContent' <c:out value="${of_board.obContent }"/>
-									style="height: 400px;">
-									</textarea></td>
+								<td>
+								<textarea class="form-control" rows="4" name='obContent' style="height: 400px;">
+								<c:out value="${of_board.obContent }"/></textarea>
+								</td>
 						</tr>
 						<tr>
 							<td><input type="text" class="form-control"
