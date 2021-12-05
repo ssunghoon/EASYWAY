@@ -343,7 +343,7 @@ function saveOffset(customNumber){
 	
 	// ajax를 통한 위치 및 너비, 높이 데이터 저장
 	$.ajax({
-		  url: '/saveOffset',
+		  url: '/office/saveOffset',
 		  data: formData,
 		  contentType: false,
 		  processData: false,
@@ -385,7 +385,7 @@ function importOffset(customNumber){
 	
 	// ajax를 통한 위치 및 너비, 높이 데이터 저장
 	$.ajax({
-		  url: '/importOffset',
+		  url: '/office/importOffset',
 		  data: jsonData,
 		  dataType: 'application/text; charset=UTF-8',
 		  type: 'GET',
