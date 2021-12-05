@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta name="description" content="">
-<meta name="author"
-	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="author"content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.84.0">
 <title>편하게 오피스 작업을! EasyWay!</title>
 
@@ -28,6 +27,11 @@
 		crossorigin="anonymous">
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+	
 	
     <!-- EASYWAY CSS, JS -->
     <link href="/resources/css/reset.css" rel="stylesheet">
@@ -40,34 +44,10 @@
 	<script src="/resources/js/calendarMain.js"></script>
 
 <script>
-//ajax 통신 예제 
-/* $.ajax({
-	url: '/schedule/schedulemain',
-	type: 'GET',
-	success: function(res){
-		var list = res;
-		console.log(list);
-		
-			var calendarEl = document.getElementById('calendar');
-		
-		var events = list.map(function(item) {
-			return {
-				title : item.reservationTitle,
-				start : item.reservationDate + "T" + item.reservationTime
-			}
-		});
-		
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			events : events,
-			eventTimeFormat: { // like '14:30:00'
-			    hour: '2-digit',
-			    minute: '2-digit',
-			    hour12: false
-			  }
-		});
-		calendar.render();
-	},
-}); */
+	//등록시 같이 전달되는 글번호처리 모달창처리위해 246p
+	$(document).ready(function(){
+		var result = '<c:out value="${result}"/>';
+	});
 
 	  document.addEventListener('DOMContentLoaded', function() {
 	    var calendarEl = document.getElementById('calendar');
@@ -86,7 +66,7 @@
 	          {
 		          title:'test',
 		          start:'2020-09-30',
-//	 	       2020-09-13T07:00:00
+//	 	     	  2020-09-13T07:00:00
 // 		          url: 'http://google.com/',
 		          end: '2020-09-30',
 // 		          allDay  : true
@@ -205,14 +185,16 @@
 	  
 	  Calendar.addEvent()
 	  
-// 	  function button_click() {
-		
-// 	}
+	  
 	  $("a").click(function(evt){
 		    evt.stopPropagation();
 		    evt.preventDefault();
 		    $(".lightUp").toggle();
 		});
+	  
+	  
+	  
+	  
 	</script>
 	
 	
@@ -249,6 +231,12 @@
 	position: absolute;
 	top: 100px;
 	right: 50px;
+	font-size: 14px;
+}
+#modalwrapperdetail {
+	position: absolute;
+	top: 80px;
+	right: 10px;
 	font-size: 14px;
 }
 /*-----*/
@@ -322,14 +310,14 @@
 </head>
 <body>
 
-	<!-- sidebar ------------------------------------------------------------------------------->
+	<!-- sidebar ----------------------------------------------------------------------------- -->
     <jsp:include page="../public/sidebar.jsp" />
     
     <div class= "page-divider">
-		<div class="sidebar-background"></div>
+	<div class="sidebar-background"></div>
 	
 	
-		<!-- 페이지 표현 부분 -------------------------------------------------------------------------->
+		<!-- 페이지 표현 부분 ------------------------------------------------------------------------ -->
 	    <div class="easyway-wrapper">
 
 			<h1 class="easyway-title1" height = "10px">
@@ -356,9 +344,7 @@
 							</div>
 							
 							<div class="modal-body">
-		
-								<!--<form action="scheduleInsertAction.do" method="post">  accept-charset="utf-8" -->
-								
+										
 								<!--UI마스터-->
 								<form action="/schedule/scheduleregister" method="post" >
 		                     <!--   accept-charset="utf-8"-->
@@ -389,6 +375,59 @@
 					</div>
 				</div>
 			</div>
+			
+			<!--일정조회모달창  -->
+		<div id="modalwrapperdetail">
+		<!-- Button trigger modal  -->
+		<!--Modal  -->
+		<div class="modal fade" id="modal-detail" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">일정 조회</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					<form role="" method="get" action="/schedule/scheduledetail?scheduleId=${schedule.scheduleId}">
+	                     <div id="scheduleInfo">
+	                       <label>일정번호</label>
+							<input type="text" class="form-control" name="scheduleId"
+								value='' readonly="readonly">
+	                        <label>직원번호</label>
+	                        <input type="text" class="form-control" name="employeeId"
+	                        	value='<c:out value="${schedule.employeeId}"/>' readonly="readonly">
+	                        <label>제목:</label>
+	                        <input type="text" class="form-control" name="scheduleTitle"
+	                            	value='<c:out value="${schedule.scheduleTitle}"/>' readonly="readonly">
+	                        <label>시작시간</label>
+	                        <input type="date" class="form-control" name="scheduleStart"
+	                            	value='<c:out value="${schedule.scheduleStart}"/>' readonly="readonly">
+	                        <label>종료시간</label>
+	                        <input type="date" class="form-control" name="scheduleEnd"
+	                            value='<c:out value="${schedule.scheduleEnd}"/>' readonly="readonly">
+	                        <label>내용</label>
+	                        <input type="text" class="form-control" name="scheduleContent"
+	                            value='<c:out value="${schedule.scheduleContent}"/>' readonly="readonly">
+	                       	<label>중요도 </label>
+	                       	<input type="text"class="form-control"  name="scheduleImportance"  
+	                            value='<c:out value="${schedule.scheduleImportance}"/>'readonly="readonly">
+	                            <br>
+	                        <label>공사구분</label>
+	                        <input type="text" class="form-control" name="schedulePrivate"
+	                            value='<c:out value="${schedule.schedulePrivate}"/>' readonly="readonly">
+	                     </div>
+	                     <div class="modal-footer">
+	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+<!-- 	                        <input type="submit" class="btn btn-primary" value="일정 수정"> -->
+	                     </div>
+                 	</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 		
 			<!-- 일정목록 리스트 출력 -->
 				<div class="easyway-title1">
@@ -416,14 +455,19 @@
 							<th style="background-color: #eeeeee; text-align: center;">공사구분
 							</th>
 						</tr>
-	
+						<!-- 추후에 수정할 부분 필요없는 표기들 빼기-->
 						<c:forEach var="schedule" items="${list}">
 							<tr style="background-color: #11111; text-align: center; border: 1px;">
 								<td>${schedule.scheduleId}</td>
 								<td>${schedule.employeeId}</td>
-								<td>${schedule.scheduleTitle}</td>
+								
+								<td><button id="save-btn" type="button" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
+								data-bs-toggle="modal" data-bs-target="#modal-detail">
+								${schedule.scheduleTitle}</button></td>
+								
 								<td>${schedule.scheduleStart}</td>
 								<td>${schedule.scheduleEnd}</td>
+						
 								<td>${schedule.scheduleContent}</td>
 								<td>${schedule.scheduleImportance}</td>
 								<td>${schedule.schedulePrivate}</td>
@@ -436,6 +480,35 @@
 	    
     </div> <!-- end page-divider -->
 </body>
+<script type="text/javascript"> 
+<!--제목클릭시처리하는부분-->
+var scheduleData;
+$('input[name=scheduleId]').attr('value',scheduleData.scheduleId);
 
+$(document)
+	.on(
+			"click","#save-btn",
+			function(e) {
+				var id = $(this).data("scheduleid");
+				console.log(id);
+				$.ajax({
+				      type: "get",
+				      url: "/schedule/scheduledetail/" +id,
+/* 					      beforeSend: function (xhr) {	
+				        var $token = $("#token");
+				        xhr.setRequestHeader($token.data("token-name"), $token.val());
+				      }, */
+				      success: function (result, status, xhr) {
+				        console.log(result);
+				        scheduleData = result;
+				      },
+				      error: function (xhr, status, er) {
+				        alert("실패!");
+				      },
+				    });
+				
+
+			});
+</script>
 
 </html>

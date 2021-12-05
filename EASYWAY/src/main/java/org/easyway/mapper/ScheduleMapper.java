@@ -16,8 +16,6 @@ public interface ScheduleMapper {
 		
 		public int remove(Long scheduleId);//일정제거 정상적 데이터 삭제시 1이상의 값
 
-		public void modify(ScheduleVO schedule);//일정수정
-
-		
+		public int modify(ScheduleVO schedule);//일정수정
 
 }

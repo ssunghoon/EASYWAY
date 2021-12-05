@@ -20,11 +20,6 @@
 			schedule_id , employee_id, schedule_title , schedule_start, schedule_end,
 			schedule_content , schedule_importance , schedule_private
 		)
-<!-- 		VALUES( -->
-<!-- 			schedule_seq.nextval, '1', #{schedule_title}, TO_DATE(TO_CHAR(#{schedule_start},'yyyy/mm/dd'),'yyyy/mm/dd'), -->
-<!-- 			TO_DATE(TO_CHAR(#{schedule_end},'yyyy/mm/dd'),'yyyy/mm/dd'), -->
-<!-- 			#{schedule_content}, #{schedule_importance}, #{schedule_private} -->
-<!-- 		) -->
 		VALUES(
 			schedule_seq.nextval, '1', #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
 			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate}
@@ -47,7 +42,7 @@
 		INSERT INTO schedule (schedule_id , employee_id, schedule_title , schedule_start, schedule_end,
 			schedule_content , schedule_importance , schedule_private )
 		VALUES
-		(#{scheduleId}, '1vv', #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
+		(#{scheduleId}, '1', #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
 			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate})
 	</insert>
 	
@@ -60,14 +55,21 @@
 		FROM schedule WHERE schedule_id = #{scheduleId}
 	</select>
 	
-	<delete id="delete">
+	<delete id="remove">
 		delete schedule where schedule_id = #{scheduleId}
 	</delete>
 	
-<!-- 	<update id="modify"> -->
-<!-- 		update board set title=#{title}, contents = #{contents}而щ읆紐?#{蹂?섎챸}  -->
-<!-- 		where seq= #{seq} -->
-<!-- 	</update> -->
+	<update id="modify">	
+		update schedule set schedule_title = #{scheduleTitle}, schedule_start = #{scheduleStart},
+		schedule_end =#{scheduleEnd},schedule_content = #{scheduleContent},
+		schedule_importance = #{scheduleImportance}, schedule_private = #{schedulePrivate}
+		where schedule_id= #{scheduleId}
+	</update>
+	<!--modify오류시 아래쿼리문참고 -->
+<!-- 	update schedule set schedule_title = '수정제목', schedule_start = '2021/06/09', -->
+<!-- 		schedule_end ='2021/09/06',schedule_content ='수정내용', -->
+<!-- 		schedule_importance = '하', schedule_private = 'Y' -->
+<!-- 		where schedule_id= 106; -->
 	
 <!-- 	<select id="countBoard" parameterType="Search" resultType = "int"> -->
 <!-- 		select count(*) from board -->

@@ -59,12 +59,30 @@ public class ScheduleMapperTests {
 //		
 //		log.info(schedule);
 //	}
-	@Test
-	public void testDelete(){//일정 추가 tset
-		
-		log.info("DELETE COUNT: " + mapper.remove(102L));
-	}
+//	@Test
+//	public void testDelete(){//일정 추가 tset
+//		
+//		log.info("DELETE COUNT: " + mapper.remove(105L));
+//	}
 	
+	@Test
+	public void testModify(){//일정 수정
+    
+		ScheduleVO schedule = new ScheduleVO();
+		schedule.setScheduleId(106L);
+//		schedule.setEmployeeId(1L);
+		schedule.setScheduleTitle("수정테스트제목1");
+		schedule.setScheduleStart(new Date(2021/12/3));
+		schedule.setScheduleEnd(new Date (2021/12/4));
+		schedule.setScheduleContent("Modify내용1");
+		schedule.setScheduleImportance("하");
+		schedule.setSchedulePrivate("N");
+		
+		
+		int count = mapper.modify(schedule);
+		
+		log.info("update Count:"+count);
+	}
 	
 	
 }
