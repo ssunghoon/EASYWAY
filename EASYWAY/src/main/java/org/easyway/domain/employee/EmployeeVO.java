@@ -1,14 +1,18 @@
 package org.easyway.domain.employee;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EmployeeVO {
 	
 	private Long employeeId;
@@ -22,7 +26,6 @@ public class EmployeeVO {
 	private String employeePhone;
 	private Date employeeHireDate;
 	private String employeeWorkType;
-	private Date employeeBirth;
 	private String employeeMaster;
 	private int employeeLeftDay;
 	

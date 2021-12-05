@@ -13,7 +13,7 @@
 
 .easyway-container {
   /* 게시물 상세 조회 grid 행부분. 맨 윗줄부터 원하는 크기로 지정해서 사용 */
-  grid-template-rows: 40px 70px auto 80px auto;
+  grid-template-rows: 40px 70px 60px auto 80px;
   row-gap: 10px;
 }
 
@@ -30,11 +30,19 @@
   border-bottom: 1px solid #999;
   padding: 0 100px;
 }
+.tab-header a {
+	color: #0397ed;
+}
+
 .tab-label {
   height: 40px;
   padding: 0 15px;
   padding-bottom: 10px;
 }
+.tab-label a{
+	color: #333;
+}
+
 .tab-label-choice {
   height: 40px;
   padding-bottom: 10px;
@@ -48,8 +56,9 @@
   font-size: 20px;
 }
 .easyway-btn {
-  grid-column: 2/ 13;
+  grid-column: 2/ 11;
   align-self: flex-end;
+  justify-self: flex-end;
   width: 100px;
   height: 40px;
   font-size: 18px;
