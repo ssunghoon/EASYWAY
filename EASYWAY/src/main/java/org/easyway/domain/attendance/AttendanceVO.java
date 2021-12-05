@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttendanceVO implements Serializable {
 
-	private int attendance_id;
-	private int employee_id;
-	private String attendance_start;
-	private String attendance_end;
-	private String attendance_out;
+	private int attendanceId;
+	private int employeeId;
+	private String attendanceStart; // 출근
+	private String attendanceOut; // 외근
+	private String attendanceEnd; // 퇴근
 	
 }

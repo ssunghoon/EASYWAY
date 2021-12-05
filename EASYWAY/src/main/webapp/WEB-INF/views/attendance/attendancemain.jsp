@@ -16,13 +16,15 @@
     <!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
     <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 	<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 		rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 		crossorigin="anonymous">
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
@@ -35,8 +37,8 @@
     <link href="/resources/css/sidebars.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
 	<link href="/resources/css/attendance.css" rel="stylesheet">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
-
+	<script src="/resources/js/menu.js"></script>
+	
 </head>
 <body>
 
@@ -84,19 +86,19 @@
 		                <div class="work-check-clock"></div>
 						<ul class="work-check">
 							<li class="work-check-start">
-								<a class="" href="/attendance/add">
+								<a class="" href="/attendance/registerAttendanceStart">
 									<i class="far fa-play-circle"></i>
 								</a>
 								<span>출근하기</span>
 							</li>
 							<li class="work-check-out">
-								<a class="" href="/attendance/updateAttendanceOut">
+								<a class="" href="/attendance/registerAttendanceOut">
 									<i class="far fa-pause-circle"></i>
 								</a>
 								<span>외근하기</span>
 							</li>
 							<li class="work-check-end">
-								<a class="" href="/attendance/updateAttendanceEnd">
+								<a class="" href="/attendance/registerAttendanceEnd">
 									<i class="far fa-stop-circle"></i>
 								</a>
 								<span>퇴근하기</span>
@@ -115,17 +117,17 @@
 		                <ul class="work-status">
 							<li class="work-status-start">
 								<i class="far fa-clock"></i>
-								<span class="work-status-time">${attendance.attendance_start}</span>
+								<span class="work-status-time">${attendance.attendanceStart}</span>
 								<span>출근</span>
 							</li>
 							<li class="work-status-out">
 								<i class="far fa-clock"></i>
-								<span class="work-status-time">${attendance.attendance_out}</span>
+								<span class="work-status-time">${attendance.attendanceOut}</span>
 								<span>외근</span>
 							</li>
 							<li class="work-status-end">
 								<i class="fas fa-clock"></i>
-								<span class="work-status-time">${attendance.attendance_end}</span>
+								<span class="work-status-time">${attendance.attendanceEnd}</span>
 								<span>퇴근</span>
 							</li>
 						</ul>
@@ -158,11 +160,7 @@
 
 </body>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/resources/js/menu.js"></script>
-<script src="/resources/js/attendance.js"></script>
+	<!-- body 아래에 있어야하는 script -->
+	<script src="/resources/js/attendance.js"></script>
+
 </html>

@@ -32,9 +32,12 @@ public interface SignService {
 	public BasicSignVO getDraftBasic(Long signId,Long signFormId);
 	public SpendSignVO getDraftSpend(Long signId,Long signFormId);
 	public VacationSignVO getDraftVacation(Long signId,Long signFormId);
-	
+	// 기안함 상세
+	public BasicSignVO getPaymentBasic(Long signId,Long signFormId);
+	public SpendSignVO getPaymentSpend(Long signId,Long signFormId);
+	public VacationSignVO getPaymentVacation(Long signId,Long signFormId);
 	// 기안 갯수
-	public int getTotal(Criteria cri);
+	public int getTotalDraft(Criteria cri);
 	
 	// 직원 목록
 	public List<EmployeeVO> getListEmployee();
@@ -46,5 +49,17 @@ public interface SignService {
 //	public void applyLineFourth(SignListVO list, SignVO sign);
 	
 	// 결재함 목록
-	public List<SignListVO> getListPayment();
+	//public List<SignListVO> getListPayment();
+	// 결재함 페이징
+	public List<SignVO> getListPayment(Criteria cri);
+	
+	// 결재함 결재
+	public boolean modify(SignListVO list);
+	
+	// 결재 갯수
+	public int getTotalPayment(Criteria cri);
+	
+	// 결재완료여부 변경
+	public boolean modifySignCheck(SignVO sign);
+
 }

@@ -4,7 +4,7 @@
 // 페이지 새로고침 혹은 브라우저 창 닫기 시도시 경고 문구 출력 ----------------------------------
 // ----------------------------------------------------------------------------------------
 
-
+/* 주의! 귀찮아서 주석!!!!
 
 window.onbeforeunload = function() {
 
@@ -16,7 +16,7 @@ window.onbeforeunload = function() {
 	return "";
 };	    	
 
-
+*/
 
 
 //----------------------------------------------------------------------------------------
@@ -28,8 +28,6 @@ function widgetFunction(e) {
 	// 테스트 : 썸네일 클릭하면 콘솔 창으로 뭔지 알랴줌 
 	var selected = e.target.firstChild.nodeValue;
 	e.stopPropagation();
-	console.log(typeof selected);
-	console.log(e.target);
 	console.log(e.target.parentNode.classList.item(2));
 	
 	// 선택한 값이 null이면 빠이
@@ -123,7 +121,7 @@ function makeWidget(widgetId, func) {
 	
 		let widgetTag = document.createElement('div');
 		widgetTag.id = widgetId;
-		widgetTag.className = 'widget draggable';
+		widgetTag.className = 'widget created-widget draggable';
 		widgetTag.innerHTML = '<div class="widgetClockInner"></div>';
 		
 		widgetSelectedContainer.append(widgetTag);
@@ -139,6 +137,8 @@ function makeWidget(widgetId, func) {
 
 	}
 	
+	
+	// 주의! 우선 테스트로 넣어둔 위치값과 너비, 높이 부분임. js로 변경도 하고 싶음.
 	var $widgetId = '#' + widgetId;
 	
 	$($widgetId).offset({
@@ -148,6 +148,8 @@ function makeWidget(widgetId, func) {
 	
 	func();
 	
+	
+	// 드래그 가능하게 하는 jQuery 부분
 	$('.draggable').draggable({
         stack: ".draggable",
         containment: ".widget-area",
@@ -242,62 +244,163 @@ function getTest6(){
 
 
 // ----------------------------------------------------------------------------------------
-// 썸네일 위치 저장하기 ---------------------------------------------------------------------
+// 위젯 위치 저장하기 -----------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------
 
-// 일단 불러나와보자
+// 저장버튼과 저장할 위젯 변수들
+var saveBtn = document.getElementById("save-btn");
+var createdWidget = document.getElementsByClassName("created-widget");
 
-	//var target = document.getElementById("save-btn");
-	//var targetTop = target.getBoundingClientRect().top;
-	//var abTop = window.pageYOffset + target.getBoundingClientRect().top;
-	
+// 위치 및 너비, 높이를 담는 변수들
+var positionTop;
+var positionLeft;
+var positionWidth;
+var positionHeight;
 
-	// 위치값 저장하는 함수
-	//function saveOffset(){
-	//	document.getElementById('save-btn').onclick = function () {
-	//		var saveBtn = document.getElementById("save-btn");
-	//		cosole.log(saveBtn.offsetTop);
-	//	};
-	//	cosole.log(saveBtn.offsetTop);
-	//}
+// 위치 및 너비, 높이를 저장하는 함수
+$('.custom-save').on('click', function(){
 	
-	//document.getElementById("save-btn").addEventListener('click', saveOffset);
+	// 저장버튼 태그의 "커스텀 1" 중 1만 숫자로 가져오기
+	var str = $(this).children().first().text();
+	var customNumber = parseInt(str.substr(str.length-1, 1));
+	alert(customNumber);
 	
+	saveOffset(customNumber);
 	
+})//end click custom-save
+
+
+function saveOffset(customNumber){
 	
-	/*
-	//pTag.offsetTop;
-	//pTag.offsetHeight;
-	//pTag.offsetLeft;
-	pTag.style.top = 500;
-    pTag.style.left = 400;
-    
+	var positionArr = new Array();
 	
-	$('.save-btn').on('click', function(e){
+	for(var i = 0; i < createdWidget.length; i++){
+
+		var positionTop = createdWidget[i].offsetTop;
+		var positionLeft = createdWidget[i].offsetLeft;
+		var positionWidth = createdWidget[i].offsetWidth;
+		var positionHeight = createdWidget[i].offsetHeight;
 		
-		alert("클릭했네?");
+		var data = new Object();
+		var widgetName;
+        
+		// 위젯명 숫자로 매칭시켜주는 switch
 		
-		e.preventDefault();
-		
-		var createdWidget = $(".created-widget");
-		var positionTop;
-		var positionLeft;
-		
+		switch (createdWidget[i].getAttribute('id')) {
+		case "clock":
+			widgetName = "1";
+			break;
+		case "notice":
+			widgetName = "2";
+			break;
+		case "attendance":
+			widgetName = "3";
+			break;
+		case "sign":
+			widgetName = "4";
+			break;
+		case "project":
+			widgetName = "5";
+			break;
+		case "calendar":
+			widgetName = "6";
+			break;
 
-		for(var i = 0; i < createdWidget.length; i++){
-
-			var positionTop = createdWidget[i].offset().top;
-			var positionLeft = createdWidget[i].offset().left;
-
-			alert(positionTop);
-			//alert(createdWidget[i].firstChild.nodeType);
-			
-			
-			//alert("positionTop : " + positionTop + "positionLeft : " + positionLeft);
-			
+		default:
+			break;
 		}
 		
-	});
-	*/
+		data.widgetName = widgetName + "";
+        data.widgetPositionX = positionTop + "";
+        data.widgetPositionY = positionLeft + "";
+        data.widgetWidth = positionWidth + "";
+        data.widgetHeight = positionHeight + "";
+         
+        positionArr.push(data);
+        
+	} // end for
 
+	console.log(positionArr);
+	
+	// 다중 데이터 ajax로 전달하기
+	var formData = new FormData();
+	var data = {
+			"customNumber": customNumber
+	};
+	
+	// data 1 : 클릭한 커스텀 저장 번호
+	formData.append(
+		"customNumber", 
+		new Blob([JSON.stringify(data)], { type: 'application/json' })
+	);
+	// data 2 : 위젯 정보들
+	formData.append(
+		"WidgetVO",
+		new Blob([JSON.stringify(positionArr)], { type: 'application/json' })
+	);
+	
+	console.log(formData);
+	
+	// ajax를 통한 위치 및 너비, 높이 데이터 저장
+	$.ajax({
+		  url: '/office/saveOffset',
+		  data: formData,
+		  contentType: false,
+		  processData: false,
+		  type: 'POST',
+		  success: function(result){
+			 console.log("위젯 저장 성공");
+		  },
+		  error: function(err){
+			 console.log(err);
+		  }
+	  }); //end ajax
+		
+} //end saveOffset()
+
+
+
+//----------------------------------------------------------------------------------------
+//위젯 위치 불러오기 -----------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+
+$('.custom-import').on('click', function(){
+	
+	// 저장버튼 태그의 "커스텀 1" 중 1만 숫자로 가져오기
+	var str = $(this).children().first().text();
+	var customNumber = parseInt(str.substr(str.length-1, 1));
+	alert(customNumber);
+	
+	importOffset(customNumber);
+	
+})//end click custom-import
+
+function importOffset(customNumber){
+	
+	var data = {
+			"customNumber": customNumber
+	};
+	
+	var jsonData = JSON.stringify(data);
+	
+	// ajax를 통한 위치 및 너비, 높이 데이터 저장
+	$.ajax({
+		  url: '/office/importOffset',
+		  data: jsonData,
+		  dataType: 'application/text; charset=UTF-8',
+		  type: 'GET',
+		  success: successHandler
+	  }); //end ajax
+	
+	function successHandler(data) {
+		
+		var parseData = JSON.parse(data)
+		
+		$(parseData).each(function(index, item) {
+			console.log("짜잔이게뭘까" + item);
+		});
+		
+	}
+	
+}
 

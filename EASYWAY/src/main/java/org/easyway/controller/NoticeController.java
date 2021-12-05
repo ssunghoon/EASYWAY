@@ -2,6 +2,8 @@ package org.easyway.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
+import org.easyway.domain.notice.NoticeCriteria;
+import org.easyway.domain.notice.NoticePageDTO;
 import org.easyway.domain.notice.NoticeVO;
 import org.easyway.service.notice.NoticeService;
 import org.easyway.service.notice.NoticeServicelmpl;
@@ -30,27 +32,36 @@ public class NoticeController {
 	// 게시글 입력폼 페이지를 불러온다
 	@GetMapping("/noticeregister")
 	public void noticeRegister() {
-		System.out.println("다혜");
+		System.out.println("입력폼을 불러옵니다");
 	}
 
 	// 입력 기능을 실행한다
 	@PostMapping("/noticeregister")
 	public String noticeRegister(NoticeVO notice, RedirectAttributes rttr) {
 		service.register(notice);
-		rttr.addFlashAttribute("결과야", notice.getObId());
+		rttr.addFlashAttribute("result", notice.getObId());
 		return "redirect:/notice/noticelist";
 	}
 
 	// 목록을 가져온다
+	//페이징 처리 리스트로 변경
+//	@GetMapping("/noticelist")
+//	public String noticeList(Model model) {
+//		log.info("listttttttttttttttttt");
+//		model.addAttribute("noticelist", service.getListAll());
+//		return "/notice/noticelist";
+//	}
+	
+	//페이징 처리 리스트
 	@GetMapping("/noticelist")
-	public String noticeList(Model model) {
-		log.info("listttttttttttttttttt");
-		model.addAttribute("noticelist", service.getListAll());
-		return "/notice/noticelist";
+	public void noticelist(NoticeCriteria cri, Model model){
+		log.info("noticelist" + cri);
+		model.addAttribute("noticelist", service.getListAll(cri));
+		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123));
 	}
 
 	@GetMapping({ "/noticedetail", "/noticemodify" })
-	public void noticedetail(@RequestParam("obId") int obId, Model model) {
+	public void noticedetail(@RequestParam("obId") int obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
 		log.info("/noticedetail or noticemodify");
 		model.addAttribute("of_board", service.detail(obId));
 		log.info("조회폼 잘 떴나요");
