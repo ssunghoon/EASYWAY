@@ -15,10 +15,10 @@ public class NoticeVO {
 	private int obId;
 	private int employeeId;
 	private int departmentId;
+	private String obFilePath;
 	private String obTitle;
 	private String obContent;
-	private String obFilePath;
-	private Date obDate;
 	private int obView;
+	private Date obDate;
 	private String obFixedCheck;
 }
