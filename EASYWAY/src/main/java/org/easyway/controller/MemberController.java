@@ -8,6 +8,7 @@ import org.easyway.domain.member.MemberVO;
 import org.easyway.service.member.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +67,7 @@ public class MemberController {
 		return new ResponseEntity<>("fail", HttpStatus.OK);
 	}// Ajax통신으로 받은 json객체를 이용해 이메일 중복여부를 판단해준다.
 	
-	@PostMapping("/search")
+	@PostMapping(value="/search", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> searchMember(@RequestBody Map<String, String> data) {
 		String enteredEmail = data.get("enteredEmail");
@@ -74,7 +75,7 @@ public class MemberController {
 		MemberDTO selectMember = service.get(enteredEmail);
 		
 		if(selectMember == null){
-			return new ResponseEntity<String>("fail", HttpStatus.FAILED_DEPENDENCY);
+			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 		
 		return new ResponseEntity<MemberDTO>(selectMember, HttpStatus.OK);

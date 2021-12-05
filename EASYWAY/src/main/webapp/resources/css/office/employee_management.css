@@ -1,0 +1,169 @@
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* 게시물 상세 조회 (공지사항 게시판, 프로젝트 게시판, 전자결재 공통) --------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+
+/* 게시물 상세 조회 - 레이아웃 세부 */
+/* 해당 세부 레이아웃은 프로젝트와 공지사항 게시판과 전자결재를 위해 제작되어 있음 */
+.easyway-wrapper {
+  margin-bottom: 100px;
+}
+
+.easyway-container {
+  /* 게시물 상세 조회 grid 행부분. 맨 윗줄부터 원하는 크기로 지정해서 사용 */
+  grid-template-rows: 40px 70px 60px auto;
+  row-gap: 10px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* 이하 easyway-container의 자식인 easyway-boarddetail가 차지하는 영역을 정의한 부분 */
+/* ----------------------------------------------------------------------------------------------- */
+.tab-header {
+  grid-column: 1/13;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  justify-content: space-around;
+  border-bottom: 1px solid #999;
+  padding: 0 100px;
+}
+
+.tab-header a {
+  color: #0397ed;
+}
+
+.tab-label {
+  height: 40px;
+  padding: 0 15px;
+  padding-bottom: 10px;
+}
+.tab-label a {
+  color: #333;
+}
+
+.tab-label-choice {
+  height: 40px;
+  padding-bottom: 10px;
+  padding: 0 15px;
+  color: #0397ed;
+  font-weight: 600;
+  border-bottom: 3px solid #0397ed;
+  box-sizing: border-box;
+}
+
+.easyway-title1 {
+  font-size: 20px;
+}
+
+.employee-btns {
+  grid-column: 1/11;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.easyway-btn {
+  align-self: flex-end;
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  border-radius: 7px;
+}
+
+.employee-add-btn {
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  border-radius: 7px;
+  border: #eee;
+  background-color: #0dbb9d;
+  color: white;
+  align-self: flex-end;
+  margin-right: 10px;
+}
+
+.setting-title {
+  grid-column: 1/13;
+  padding: 10px 20px;
+  align-self: flex-end;
+}
+
+.employee-table {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-column: 2/11;
+  padding: 0 15px 0 15px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+.employee-list {
+  grid-column: 1/13;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  width: 100%;
+}
+
+.employee-list th {
+  border-bottom: 1px solid #ccc;
+  height: 35px;
+  text-align: center;
+  background: #eee;
+}
+
+/* 각 컬럼의 가로길이는 가급적 % 단위를 사용하세요 */
+.employee-list th:nth-child(1) {
+  /* 게시물 목록 컬럼 1 */
+  width: 15%;
+}
+
+.employee-list th:nth-child(2) {
+  /* 게시물 목록 컬럼 2 */
+  width: 25%;
+}
+
+.employee-list td {
+  border-bottom: 1px solid #ccc;
+  height: 35px;
+  text-align: center;
+}
+
+.employee-list td:nth-child(1) {
+  /* 게시물 목록 컬럼내용 1 */
+}
+
+.employee-list td:nth-child(2) {
+  /* 게시물 목록 컬럼내용 2 */
+}
+
+.search-member-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.search-member-info p:nth-child(1) {
+  padding-right: 20px;
+}
+
+.search-member-info p:nth-child(2) {
+  padding-right: 20px;
+}
+
+.search-member-info input {
+  margin-top: 5px;
+}
+.x-btn {
+  border: #eee;
+  border-radius: 7px;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */ ;

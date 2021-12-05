@@ -5,7 +5,7 @@
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<!-- <bean id="customAccessDenied" class="org.easyway.security.CustomAccessDeniedHandler"></bean>
+<!-- 	<bean id="customAccessDenied" class="org.easyway.security.CustomAccessDeniedHandler"></bean>
 	<bean id="customLoginSuccess"
 		class="org.easyway.security.CustomLoginSuccessHandler"></bean>
 	<bean id="bcryptPasswordEncoder"

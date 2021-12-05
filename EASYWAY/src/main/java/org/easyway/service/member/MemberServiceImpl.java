@@ -17,30 +17,33 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberMapper mapper;
 	
-//	@Autowired
-//	private PasswordEncoder pwencoder;
+	@Autowired
+	private PasswordEncoder pwencoder;
 	
-//	@Override
-//	public int register(MemberVO member) {
-//		log.info("join..........service" + member);
-//		if(member.getMemberAuth() == null){
-//			member.setMemberAuth("ROLE_MEMBER");
-//		}
-//		String originPw = member.getMemberPassword();
-//		member.setMemberPassword(pwencoder.encode(originPw));
-//		return mapper.insertMember(member);
-//	}
+	@Override
+	public int register(MemberVO member) {
+		log.info("join..........service" + member);
+		if(member.getMemberAuth() == null){
+			member.setMemberAuth("ROLE_MEMBER");
+		}
+		String originPw = member.getMemberPassword();
+		member.setMemberPassword(pwencoder.encode(originPw));
+		return mapper.insertMember(member);
+	}
 	
 	@Override
 	public Long checkEmail(String tempEmail) {
-		
 		return mapper.readEmail(tempEmail);
 	}
 
 	@Override
 	public MemberDTO get(String enteredEmail) {
 		
-		MemberVO findMember = mapper.read(enteredEmail);
+		MemberVO findMember = mapper.get(enteredEmail);
+		
+		if(findMember == null){
+			return null;
+		}
 		
 		MemberDTO memberDTO = MemberDTO.builder()
 								.memberEmail(findMember.getMemberEmail())
@@ -50,11 +53,5 @@ public class MemberServiceImpl implements MemberService {
 								.build();
 		
 		return memberDTO;
-	}
-
-	@Override
-	public int register(MemberVO member) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

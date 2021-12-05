@@ -27,9 +27,13 @@ $(document).ready(function() {
 				    ['view', ['codeview','fullscreen', 'help']]
 				  ],
 				  // 추가한 글꼴
-				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-				 // 추가한 폰트사이즈
-				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+				  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+				  // 추가한 폰트사이즈
+				  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+				  placeholder: '최대 2048자까지 쓸 수 있습니다',
 				 
 			});
+		
 		});
+
+

@@ -19,11 +19,13 @@ public class SignListVO implements Serializable{
 	
 	
 	// sql문 추가
+	private Long rownum;
 	private String employeeName; // EMPLOYEE_NAME
 	private String signTitle; // SIGN_TITLE
 	private String signContent; // SIGN_CONTENT
 	private Date signDate; // SIGN_DATE
 	private String signFormId; // SF_ID
+	private String signImportance; // SIGN_IMPORTANCE
 	
 
 }
