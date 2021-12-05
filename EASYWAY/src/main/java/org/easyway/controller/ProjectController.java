@@ -25,7 +25,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService service;
 	
-	//프로젝트 생성
+	// 프로젝트 생성
 	@PostMapping("/projectcreate")
 	public String projectCreate(Project project, RedirectAttributes rttr) {
 		service.create(project);
@@ -33,16 +33,16 @@ public class ProjectController {
 		return "redirect:/project/projectlist";
 	}
 	
-	//프로젝트 수정
+	// 프로젝트 수정
 	
 	
-	//프로젝트 목록
+	// 프로젝트 목록
 	@GetMapping("/projectlist")
 	public void projectList(Model model) {
 		model.addAttribute("list", service.getListProject());
 	}
 	
-	//프로젝트 게시판 등록
+	// 프로젝트 게시판 등록
 	@PostMapping("/projectboardregister")
 	public String projectBoardRegister(ProjectBoard projectBoard, RedirectAttributes rttr) {
 		log.info("프로젝트 시퀀스 아이디"+projectBoard.getProjectId());
@@ -52,38 +52,48 @@ public class ProjectController {
 		return "redirect:/project/projectboardlist";
 	}
 	
-	//프로젝트 게시판 목록
+	// 프로젝트 게시판 목록
 	@GetMapping("/projectboardlist")
 	public void projectBoardList(@RequestParam("projectId") Long projectId, Model model) {
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
-//		model.addAttribute("projectBoardId", projectBoardId);
-//		model.addAttribute("projectPost", service.getListProjectPost(projectBoardId));
 	}
 	
-	//프로젝트 게시물 생성 페이지
+	// 프로젝트 게시물 생성 페이지
 	@GetMapping("/projectpostregister")
-	public void projectPostGetRegister(@RequestParam("projectId") Long projectId, Model model) {
+	public void projectPostGetRegister(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, Model model) {
 		model.addAttribute("projectId", projectId);
-//		log.info(projectId);
+		model.addAttribute("projectBoardId",projectBoardId);
 	}
 	
-	//프로젝트 게시물 생성
+	// 프로젝트 게시물 생성
 	@PostMapping("/projectpostregister")
-	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, @RequestParam("projectId") Long projectId) {
-		log.info(projectId.getClass().getName());
-		log.info(projectId);
+	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, @RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId) {
+//		log.info(projectId.getClass().getName());
+//		log.info(projectId); 
 		rttr.addAttribute("projectId", projectId);
+		rttr.addAttribute("projectBoardId", projectBoardId);
+		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
 		service.registerProjectPost(projectPost);
-		return "redirect:/project/projectboardlist";
+		return "redirect:/project/projectpostlist";
 	}
 	
-//	//프로젝트 게시물 목록
-//	@GetMapping("/projectpostlist")
-//	public void projectPostList(@RequestParam Long projectId, @RequestParam Long projectBoardId, Model model) {
-//		model.addAttribute("projectId", projectId);
-//		model.addAttribute("projectBoardId", projectBoardId);
-////		model.addAttribute("projectPost", service.getListProjectPost());
-//	}
+	// 프로젝트 게시물 목록
+	@GetMapping("/projectpostlist")
+	public void projectPostList(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, Model model) {
+		model.addAttribute("projectId", projectId);
+		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
+		model.addAttribute("projectBoardId", projectBoardId);
+		model.addAttribute("projectPost", service.getListProjectPost(projectBoardId));
+	}
+	
+	// 프로젝트 게시물 상세
+	@GetMapping("/projectpostdetail")
+	public void projectPostDetail(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, @RequestParam("projectPostId") Long projectPostId, Model model) {
+		model.addAttribute("projectId", projectId);
+		model.addAttribute("projectBoardId", projectBoardId);
+		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
+		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
+	}
 
 }

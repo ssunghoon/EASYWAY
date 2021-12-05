@@ -15,6 +15,7 @@
 
 <!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
 <!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script
@@ -41,19 +42,30 @@
 <link href="/resources/css/common_boardlist.css" rel="stylesheet">
 <script src="/resources/js/menu.js"></script>
 
+<style>
+.wrapper {
+	width: 180px;
+	background: #eee;
+	border-right: 1px solid #ccc;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding: 15px;
+	flex-direction: column;
+}
+</style>
+
 </head>
 <body>
+	<!-- sidebar ------------------------------------------------------------------------------->
 	<jsp:include page="../public/sidebar.jsp" />
 
 	<div class="page-divider">
 		<div class="sidebar-background"></div>
 
-
-		<!-- 페이지 표현 부분 -------------------------------------------------------------------------->
-		<div class="easyway-wrapper">
-			<!-- 		<a href="projectInsertForm.do">프로젝트 생성</a> -->
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-				data-bs-target="#staticBackdrop">프로젝트 생성</button>
+		<div class="wrapper">
+			<button type="button" class="easyway-btn" data-bs-toggle="modal"
+				data-bs-target="#staticBackdrop">게시판 생성</button>
 
 			<!-- Modal -->
 			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
@@ -61,65 +73,57 @@
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form action="projectcreate" method="post">
+						<form action="projectboardregister?projectId=${projectId}"
+							method="post">
 							<div class="modal-header">
-								<h5 class="modal-title" id="staticBackdropLabel">프로젝트 생성</h5>
+								<h5 class="modal-title" id="staticBackdropLabel">게시판 생성</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
 								<div>
-									프로젝트 이름 : <input type="text" name="projectName"><br>
-									시작일 : <input type="date" name="projectStart"><br>
-									종료일 : <input type="date" name="projectEnd"><br>
-									프로젝트 설명 <br>
-									<textarea rows="6" cols="70" name="projectContent"></textarea>
-									<br>
-									<!-- 								<input type="submit" class="btn btn-primary mb-3" -->
-									<!-- 									value="등록"> -->
+									게시판 이름 : <input type="text" name="projectBoardName"><br>
 								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">취소</button>
 								<input type="submit" class="btn btn-primary" value="등록">
-								<!-- 							<button type="button" class="btn btn-primary">생성</button> -->
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
+			<br>
 
 
-			<table border="1">
-				<tr>
-					<td>프로젝트 번호&nbsp;&nbsp;</td>
-					<td>프로젝트 명&nbsp;&nbsp;</td>
-					<td>시작일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>종료일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>프로젝트 내용</td>
-				</tr>
-				<c:forEach var="project" items="${list}">
+			<table>
+				<!-- 게시판 목록 -->
+				<c:forEach var="projectBoard" items="${projectBoard}">
 					<tr>
-						<td>${project.projectId}</td>
 						<td><a
-							href="projectboardlist?projectId=${project.projectId }">${project.projectName}</a></td>
-						<td><fmt:parseDate var="dt" value="${project.projectStart}"
-								pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate value="${dt }"
-								pattern="yyyy/MM/dd" /></td>
-						<td><fmt:parseDate var="de" value="${project.projectEnd}"
-								pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate value="${de }"
-								pattern="yyyy/MM/dd" /></td>
-						<td>${project.projectContent }</td>
-						<td><button class="easyway-btn"
-								onclick="location.href='projectboardlist?projectId=${project.projectId}'">입장하기</button></td>
+							href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a></td>
 					</tr>
 				</c:forEach>
-			</table>
-			<br> <br>
+			</table>	
+			<br>
 
 		</div>
+
+		<button class="easyway-btn"
+			onclick="location.href='projectpostregister?projectId=${projectId}&&projectBoardId=${projectBoardId}'">글쓰기</button>
+
+		<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@게시물 목록@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  -->
+		<table>
+			<c:forEach var="projectPost" items="${projectPost}">
+				<tr>
+					<td><a href="projectpostdetail?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}">${projectPost.projectPostTitle}</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+
 	</div>
-	
+
 </body>
+
 </html>
