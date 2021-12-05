@@ -39,6 +39,9 @@
 	<select id="get" resultMap="memberVOResultMap">
 		select * from member where member_email = #{enteredEmail}
 	</select>
+	<select id="getById" resultMap="memberVOResultMap">
+		select * from member where member_id = #{memberId}
+	</select>
 </mapper>
 
 

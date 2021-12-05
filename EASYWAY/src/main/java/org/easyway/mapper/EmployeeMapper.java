@@ -4,6 +4,7 @@ package org.easyway.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 
 public interface EmployeeMapper {
@@ -14,5 +15,5 @@ public interface EmployeeMapper {
 	//select	
 	public EmployeeVO getEmployee(Long employeeId);
 	public EmployeeVO getEmployee2(@Param("memberId")Long nowMemberId, @Param("officeId")Long officeId);
-	public List<EmployeeVO> getListEmployee(Long officeId);
+	public List<EmployeeDTO> getListEmployee(Long officeId);
 }

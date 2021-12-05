@@ -11,6 +11,19 @@
 		<result property="officeName" column="office_name" />
 		<result property="officeCode" column="office_code" />
 	</resultMap>
+	
+	<resultMap id="positionVOResultMap" type="org.easyway.domain.office.PositionVO">
+		<id property="positionId" column="office_id" />
+		<result property="positionName" column="position_name" />
+		<result property="officeId" column="office_id" />
+		<result property="positionLevel" column="position_level" />
+	</resultMap>
+	
+	<resultMap id="departmentVOResultMap" type="org.easyway.domain.office.DepartmentVO">
+		<id property="departmentId" column="department_id" />
+		<result property="officeId" column="office_id" />
+		<result property="departmentName" column="department_name" />
+	</resultMap>
 
 	<insert id="insertOffice">
 		insert into office(
@@ -35,6 +48,9 @@
 		position_name, position_level)
 		values( position_seq.nextval,
 		#{officeId}, #{positionName}, #{positionLevel} )
+		<selectKey keyProperty="positionId" resultType="long" order="AFTER">
+			select position_seq.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	<insert id="insertAnnualVacation">
 		insert into annual_vacation(av_id, office_id, annual,
@@ -42,10 +58,24 @@
 		values( av_seq.nextval, #{officeId}, #{annual},
 		#{vacations})
 	</insert>
+	<insert id="insertDepartment">
+		insert into department(department_id, office_id, department_name)
+		values( department_seq.nextval, #{officeId}, #{departmentName})
+		
+		<selectKey keyProperty="departmentId" resultType="long" order="AFTER">
+			select department_seq.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
 
 
-	<select id="get" resultMap="officeVOResultMap">
+	<select id="getOffice" resultMap="officeVOResultMap">
 		select * from office where office_id = #{officeId}
+	</select>
+	<select id="getPositionList" resultMap="positionVOResultMap">
+		select * from position where office_id = #{officeId}
+	</select>
+	<select id="getDepartmentList" resultMap="departmentVOResultMap">
+		select * from department where office_id = #{officeId}
 	</select>
 	<select id="getList" resultMap="officeVOResultMap">
 		select o.office_id,o.office_name,

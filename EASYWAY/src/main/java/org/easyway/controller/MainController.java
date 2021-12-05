@@ -33,7 +33,7 @@ public class MainController {
 		
 		//오피스 정보 모델이 전달
 		log.info("오피스 정보 불러오기");
-		OfficeVO nowOfficeInfo = officeService.get(officeId);
+		OfficeVO nowOfficeInfo = officeService.getOffice(officeId);
 		session.setAttribute("nowOfficeInfo", nowOfficeInfo);
 		
 		//맴버id와 office id를 이용해 사원 정보 조회

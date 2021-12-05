@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -49,6 +50,8 @@
 
 	<!-- sidebar ------------------------------------------------------------------------------->
 	<jsp:include page="../../../public/sidebar.jsp" />
+	<c:set var="positionList" value="${positionList}"/>
+	<c:set var="departmentList" value="${departmentList}" />
 
 	<div class="page-divider">
 		<div class="sidebar-background"></div>
@@ -76,7 +79,7 @@
 					<button class="easyway-btn">저장</button>
 				</div>
 				<div class="employee-table">
-					<table class="employee-list">
+					<table id="employee-list" class="employee-list">
 						<tr>
 							<th>이름</th>
 							<th>이메일</th>
@@ -85,30 +88,17 @@
 							<th>근로형태</th>
 							<th>휴대전화</th>
 						</tr>
+						
+						<c:forEach var="employee" items="${employeeList}">
 						<tr>
-							<td>임동혁</td>
-							<td>as0387@naver.com</td>
-							<td>대표이사</td>
-							<td>개발</td>
-							<td>임원</td>
-							<td>010-6352-2135</td>
-						</tr>
-						<tr>
-							<td>전나은</td>
-							<td>jne8181@naver.com</td>
-							<td>사원</td>
-							<td>개발</td>
-							<td>정규직</td>
-							<td>010-1234-1234</td>
-						</tr>
-						<tr>
-							<td>김나현</td>
-							<td>steamNa@naver.com</td>
-							<td>과장</td>
-							<td>영업</td>
-							<td>정규직</td>
-							<td>010-5678-5678</td>
-						</tr>
+							<td>${employee.employeeName}</td>
+							<td>${employee.employeeEmail}</td>
+							<td>${employee.employeePosition}</td>
+							<td>${employee.employeeDepartment}</td>
+							<td>${employee.employeeWorkType}</td>
+							<td>${employee.employeePhone}</td>
+						</tr>			
+						</c:forEach>
 					</table>
 				</div>
 			</div>
@@ -129,13 +119,13 @@
 									aria-describedby="search-addon" name="memberEmail"/>
 								<button type="button" id="search-email" class="btn easyway-btn">search</button>
 							</div>
-							<div id="email-list" class="mb-3">
+							<div id="search-email-list" class="mb-3">
 								<label for="recipient-name" class="col-form-label">검색결과:</label>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary all-clear-btn"
 									data-bs-dismiss="modal">닫기</button>
-								<input type="button" class="btn easyway-btn" data-bs-dismiss="modal" value="추가하기">
+								<input id="add-employee" type="button" class="btn easyway-btn" data-bs-dismiss="modal" value="추가하기">
 							</div>
 							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}"	value="${_csrf.token}" />
 					</div>

@@ -3,6 +3,7 @@ package org.easyway.service.employee;
 
 import java.util.List;
 
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<EmployeeVO> getListEmployee(Long officeId) {
+	public List<EmployeeDTO> getListEmployee(Long officeId) {
 		
 		return employeeMapper.getListEmployee(officeId);
 	}

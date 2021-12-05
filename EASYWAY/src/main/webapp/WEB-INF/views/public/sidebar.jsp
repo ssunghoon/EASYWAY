@@ -7,7 +7,7 @@
 	<div class="nav-bar"	style="width: 230px;">
 		
 		<!-- 로고 -->
-		<a href="/main" class="logo-a">
+		<a href="/office/main" class="logo-a">
 			<span class="fs-4">
 				<img alt="LOGO" src="/resources/image/EASYWAY_SYMBOL60.png">
 				<span class="office-name">${sessionScope.nowOfficeInfo.officeName}</span>
@@ -23,7 +23,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/attendance/main" class="nav-link link-dark">
+				<a href="/attendance/attendancemain" class="nav-link link-dark">
 					<i class="nav-element fas fa-briefcase"></i>
 					<span class="nav-element">근태관리</span>
 				</a>

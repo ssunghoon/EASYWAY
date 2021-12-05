@@ -81,8 +81,7 @@ body {
 
 					<div class="mb-3">
 						<label for="password">비밀번호</label> <input type="password"
-							class="form-control" name="memberPassword" id="password"
-							required>
+							class="form-control" name="memberPassword" id="password" required>
 						<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
 					</div>
 
@@ -92,7 +91,7 @@ body {
 							required>
 						<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
 					</div>
-					
+
 					<div class="mb-3">
 						<label for="passwordCheck">휴대전화 번호</label> <input type="text"
 							class="form-control" name="memberPhone" id="phone-number"
@@ -110,13 +109,15 @@ body {
 					<div class="mb-4"></div>
 					<button class="btn btn-primary btn-lg btn-block" type="submit">가입
 						완료</button>
+
+					<input type="hidden" id="token" name="${_csrf.parameterName}"
+						data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+				</form>
 			</div>
-			<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}"	value="${_csrf.token}" />
-			</form>
 		</div>
 	</div>
-	</div>
-	<script>
+</body>
+<script>
 	window.addEventListener('load', () => {
 		const forms = document.getElementsByClassName('validation-form');
 		Array.prototype.filter.call(forms, (form) => {
@@ -130,9 +131,8 @@ body {
 				}, false);
 			});
 		}, false);
-	</script>
-	<script src="/resources/js/jquery.min.js"></script>
-	<script src="/resources/js/member/member.js"></script>
-</body>
+</script>
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/member/member.js"></script>
 
 </html>
