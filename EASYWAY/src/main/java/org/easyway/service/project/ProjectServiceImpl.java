@@ -24,13 +24,13 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
-	public boolean modifyProject(Project project) { // 프로젝트 수정
-		return mapper.updateProject(project) == 1;
-	}
-
-	@Override
 	public List<Project> getListProject() { // 프로젝트 목록
 		return mapper.getListProject();
+	}
+	
+	@Override
+	public boolean modifyProject(Project project) { // 프로젝트 수정
+		return mapper.updateProject(project) == 1;
 	}
 	
 	@Override
@@ -41,6 +41,11 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<ProjectBoard> getListProjectBoard(Long projectId) { // 프로젝트 게시판 목록
 		return mapper.getListProjectBoard(projectId);
+	}
+	
+	@Override
+	public ProjectBoard getProjectBoard(Long projectId, Long projectBoardId) { // 프로젝트 게시판 상세
+		return mapper.readProjectBoard(projectId, projectBoardId);
 	}
 
 	@Override
@@ -58,7 +63,9 @@ public class ProjectServiceImpl implements ProjectService{
 		return mapper.readProjectPost(projectBoardId, projectPostId);
 	}
 
-	
-	
+	@Override
+	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) {
+		return mapper.deleteProjectPost(projectBoardId, projectPostId) == 1;
+	}
 
 }
