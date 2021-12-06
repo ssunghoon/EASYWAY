@@ -70,10 +70,19 @@ public class MainController {
 		return "redirect:/office/main";
 	}
 	
+	// 위젯 메인 불러오기
 	@GetMapping("/main")
-	public void main(){
+	public void main(Model model){
 		
-		log.info("이렇게 하는 거 맞아?");
+		log.info("메인 getList 페이지");
+		
+		WidgetCustom widgetCustom = new WidgetCustom();
+		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
+		widgetCustom.setMemberId(444L);
+		widgetCustom.setOfficeId(444L);
+		
+		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
+		model.addAttribute("widgetList", service.getListWidget(widgetCustom));
 	}
 	
 	// 위젯 불러오기 요청
@@ -84,8 +93,8 @@ public class MainController {
 		
 		WidgetCustom widgetCustom = new WidgetCustom();
 		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
-		widgetCustom.setMemberId(818L);
-		widgetCustom.setOfficeId(616L);
+		widgetCustom.setMemberId(444L);
+		widgetCustom.setOfficeId(444L);
 		widgetCustom.setWsCustom(data.get("customNumber"));
 		
 		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
@@ -108,8 +117,8 @@ public class MainController {
 		WidgetCustom widgetCustom = new WidgetCustom();
 		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
 		widgetCustom.setWsCustom(data.get("customNumber"));
-		widgetCustom.setMemberId(55L);
-		widgetCustom.setOfficeId(55L);
+		widgetCustom.setMemberId(444L);
+		widgetCustom.setOfficeId(444L);
 		widgetCustom.setWsImport("Y");
 		
 		// getList 만들기전까지 임시
