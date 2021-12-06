@@ -83,6 +83,8 @@
 			 	 	<span>불러오기</span>
 				</div>
 			</div>
+			<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			
 			<!-- 커스텀 저장 모달창 -->
 			<div class="modal fade" id="staticBackdrop-save" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

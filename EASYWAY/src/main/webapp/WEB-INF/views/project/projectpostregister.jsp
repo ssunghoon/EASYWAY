@@ -118,6 +118,7 @@ input.easy-btn {
 	            <div class="easyway-boardapply-form">
 	            
 		            <form class="form-container" action="projectpostregister" method="post">
+		            	<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            	<input type="hidden" name="projectId" value="${projectId }">
 		            	<input type="hidden" name="projectBoardId" value="${projectBoardId }">
 			        	<div class="form-title">

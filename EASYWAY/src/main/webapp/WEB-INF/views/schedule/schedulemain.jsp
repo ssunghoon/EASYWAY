@@ -376,6 +376,8 @@
 							<div class="modal-body">
 								<!--UI마스터-->
 								<form action="/schedule/scheduleregister" method="post" >
+								<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		                     <!--   accept-charset="utf-8"-->
 			                     <div class="mb-3">
 			                        <label>제목:</label>
@@ -422,6 +424,8 @@
 					<div class="modal-body">
 <%-- 					<form role="" method="post" action="/schedule/schedulemodify?scheduleId=${schedule.scheduleId}"> --%>
 					<form role="" method="get" action="/schedule/scheduledetail?scheduleId=${schedule.scheduleId}">
+					<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	                     <div id="scheduleInfo">
 	                       <label>일정번호</label>
 							<input type="text" class="form-control" name="scheduleId"
@@ -521,6 +525,24 @@
 <!--제목클릭시처리하는부분-->
 var scheduleData;
 
+$.ajax({
+    type: "post",
+    url: "/member/search",
+    data: JSON.stringify(data),
+    contentType: "application/json; charset=utf-8",
+    beforeSend: function (xhr) {
+      var $token = $("#token");
+      xhr.setRequestHeader($token.data("token-name"), $token.val());
+    },
+    success: function (result, status, xhr) {
+      console.log(result);
+      addEmail(result);
+    },
+    error: function (xhr, status, er) {
+      alert("해당 이메일을 가진 맴버가 존재하지 않습니다.");
+    },
+  });
+  
 $(document)
 	.on(
 			"click","#save-btn",
