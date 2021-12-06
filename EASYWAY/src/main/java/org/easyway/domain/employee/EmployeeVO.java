@@ -2,6 +2,7 @@ package org.easyway.domain.employee;
 
 
 
+import java.io.Serializable;
 
 import java.sql.Date;
 
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeVO {
+public class EmployeeVO implements Serializable {
 	
 	private Long employeeId;
 	private Long officeId;
