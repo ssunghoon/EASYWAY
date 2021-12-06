@@ -49,7 +49,7 @@
 
 				<div class="easyway-board-item">
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
-					<div class="easyway-title1">전체 공지사항</div>
+					<div class="easyway-title1"><c:out value="${of_board.departmentId } "/> 공지사항</div>
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->
