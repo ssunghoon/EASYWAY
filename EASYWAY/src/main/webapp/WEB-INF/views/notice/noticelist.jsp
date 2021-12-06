@@ -181,6 +181,8 @@
 
 
 					<form id="actionForm" action="/notice/noticelist" method="get">
+						<input type="hidden" id="token" name="${_csrf.parameterName}"
+                		  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<input type="hidden" name="pageNum"
 							value='<c:out value="${pageMaker.cri.pageNum}"/>'> <input
 							type="hidden" name="amount"
@@ -220,6 +222,8 @@
 				<div class="easyway-board-item">
 					<!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
 					<form class="search-form" action="/notice/noticelist" method="get">
+						<input type="hidden" id="token" name="${_csrf.parameterName}"
+               			   data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<select name="type" class="dropdown-toggle" data-toggle="dropdown">
 							<option class="dropdown-menu" value="" 
 							<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>검색 옵션
