@@ -74,6 +74,8 @@
 	            <div class="easyway-boardapply-form">
 	            
 		            <form class="form-container" action="" action="" method="post">
+		            	<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  		data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            
 			        	<div class="form-title">
 			                <!-- 제목 -->

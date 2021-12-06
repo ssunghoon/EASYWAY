@@ -352,11 +352,15 @@ function saveOffset(customNumber){
 	
 	// ajax를 통한 위치 및 너비, 높이 데이터 저장
 	$.ajax({
+		  type: 'POST',
 		  url: '/office/saveOffset',
 		  data: formData,
 		  contentType: false,
 		  processData: false,
-		  type: 'POST',
+          beforeSend: function (xhr) {
+        	  var $token = $("#token");
+        	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+          },
 		  success: function(result){
 			 console.log("위젯 저장 성공");
 		  },
@@ -394,11 +398,15 @@ function importOffset(customNumber){
 	
 	// ajax를 통한 위치 및 너비, 높이 데이터 저장
 	$.ajax({
+		  type: 'POST',
 		  url: '/office/importOffset',
 		  data: jsonData,
 		  dataType: 'json',
           contentType: 'application/json; charset=utf-8',
-		  type: 'POST',
+          beforeSend: function (xhr) {
+        	  var $token = $("#token");
+        	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+          },
 		  success: successHandler
 	  }); //end ajax
 	
