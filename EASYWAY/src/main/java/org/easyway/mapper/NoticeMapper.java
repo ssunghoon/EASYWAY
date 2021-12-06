@@ -13,7 +13,7 @@ public interface NoticeMapper {
 	//전체리스트
 	public List<NoticeVO> getListAll();
 	
-	//페이징
+	//페이징검색 포함한 리스트
 	public List<NoticeVO> getListPaging(NoticeCriteria cri);
 
 	//상세조회
@@ -24,5 +24,9 @@ public interface NoticeMapper {
 
 	//삭제
 	public boolean delete(int obId);
+	
+	public List<NoticeVO> getListDepartment();
+	
+	public int getTotalCount(NoticeCriteria cri);
 
 }
