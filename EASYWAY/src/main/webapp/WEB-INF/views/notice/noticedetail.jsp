@@ -82,6 +82,8 @@
 					</div>
 	            	
 	            	<form action="/notice/noticeremove" method="post">
+	            	<input type="hidden" id="token" name="${_csrf.parameterName}"
+              		    data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	            	<div class="buttons">
 	            	<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>' >
 						<!--수정페이지로 이동 버튼 -->
@@ -108,6 +110,8 @@
 	            	</div>
 	
 					<form id='operForm' action="/notice/noticedetail" method="get">
+						<input type="hidden" id="token" name="${_csrf.parameterName}"
+                 		 data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<input type="hidden" id='obId' name="obId" value='<c:out value="${of_board.obId}"/>'> 
 							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> 
 							<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'> 
