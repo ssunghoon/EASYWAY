@@ -62,6 +62,9 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<form action="projectcreate" method="post">
+						
+							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+						
 							<div class="modal-header">
 								<h5 class="modal-title" id="staticBackdropLabel">프로젝트 생성</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
