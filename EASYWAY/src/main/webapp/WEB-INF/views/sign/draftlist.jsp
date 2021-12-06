@@ -155,6 +155,7 @@
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 						<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
 						<input type='hidden' name='keyword1' value='<c:out value="${ pageMaker.cri.keyword1 }"/>'>
+						<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</form>
 	            </div>
 	           
@@ -173,6 +174,7 @@
 						<input type='hidden' name='amount'
 							value='<c:out value="${pageMaker.cri.amount}"/>' />
 	                    <button class="easyway-btn">검색</button>
+	                <input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</form>
 	            </div>
 	

@@ -209,6 +209,8 @@
 	            <div class="easyway-board-item">
 	                <!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
 	                <form class="search-form" action="" method="get">
+	                	<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  		data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	                    <select name="type" class="dropdown-toggle" data-toggle="dropdown">
 	                        <option value="" class="dropdown-menu">검색 옵션</option>
 	                            <option value="title" class="dropdown-item">제목</option>
