@@ -165,7 +165,7 @@
 							<input type="hidden" name="signFormId" value="1">
 							<input type="submit" class="easyway-btn" value="등록">
 			            </div>
-			            
+			            <input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			    	</form>
 			    </div> <!-- end easyway-boardapply-form -->
 	            
