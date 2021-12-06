@@ -17,7 +17,7 @@ import lombok.ToString;
 
 	  public NoticeCriteria() {
 		  //1페이지에 게시글 10개만 보여주겠다
-	    this(1, 10);
+	    this(1, 15);
 	  }
 
 	  public NoticeCriteria(int pageNum, int amount) {

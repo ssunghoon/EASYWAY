@@ -46,6 +46,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
     <script src="/resources/js/menu.js"></script>
     <script src="/resources/js/sign/sign.js"></script>
+    <script src="/resources/js/sign/applyBasic.js"></script>
 
 </head>
 <body>
@@ -179,14 +180,23 @@
 							</div>
 							<div class="modal-body">
 								<div class="col-lg-6 sign-list-box">
-									<h5>결재선 설정</h5>
-									<c:forEach var="employee" items="${employeeList }">
+									<div class="input-group">
+										<input type="search" class="form-control rounded"
+											placeholder="이름을 입력해주세요" aria-label="Search"
+											aria-describedby="search-addon" name="employeeName"/>
+										<button type="button" id="search-name" class="btn easyway-btn">검색</button>
+									</div>
+									<div id="search-name-list" class="mb-3">
+										<!-- <label for="recipient-name" class="col-form-label"></label>
+										<div id="seach-output"></div> -->
+									</div>
+									<%-- <c:forEach var="employee" items="${employeeList }">
 										<input type="radio" value="${employee.employeeId }" name="employeeId" id="${employee.employeeId }">
 										<label for="${employee.employeeId }">
 											<c:out value="${employee.employeeName}" />
 										</label><br>
 										<input type="hidden" value="${employee.employeeName }" id="employeeId">
-									</c:forEach>
+									</c:forEach> --%>
 								</div>
 								<div class="col-lg-1">
 									<div class="in-out-box">
@@ -243,7 +253,7 @@
 	
 	var employeeData = null;
 	// 첫번째 결재선 등록
- 	$('#firstIn').on("click",function() {
+ 	/* $('#firstIn').on("click",function() {
 		// firstResult 자리
 		const firstResult = document.getElementById('firstResult').value;
 		// 선택된 값
@@ -294,7 +304,7 @@
 			document.getElementById("fourthResult").innerHTML = "";
 			alert(document.getElementById("firstResult").innerHTML);
 		});
-		
+		 */
 		
 		
 		

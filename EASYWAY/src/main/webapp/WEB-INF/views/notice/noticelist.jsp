@@ -42,10 +42,11 @@
 </head>
 <style>
 .submenuLink { /* 하위 메뉴의 a 태그 스타일 설정 */
-	color: #2d2d2d; /* 글씨 색을 RGB(2D2D2D)로 설정 */
+/* 	color: #2d2d2d; /* 글씨 색을 RGB(2D2D2D)로 설정 */ */
 	background-color: white; /* 배경색을 흰색으로 설정 */
 /* 	border: solid 1px black; /* 테두리를 설정 */ */
 	margin-top: -1px; /* 위 칸의 하단 테두리와 아래칸의 상단 테두리가 겹쳐지도록 설덩 */
+	padding-left: 20px;
 }
 
 .submenu { /* 하위 메뉴 스타일 설정 */
@@ -103,15 +104,6 @@
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->
-<!-- 			<div class="menu"> -->
-<!-- 					<a href="/notice/noticelist"> <input type="button" -->
-<!-- 						class="btn btn-primary pull-right" -->
-<!-- 						style="margin-left: 145px; margin-top: 30px; width: 30%; position: absolute; height: 45px; font-size: 150%;" -->
-<!-- 						value="전체 공지사항"></a> <a href="*"> <input type="button" -->
-<!-- 						class="btn btn-primary pull-right" -->
-<!-- 						style="margin-left: 650px; margin-top: 30px; width: 40%; height: 45px; font-size: 150%;" -->
-<!-- 						value="부서 공지사항"></a> -->
-<!-- 				</div> -->
 				</div>
 				<div class="easyway-board-item">
 					<!-- 3번째 easyway-board-item : 필터 들어갈 자리 2 -->
@@ -291,8 +283,8 @@
 
 								if (parseInt(result) > 0) {
 									$(".modal-body").html(
-											"성공적으로 게시글 " + parseInt(result)
-													+ " 번이 등록되었습니다.");
+											"성공적으로 " + parseInt(result)
+													+ " 번 게시글이 등록되었습니다.");
 								}
 
 								$("#myModal").modal("show");
