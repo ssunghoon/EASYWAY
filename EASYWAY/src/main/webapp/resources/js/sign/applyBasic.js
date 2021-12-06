@@ -17,10 +17,10 @@ $(document).ready(function () {
 		  url: "/sign/search",
 		  data: JSON.stringify(data),
 	      contentType: "application/json; charset=utf-8",
-//	      beforeSend: function (xhr) {
-//	        var $token = $("#token");
-//	        xhr.setRequestHeader($token.data("token-name"), $token.val());
-//	      },
+	      beforeSend: function (xhr) {
+	        var $token = $("#token");
+	        xhr.setRequestHeader($token.data("token-name"), $token.val());
+	      },
 	      success: function (result, status, xhr) {
 	          console.log(result);
 	          addName(result);

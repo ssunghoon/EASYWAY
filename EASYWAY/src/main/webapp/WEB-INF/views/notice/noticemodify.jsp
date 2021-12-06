@@ -101,15 +101,16 @@
 
   			 <div class="easyway-boardapply-form">
 
-					<form class="form-container" action="/notice/noticemodify"
-						method="post">
+				<form class="form-container" action="/notice/noticemodify" method="post">
+						<input type="hidden" id="token" name="${_csrf.parameterName}"
+                		  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<input type="hidden" name="obId" value="${of_board.obId }">
-						<div class="form-title">
-							<!-- 제목 -->
-							<div class="option-name">
-								제목
+							<div class="form-title">
+								<!-- 제목 -->
+								<div class="option-name">
+									제목
+								</div>
 							</div>
-						</div>
 						<div class="form-title-input">
 							<!-- 제목 : 작성칸 -->
 							<input type="text" class="form-control" placeholder="글제목"
@@ -118,7 +119,7 @@
 					 <div class="form-writer">
 			                <!-- 작성자 : 작성칸 -->			                
 			            <div class="option-name" name="employeeId" >작성자</div>
-			            </div>
+			         </div>
 						<div class="form-writer-input">
 							<!-- 작성자 : 작성칸 -->
 							<!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->

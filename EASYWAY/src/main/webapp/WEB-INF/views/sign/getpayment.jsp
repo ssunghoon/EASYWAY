@@ -106,6 +106,7 @@
 					<c:if test="${basicSign.signListCheck == 'N'}">
 					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
 					</c:if>
+					<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</form> 
 					</c:when>
 					<c:when test="${spendSign.signFormId == '2'}">
@@ -148,6 +149,7 @@
 					<c:if test="${spendSign.signListCheck == 'N'}">
 					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
 					</c:if> 
+					<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</form>  
 					</c:when>
 					<c:when test="${vacationSign.signFormId == '3'}">
@@ -188,6 +190,7 @@
 					<c:if test="${vacationSign.signListCheck == 'N'}">
 					 	<button type="submit" data-oper='payment' onclick="signOk()" class="easyway-btn form-submit">결재확인</button>
 					</c:if>  
+					<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</form> 
 					</c:when>
 				</c:choose>
