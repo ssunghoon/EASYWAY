@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.member.MemberVO;
 import org.easyway.domain.office.OfficeVO;
@@ -97,13 +98,16 @@ public class OfficeController {
 		return "redirect:/office/officelist";
 	}
 	
-	@PostMapping("/employee/register/{officeId}")
+	@PostMapping("/employee/register")
 	@ResponseBody
-	public ResponseEntity<?> employeeRegister(@RequestBody List<MemberDTO> members, @PathVariable Long officeId){
-		log.info(members);
-		log.info(officeId);
-		officeService.sendEmail(members, officeId);
-		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	public ResponseEntity<?> employeeRegister(@RequestBody List<EmployeeDTO> employees, HttpSession session){
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(employees);
+		log.info(officeVO.getOfficeId());
+		officeService.sendEmail(employees, officeVO.getOfficeId());
+		officeService.registerEmployees(employees, officeVO.getOfficeId());
+		
+		return new ResponseEntity<>("ok", HttpStatus.OK);
 	}
 	
 }

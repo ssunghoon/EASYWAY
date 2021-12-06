@@ -78,7 +78,7 @@
 					<button type="button" class="btn btn-sign"
 						onclick="location.href='/sign/paymentlist'">결재함</button>
 				</div>
-				<div id="btn-group btn-group-lg white-box-group" style="padding: 10px 80px 10px 80px">
+				<div id="btn-group btn-group-lg white-box-group" >
 					<button class="btn btnGray" onclick="location.href='/sign/applybasic'" >기본기안서</button>
 					<button class="btn btnGray" onclick="location.href='/sign/applyspend'" >지출결의서</button>
 					<button class="btn btnGray" onclick="location.href='/sign/applyvacation'" >휴가신청서</button>

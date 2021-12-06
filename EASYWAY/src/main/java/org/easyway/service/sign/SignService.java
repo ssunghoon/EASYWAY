@@ -2,9 +2,10 @@ package org.easyway.service.sign;
 
 import java.util.List;
 
+import org.easyway.domain.employee.EmployeeDTO;
+import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
-import org.easyway.domain.sign.EmployeeVO;
 import org.easyway.domain.sign.SignListVO;
 import org.easyway.domain.sign.SignVO;
 import org.easyway.domain.sign.SpendSignVO;
@@ -40,7 +41,7 @@ public interface SignService {
 	public int getTotalDraft(Criteria cri);
 	
 	// 직원 목록
-	public List<EmployeeVO> getListEmployee();
+	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재선 등록(1,2,3,4 번째)
 	public void applyLineFirst(SignListVO list, SignVO sign);
@@ -61,5 +62,8 @@ public interface SignService {
 	
 	// 결재완료여부 변경
 	public boolean modifySignCheck(SignVO sign);
+	
+	// 직원 검색
+	EmployeeVO get(String enterdeName);
 
 }
