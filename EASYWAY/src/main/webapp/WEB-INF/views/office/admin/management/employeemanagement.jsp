@@ -39,7 +39,8 @@
 <link href="/resources/css/reset.css" rel="stylesheet">
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 <link href="/resources/css/common.css" rel="stylesheet">
-<link href="/resources/css/office/employee_management.css" rel="stylesheet">
+<link href="/resources/css/office/employee_management.css"
+	rel="stylesheet">
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 <script src="/resources/js/menu.js"></script>
@@ -50,9 +51,6 @@
 
 	<!-- sidebar ------------------------------------------------------------------------------->
 	<jsp:include page="../../../public/sidebar.jsp" />
-	<c:set var="positionList" value="${positionList}"/>
-	<c:set var="departmentList" value="${departmentList}" />
-
 	<div class="page-divider">
 		<div class="sidebar-background"></div>
 
@@ -65,18 +63,19 @@
 						<a href="/office/admin/management/employeemanagement">임직원 관리</a>
 					</div>
 					<div class="tab-label">
-						<a href="/office/admin/management/employeemanagement">인사 관리자 설정</a>
+						<a href="/office/admin/management/employeemanagement">인사 관리자
+							설정</a>
 					</div>
 				</div>
 
-<%-- ${sessionScope.nowOfficeInfo} --%>
+				<%-- ${sessionScope.nowOfficeInfo} --%>
 				<div class="setting-title">
 					<div class="easyway-title1">사원 등록</div>
 				</div>
 				<div class="employee-btns">
 					<button type="button" class="employee-add-btn"
 						data-bs-toggle="modal" data-bs-target="#employee-resite-model">추가하기</button>
-					<button class="easyway-btn">저장</button>
+					<button id="save-btn" class="easyway-btn">저장</button>
 				</div>
 				<div class="employee-table">
 					<table id="employee-list" class="employee-list">
@@ -85,19 +84,21 @@
 							<th>이메일</th>
 							<th>직위명</th>
 							<th>소속부서</th>
+							<th>입사일</th>
 							<th>근로형태</th>
 							<th>휴대전화</th>
 						</tr>
-						
+
 						<c:forEach var="employee" items="${employeeList}">
-						<tr>
-							<td>${employee.employeeName}</td>
-							<td>${employee.employeeEmail}</td>
-							<td>${employee.employeePosition}</td>
-							<td>${employee.employeeDepartment}</td>
-							<td>${employee.employeeWorkType}</td>
-							<td>${employee.employeePhone}</td>
-						</tr>			
+							<tr>
+								<td>${employee.employeeName}</td>
+								<td>${employee.employeeEmail}</td>
+								<td>${employee.employeePosition}</td>
+								<td>${employee.employeeDepartment}</td>
+								<td>${employee.employeeHireDate}</td>
+								<td>${employee.employeeWorkType}</td>
+								<td>${employee.employeePhone}</td>
+							</tr>
 						</c:forEach>
 					</table>
 				</div>
@@ -113,26 +114,46 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-							<div class="input-group">
-								<input type="search" class="form-control rounded"
-									placeholder="초대할 맴버 이메일을 작성해주세요" aria-label="Search"
-									aria-describedby="search-addon" name="memberEmail"/>
-								<button type="button" id="search-email" class="btn easyway-btn">search</button>
-							</div>
-							<div id="search-email-list" class="mb-3">
-								<label for="recipient-name" class="col-form-label">검색결과:</label>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary all-clear-btn"
-									data-bs-dismiss="modal">닫기</button>
-								<input id="add-employee" type="button" class="btn easyway-btn" data-bs-dismiss="modal" value="추가하기">
-							</div>
-							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}"	value="${_csrf.token}" />
+						<div class="input-group">
+							<input type="search" class="form-control rounded"
+								placeholder="초대할 맴버 이메일을 작성해주세요" aria-label="Search"
+								aria-describedby="search-addon" name="memberEmail" />
+							<button type="button" id="search-email" class="btn easyway-btn">search</button>
+						</div>
+						<div id="search-email-list" class="mb-3">
+							<label for="recipient-name" class="col-form-label">검색결과:</label>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary all-clear-btn"
+								data-bs-dismiss="modal">닫기</button>
+							<input id="add-employee" type="button" class="btn easyway-btn"
+								data-bs-dismiss="modal" value="추가하기">
+						</div>
+						<input type="hidden" id="token" name="${_csrf.parameterName}"
+							data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</div>
 				</div>
 			</div>
 		</div>
 </body>
+<script type="text/javascript">
+	var positionList = new Array();
+	var ps = {};
+	<c:forEach items="${positionList}" var="position">
+	positionList.push({
+		"positionId": ${position.positionId},
+		"positionName":"${position.positionName}"
+		});
+	</c:forEach>
+	console.log(positionList);
+	var departmentList = new Array();
+	<c:forEach items="${departmentList}" var="department">
+	departmentList.push({
+		"departmentId": ${department.departmentId},
+		"departmentName":"${department.departmentName}"
+		});
+	</c:forEach>
+</script>
 <script src="/resources/js/office/employeemanagement.js"></script>
 
 </html>

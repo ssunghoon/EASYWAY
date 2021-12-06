@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.member.MemberVO;
@@ -164,6 +166,7 @@ public class OfficeServiceImpl implements OfficeService {
 									.employeePhone(adminMember.getMemberPhone())
 									.employeeMaster("y")
 									.employeeWorkType("정규직")
+									.employeeHireDate(new Date(System.currentTimeMillis()))
 									.employeeLeftDay(adminannualVacation)
 									.employeeCall("0100100101")
 									.build();
@@ -172,10 +175,10 @@ public class OfficeServiceImpl implements OfficeService {
 	}
 
 	// 인증메일 보내기
-	public void sendEmail(List<MemberDTO> members, Long officeId) {
+	public void sendEmail(List<EmployeeDTO> employees, Long officeId) {
 
 		OfficeVO thisOffice = officeMapper.getOffice(officeId);
-		members.forEach((member) -> {
+		employees.forEach((employee) -> {
 			// 인증메일 보내기
 			try {
 				MailUtils sendMail = new MailUtils(mailSender);
@@ -184,7 +187,7 @@ public class OfficeServiceImpl implements OfficeService {
 						.append("<p>" + thisOffice.getOfficeName() + "에서 귀하를 등록했습니다. 아래 고유 코드를 입력해 오피스로 입장해주세요!</p>")
 						.append("<br><h2>" + thisOffice.getOfficeCode() + "</h2>").toString());
 				sendMail.setFrom("wfret0710@bible.ac.kr", "관리자");
-				sendMail.setTo(member.getMemberEmail());
+				sendMail.setTo(employee.getEmployeeEmail());
 				sendMail.send();
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -203,5 +206,28 @@ public class OfficeServiceImpl implements OfficeService {
 	@Override
 	public List<DepartmentVO> getDepartment(Long officeId) {		
 		return officeMapper.getDepartmentList(officeId);
+	}
+
+	@Override
+	public void registerEmployees(List<EmployeeDTO> employees, Long officeId) {
+		
+		AnnualVacation av = officeMapper.getAnnualVacation(1, officeId);
+		employees.forEach((employee)->{
+			EmployeeVO employeeVO = EmployeeVO.builder()
+							.officeId(officeId)
+							.memberId(employee.getMemberId())
+							.departmentId(Long.parseLong(employee.getEmployeeDepartment()))
+							.positionId(Long.parseLong(employee.getEmployeePosition()))
+							.employeeLeftDay(av.getAnnual())
+							.employeeCall("010-000-000")
+							.employeeMaster("n")
+							.employeeName(employee.getEmployeeName())
+							.employeePhone(employee.getEmployeePhone())
+							.employeeWorkType(employee.getEmployeeWorkType())
+							.employeeHireDate(employee.getEmployeeHireDate())
+							.build();
+							
+			employeeMapper.insertEmployee(employeeVO);
+		});
 	}
 }

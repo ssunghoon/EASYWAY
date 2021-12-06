@@ -16,4 +16,5 @@ public interface EmployeeMapper {
 	public EmployeeVO getEmployee(Long employeeId);
 	public EmployeeVO getEmployee2(@Param("memberId")Long nowMemberId, @Param("officeId")Long officeId);
 	public List<EmployeeDTO> getListEmployee(Long officeId);
+	public void insertEmployee(EmployeeDTO employee);
 }
