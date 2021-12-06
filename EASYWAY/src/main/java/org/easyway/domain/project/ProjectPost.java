@@ -16,5 +16,6 @@ public class ProjectPost { // 프로젝트 게시물
 	private String projectPostContent; // 내용
 	private String projectPostFilePath; // 첨부파일
 	private String projectPostDate; // 작성일
+	private long projectPostViews; // 조회 수
 
 }

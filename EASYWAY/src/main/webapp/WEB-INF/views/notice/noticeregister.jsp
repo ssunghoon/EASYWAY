@@ -133,10 +133,10 @@
 			            <div class="form-option1-input">
 							<!-- 상단 고정 여부 : 작성칸 -->
 							<div class="radio-wrapper">
-								<input type="radio" name="obFixedCheck" id="ch1" value="Y">&nbsp;<label for="first">상단 고정</label>
+								<input type="radio" name="obFixedCheck" id="ch1" value="Y">&nbsp;<label for="ch1">상단 고정</label>
 				            </div>
 							<div class="radio-wrapper">
-					            <input type="radio" name="obFixedCheck" id="ch2" value="N">&nbsp;<label for="second">일반 공지</label>
+					            <input type="radio" name="obFixedCheck" id="ch2" value="N">&nbsp;<label for="ch2">일반 공지</label>
 				            </div>
 			            </div>
 			            

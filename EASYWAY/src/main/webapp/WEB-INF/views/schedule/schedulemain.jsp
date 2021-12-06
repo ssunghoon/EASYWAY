@@ -203,10 +203,11 @@
 	margin-top: 40px;
 	margin: 0px;
 	padding: 0;
-	/*  font-family: Arial, Helvetica Neue, Helvetica, sans-serif; */
+	/*  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 	position: relative;
 }
  */
+ /* <id 영역 #> */
 #calendar {
 	max-width: 1100px;
 /* 	margin: 100px, auto; */
@@ -221,11 +222,6 @@
 	padding-bottom: 20px;
 	padding-top: 20px;
 }
-
-/* p {
-	text-align: center;
-	color: black;
-} */
 
 #modalwrapper {
 	position: absolute;
@@ -281,8 +277,14 @@
 #calendar {
 	max-width: 1100px;
 	margin: 0 auto;
+	
 }
 
+#save-btn:hover{
+	background:#0397ed; 
+	color: #FFFFFF;
+}
+/* <클래스 영역> */
 .container {
 	margin-top: 50px;
 	margin-bottom: 100px;
@@ -294,16 +296,44 @@
     display: flex;
     justify-content: center;
 }
+
 /*일정 목록*/
 .easyway-title1 {
     margin-bottom: 20px;
     font-size: 20pt;
     margin-top: 20px;
 }
+
 /*일정추가버튼*/
 .btn-primary {
 	color: #fff;
     background-color: #0397ed;
+}
+
+/*일정조회 버튼 전체 적용스타일 */
+.schedule-btn {
+	background: none;
+	border: none;
+	width: 60px;
+	height: 40px;
+	color: white;
+	border-radius: 5px;
+	font-size: 15px;
+}
+
+/* 저장버튼 */
+.schedule-btn-save {
+	background: #0397ed;
+}
+
+/* 일정수정버튼 */
+.schedule-btn-modify {
+	background: #74DF00;
+}
+
+/* 일정삭제버튼 */
+.schedule-btn-delete {
+	background: #f75834;
 }
 
 </style>
@@ -344,19 +374,19 @@
 							</div>
 							
 							<div class="modal-body">
-										
 								<!--UI마스터-->
 								<form action="/schedule/scheduleregister" method="post" >
 		                     <!--   accept-charset="utf-8"-->
 			                     <div class="mb-3">
 			                        <label>제목:</label>
-			                            <input type="text" class="form-control" name="scheduleTitle">
-			                        <label>시작시간</label>
-			                            <input type="date" class="form-control" name="scheduleStart">
-			                        <label>종료시간</label>
-			                            <input type="date" class="form-control" name="scheduleEnd">
-			                        <label>내용</label>
-			                            <input type="text" class="form-control" name="scheduleContent">
+	                            		<input type="text" class="form-control" name="scheduleTitle">
+	                        		<label>시작시간</label>
+	                            		<input type="date" class="form-control" name="scheduleStart">
+	                        		<label>종료시간</label>
+	                            		<input type="date" class="form-control" name="scheduleEnd">
+	                        		<label>내용</label>
+	                            		<input type="text" class="form-control" name="scheduleContent">
+								<%--value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>		                            
 			                        <label>중요도 </label>
 			                            <input type="radio" name="scheduleImportance" id="first" value="상">&nbsp;<label for="first">상</label>
 			                            <input type="radio" name="scheduleImportance" id="second" value="중">&nbsp;<label for="second">중</label>
@@ -376,7 +406,7 @@
 				</div>
 			</div>
 			
-			<!--일정조회모달창  -->
+			<!--일정조회모달창+수정+삭제 저장 버튼 포함 -->
 		<div id="modalwrapperdetail">
 		<!-- Button trigger modal  -->
 		<!--Modal  -->
@@ -390,39 +420,47 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
+<%-- 					<form role="" method="post" action="/schedule/schedulemodify?scheduleId=${schedule.scheduleId}"> --%>
 					<form role="" method="get" action="/schedule/scheduledetail?scheduleId=${schedule.scheduleId}">
 	                     <div id="scheduleInfo">
 	                       <label>일정번호</label>
 							<input type="text" class="form-control" name="scheduleId"
-								value='' readonly="readonly">
+								value='scheduleData.scheduleId' readonly="readonly">
 	                        <label>직원번호</label>
 	                        <input type="text" class="form-control" name="employeeId"
-	                        	value='<c:out value="${schedule.employeeId}"/>' readonly="readonly">
+	                        	value='scheduleData.semployeeId' readonly="readonly">
 	                        <label>제목:</label>
 	                        <input type="text" class="form-control" name="scheduleTitle"
-	                            	value='<c:out value="${schedule.scheduleTitle}"/>' readonly="readonly">
+	                            	value='scheduleData.scheduleTitle'>
+	                            	
 	                        <label>시작시간</label>
-	                        <input type="date" class="form-control" name="scheduleStart"
-	                            	value='<c:out value="${schedule.scheduleStart}"/>' readonly="readonly">
+	                        <!--기간 형식 바꾸기 -->
+<!-- 	                     <input type="date" class="form-control" name="scheduleStart" -->
+<!-- 	                        value='scheduleData.scheduleStart' readonly="readonly"> -->
+							 <input type="date" class="form-control" name="scheduleStart"
+							 		value='scheduleData.scheduleStart' >
+<%-- 	                            value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
 	                        <label>종료시간</label>
 	                        <input type="date" class="form-control" name="scheduleEnd"
-	                            value='<c:out value="${schedule.scheduleEnd}"/>' readonly="readonly">
+	                            value='scheduleData.scheduleEnd' >
 	                        <label>내용</label>
 	                        <input type="text" class="form-control" name="scheduleContent"
-	                            value='<c:out value="${schedule.scheduleContent}"/>' readonly="readonly">
+	                            value='scheduleData.scheduleContent'>
 	                       	<label>중요도 </label>
 	                       	<input type="text"class="form-control"  name="scheduleImportance"  
-	                            value='<c:out value="${schedule.scheduleImportance}"/>'readonly="readonly">
-	                            <br>
+	                            value='scheduleData.scheduleImportance'>
 	                        <label>공사구분</label>
 	                        <input type="text" class="form-control" name="schedulePrivate"
-	                            value='<c:out value="${schedule.schedulePrivate}"/>' readonly="readonly">
+	                            value='scheduleData.schedulePrivate'>
 	                     </div>
 	                     <div class="modal-footer">
-	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-<!-- 	                        <input type="submit" class="btn btn-primary" value="일정 수정"> -->
+	                  	<!-- 책254p에는 버튼형식으로 되어있음 확인해보기 기존 버튼코드는 노션 kosta 최종프로젝트에있음-->
+	                    <input type="submit" class="schedule-btn schedule-btn-save" value="저장">
+						<input type="submit" class="schedule-btn schedule-btn-modify" value="수정">
+						<input type="submit" class="schedule-btn schedule-btn-delete" value="삭제">
 	                     </div>
-                 	</form>
+                 	</form><!-- end detail -->
+<!--                  	</form>end modify -->
 					</div>
 				</div>
 			</div>
@@ -435,7 +473,7 @@
 				</div>
 					
 				<div class="table-container">
-					<table style="text-align: center; border: 1px solid #dddddd;">
+					<table style="text-align: center; border: 2px solid #dddddd;">
 						<!--style="-->
 						<tr>
 							<th style="background-color: #eeeeee; text-align: center;">일정번호
@@ -460,12 +498,11 @@
 							<tr style="background-color: #11111; text-align: center; border: 1px;">
 								<td>${schedule.scheduleId}</td>
 								<td>${schedule.employeeId}</td>
-								
-								<td><button id="save-btn" type="button" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
-								data-bs-toggle="modal" data-bs-target="#modal-detail">
-								${schedule.scheduleTitle}</button></td>
-								
-								<td>${schedule.scheduleStart}</td>
+								<td><a id="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
+ 								data-bs-toggle="modal" data-bs-target="#modal-detail">
+ 								${schedule.scheduleTitle}</a></td>
+ 								
+ 								<td>$(schedule.scheduleStart)</td>
 								<td>${schedule.scheduleEnd}</td>
 						
 								<td>${schedule.scheduleContent}</td>
@@ -483,24 +520,39 @@
 <script type="text/javascript"> 
 <!--제목클릭시처리하는부분-->
 var scheduleData;
-$('input[name=scheduleId]').attr('value',scheduleData.scheduleId);
 
 $(document)
 	.on(
 			"click","#save-btn",
 			function(e) {
+				
 				var id = $(this).data("scheduleid");
 				console.log(id);
+				
 				$.ajax({
 				      type: "get",
 				      url: "/schedule/scheduledetail/" +id,
-/* 					      beforeSend: function (xhr) {	
+					   /*   beforeSend: function (xhr) {	
 				        var $token = $("#token");
 				        xhr.setRequestHeader($token.data("token-name"), $token.val());
 				      }, */
 				      success: function (result, status, xhr) {
 				        console.log(result);
+				        console.log(result.scheduleTitle);
 				        scheduleData = result;
+				      //조회모달창에 넘어가기
+				     // DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+				      
+						$('input[name=scheduleId]').attr('value',scheduleData.scheduleId);
+						$('input[name=employeeId]').attr('value',scheduleData.employeeId);
+						$('input[name=scheduleTitle]').attr('value',scheduleData.scheduleTitle);
+						
+						$('input[name=scheduleStart]').attr('value',scheduleData.scheduleStart);
+						$('input[name=scheduleEnd]').attr('value',scheduleData.scheduleEnd);
+						
+						$('input[name=scheduleContent]').attr('value',scheduleData.scheduleContent);
+						$('input[name=scheduleImportance]').attr('value',scheduleData.scheduleImportance);
+						$('input[name=schedulePrivate]').attr('value',scheduleData.schedulePrivate);
 				      },
 				      error: function (xhr, status, er) {
 				        alert("실패!");
