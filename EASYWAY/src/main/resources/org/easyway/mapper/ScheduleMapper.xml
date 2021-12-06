@@ -11,7 +11,7 @@
 			schedule_id AS scheduleId , employee_id AS employeeId, schedule_title AS scheduleTitle,
 			schedule_start AS scheduleStart, schedule_end AS scheduleEnd,
 			schedule_content AS scheduleContent, schedule_importance AS scheduleImportance, schedule_private AS schedulePrivate
-			FROM schedule
+			FROM schedule ORDER BY schedule_id
 			]]>
 	</select>
 	<!--일정등록 schedule_seq.nextval 자동으로 1씩증가-->
@@ -21,8 +21,8 @@
 			schedule_content , schedule_importance , schedule_private
 		)
 		VALUES(
-			schedule_seq.nextval, '1', #{schedule_title}, #{scheduleStart},#{scheduleEnd},
-			#{schedule_content}, #{schedule_importance}, #{schedule_private}
+			schedule_seq.nextval, '1', #{scheduleTitle}, #{scheduleStart},#{scheduleEnd},
+			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate}
 		)
 	</insert>
 	<!--date타입으로 기간변경시 아래 sql문활용하기 -->
