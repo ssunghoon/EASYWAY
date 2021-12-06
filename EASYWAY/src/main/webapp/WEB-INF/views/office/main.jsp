@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!doctype html>
 <html lang="en">
@@ -189,5 +191,21 @@
 </body>
 
 <script src="/resources/js/widget.js"></script>
+
+<script type="text/javascript">
+
+var widgetArr = new Array();
+
+<c:forEach var="widgetList" items="${widgetList}">
+
+	widgetArr.push("${widgetList.widgetName}");
+	widgetArr.push("${widgetList.widgetPositionX}");
+	widgetArr.push("${widgetList.widgetPositionY}");
+	widgetArr.push("${widgetList.widgetWidth}");
+	widgetArr.push("${widgetList.widgetHeight}");
+
+</c:forEach>
+	
+</script>
 
 </html>

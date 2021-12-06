@@ -57,7 +57,12 @@ public class NoticeController {
 	public void noticelist(NoticeCriteria cri, Model model){
 		log.info("noticelist" + cri);
 		model.addAttribute("noticelist", service.getListAll(cri));
-		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123));
+//		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123));
+		int total = service.getTotal(cri);
+		
+		log.info("total" + total);
+		
+		model.addAttribute("pageMaker", new NoticePageDTO(cri, total));
 	}
 
 	@GetMapping({ "/noticedetail", "/noticemodify" })
@@ -94,4 +99,22 @@ public class NoticeController {
 		}
 		return "redirect:/notice/noticelist";
 	}
+	
+	
+	//부서 공지사항 컨트롤러
+	
+	//부서 공지 입력폼
+//	@GetMapping("/departmentnoticeregister")
+//	public void departmentnoticeRegister() {
+//		System.out.println("부서공지입력폼을 불러옵니다");
+//	}
+//	
+//	//부서 공지 리스트
+//	@GetMapping("/noticelist")
+//	public String noticeList(Model model) {
+//		log.info("listttttttttttttttttt");
+//		model.addAttribute("noticelist", service.getListAll());
+//		return "/notice/noticelist";
+//	}
+	
 }

@@ -19,4 +19,6 @@ public interface NoticeService {
 	public boolean remove(int obId);
 	
 	public List<NoticeVO> getListAll(NoticeCriteria cri);
+	
+	public int getTotal(NoticeCriteria cri);
 }

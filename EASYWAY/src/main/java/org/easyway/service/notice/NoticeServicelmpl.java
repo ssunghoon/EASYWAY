@@ -53,5 +53,10 @@ public class NoticeServicelmpl implements NoticeService {
 		return mapper.getListPaging(cri);
 	}
 
+	@Override
+	public int getTotal(NoticeCriteria cri) {
+		return mapper.getTotalCount(cri);
+	}
+
 
 }

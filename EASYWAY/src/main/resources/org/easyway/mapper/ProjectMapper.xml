@@ -15,10 +15,6 @@
 		)
 	</insert>
 
-	<update id="updateProject">
-		update project set project_name = #{projectName}, project_end = #{projectEnd}, project_content = #{projectContent} WHERE project_id = #{projectId}
-	</update>
-	
 	<select id="getListProject" resultType="org.easyway.domain.project.Project">
 		SELECT
 			project_id AS projectId,
@@ -30,9 +26,15 @@
 			PROJECT
 	</select>
 	
+	<update id="updateProject">
+		update project set project_name = #{projectName}, project_end = #{projectEnd}, project_content = #{projectContent} WHERE project_id = #{projectId}
+	</update>
+	
+	
 	<insert id="insertProjectBoard">
 		INSERT INTO P_BOARD VALUES(P_BOARD_SEQ.nextval, #{projectId}, #{projectBoardName})
 	</insert>
+	
 	
 	<select id="getListProjectBoard" resultType="org.easyway.domain.project.ProjectBoard">
 		SELECT
@@ -43,8 +45,18 @@
 			P_BOARD WHERE PROJECT_ID = #{projectId}
 	</select>
 	
+	<select id="readProjectBoard" resultType="org.easyway.domain.project.ProjectBoard">
+		SELECT
+			pb_id AS projectBoardId,
+			project_id AS projectId,
+			pb_name AS projectBoardName
+		FROM
+			P_BOARD WHERE PROJECT_ID = #{projectId} AND PB_ID = #{projectBoardId}
+	</select>
+	
+	
 	<insert id="insertProjectPost">
-		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE)
+		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
 	</insert>
 
 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost">
@@ -55,7 +67,8 @@
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
 			pp_file_path AS projectPostFilePath,
-			pp_date AS projectPostDate
+			pp_date AS projectPostDate,
+			pp_views AS projectPostViews
 		FROM
 			P_POST WHERE PB_ID = #{projectBoardId}
 	</select>
@@ -68,10 +81,15 @@
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
 			pp_file_path AS projectPostFilePath,
-			pp_date AS projectPostDate
+			pp_date AS projectPostDate,
+			pp_views AS projectPostViews
 		FROM
 			P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID = ${projectPostId}
 	</select>
+	
+	<delete id="deleteProjectPost">
+		DELETE FROM P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID #{projectPostId}
+	</delete>
 	
 </mapper>
 

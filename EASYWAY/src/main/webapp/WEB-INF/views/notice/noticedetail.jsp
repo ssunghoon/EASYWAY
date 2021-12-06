@@ -60,6 +60,13 @@
 	                    공지사항 게시글 보기
 	                </div>
 	            </div>
+	            <div class="easyway-boarddetail-title">
+	            	<!-- 게시물 타이틀 -->
+	            	<div class="post-title">
+	                   NO: <c:out value="${of_board.obId }"/>
+	                   <c:out value="${of_board.obTitle}"/>
+	                </div>
+	            </div>
 	            <div class="easyway-boarddetail-writer">
 	            	<!-- 게시물 작성자 / 소속부서 / 수정 / 삭제 / 리스트로 돌아가기 -->
 	            	
@@ -67,12 +74,15 @@
 	            	<div class="writer-info">
 		            	<div class="writer-name">
 		            		<i class="writer-icon fas fa-user-circle"></i>
-		            		임동혁
+							홍길동
 		            	</div>
-	            	</div>
+						<div class="writer-department">
+						개발부<c:out value="${of_board.departmentId }"/>
+						</div>
+					</div>
 	            	
-	            	<div class="buttons">
 	            	<form action="/notice/noticeremove" method="post">
+	            	<div class="buttons">
 	            	<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>' >
 						<!--수정페이지로 이동 버튼 -->
 						<a href="/notice/noticemodify?obId=${of_board.obId }"> <input
@@ -82,44 +92,34 @@
 						<!-- 리스트로 이동 -->
 						<a href="/notice/noticelist"> <input type="button"
 							value="목록" class="list-btn easyway-btn"></a>
-	            </form>
 					</div>
+	            </form>
 	            </div>
-	            <div class="easyway-boarddetail-content">
 	            	
-	            	<label>작성날짜</label>
-					<p>
-						<fmt:formatDate var="setObDate" value="${of_board.obDate }"
-							pattern="yyyy-MM-dd" />${setObDate }
-					<p>
-
-					<label>글번호</label> <input type="text" class="form-control" name='obId'
-						value='<c:out value="${of_board.obId }"/>' readonly="readonly">
-
-
-
-					<label>제목</label> <input  type="text" class="form-control" name='obTitle'
-						value='<c:out value="${of_board.obTitle}"/>' readonly="readonly">
-
-
-
-					<label>내용</label>
-					<textarea class="form-control"  rows="3" name='obContent'
-						readonly="readonly"><c:out
-							value="${of_board.obContent}" /></textarea>
-
+	            	
+	            <div class="easyway-boarddetail-info">
+	            	<!-- 게시물 세부 정보 : 작성 시간, 날짜 / 조회수 등 -->
+	            	
+						<div class="info-time">
+	            		<i class="time-icon far fa-clock"></i>
+						<fmt:formatDate var="setObDate" 
+						value="${of_board.obDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+						${setObDate }
+	            	</div>
 	
 					<form id='operForm' action="/notice/noticedetail" method="get">
 						<input type="hidden" id='obId' name="obId" value='<c:out value="${of_board.obId}"/>'> 
 							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> 
-<!-- 							<input type='hidden' name='amount'  -->
-<%-- 							value='<c:out value="${cri.amount}"/>'> <input --%>
-<!-- 							type='hidden' name='keyword' -->
-<%-- 							value='<c:out value="${cri.keyword}"/>'> <input --%>
-<%-- 							type='hidden' name='type' value='<c:out value="${cri.type}"/>'> --%>
+							<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'> 
+							<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
+							<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 
 					</form>
 
+				</div>
+				
+				<div class="easyway-boarddetail-content">
+						 ${of_board.obContent}
 				</div>
 	        </div>
 	

@@ -33,14 +33,15 @@ public class ProjectController {
 		return "redirect:/project/projectlist";
 	}
 	
-	// 프로젝트 수정
-	
-	
 	// 프로젝트 목록
 	@GetMapping("/projectlist")
 	public void projectList(Model model) {
 		model.addAttribute("list", service.getListProject());
 	}
+	
+	// 프로젝트 수정
+	
+	
 	
 	// 프로젝트 게시판 등록
 	@PostMapping("/projectboardregister")
@@ -93,7 +94,10 @@ public class ProjectController {
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoardId", projectBoardId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
+		model.addAttribute("pb", service.getProjectBoard(projectId, projectBoardId));
 		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
 	}
+	
+	
 
 }
