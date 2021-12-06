@@ -21,8 +21,8 @@
 			schedule_content , schedule_importance , schedule_private
 		)
 		VALUES(
-			schedule_seq.nextval, '1', #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
-			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate}
+			schedule_seq.nextval, '1', #{schedule_title}, #{scheduleStart},#{scheduleEnd},
+			#{schedule_content}, #{schedule_importance}, #{schedule_private}
 		)
 	</insert>
 	<!--date타입으로 기간변경시 아래 sql문활용하기 -->
@@ -30,7 +30,7 @@
 			schedule_seq.nextval, '1', #{schedule_title}, TO_DATE(TO_CHAR(#{schedule_start},'yyyy/mm/dd'),'yyyy/mm/dd'),
 			TO_DATE(TO_CHAR(#{schedule_end},'yyyy/mm/dd'),'yyyy/mm/dd'),
 			#{schedule_content}, #{schedule_importance}, #{schedule_private}
-		) -->
+		) #{scheduleStart},#{scheduleEnd},-->
 	<!-- scheduleId 사용시 pk번호 반환하는 sql문
 	dual:함수에 대한 쓰임을 알고 싶을때 특정 테이블을 생성할 필요없이 dual 테이블을 이용하여 함수의 값을 리턴(return)받을 수 있다. -->
 	<insert id="insertSelectKey" >

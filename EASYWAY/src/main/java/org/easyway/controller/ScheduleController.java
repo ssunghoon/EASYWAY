@@ -36,6 +36,7 @@ public class ScheduleController {
 //		log.info("getMain or modify");
 //		model.addAttribute("list", service.getListDo(scheduleId));
 //	}
+	
 	//일정등록
 	@PostMapping("/scheduleregister")
 	public String register(ScheduleVO schedule, RedirectAttributes rttr){
@@ -46,6 +47,7 @@ public class ScheduleController {
 		rttr.addFlashAttribute("scheduleInfo", schedule.getScheduleId());//클릭한번호 넘겨줌
 		return "redirect:/schedule/schedulemain";
 	}
+	
 	//일정조회
 	@GetMapping(value="/scheduledetail/{scheduleId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -53,16 +55,26 @@ public class ScheduleController {
 		log.info("/detail");
 		return new ResponseEntity<ScheduleVO>(service.detail(scheduleId), HttpStatus.OK);
 	}
+	
 	//일정수정
+//	@PostMapping("/schedulemodify")
+//	public String modify(ScheduleVO schedule, RedirectAttributes rttr){
+//		log.info("modify:"+schedule);
+//		
+//		if(service.modify(schedule)){
+//			rttr.addFlashAttribute("result", "success");	
+//		}
+//		return "redirect:/schedule/schedulemain";
+//	}
 	@PostMapping("/schedulemodify")
-	public String modify(ScheduleVO schedule, RedirectAttributes rttr){
-		log.info("modify:"+schedule);
+	public String modify(@RequestParam("scheduleId") Long scheduleId,Model model){
+		log.info("modify.....");
 		
-		if(service.modify(schedule)){
-			rttr.addFlashAttribute("result", "success");	
-		}
+		model.addAttribute("board", service.detail(scheduleId));
+		
 		return "redirect:/schedule/schedulemain";
 	}
+	
 	//일정삭제
 	@PostMapping("/scheduleremove")
 	public String remove(@RequestParam("scheduleId") Long scheduleId,RedirectAttributes rttr){
