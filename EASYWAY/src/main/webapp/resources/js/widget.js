@@ -48,7 +48,7 @@ function widgetFunction(e) {
 	case "실시간 시계":
 		
 		console.log("우왕시계당");
-		makeWidget("clock", setTime);
+		makeWidget("clock", 200, 400, setTime);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-clock').classList.replace('unselected', 'selected');
@@ -57,7 +57,7 @@ function widgetFunction(e) {
 	case "공지사항 목록":
 
 		console.log("공지사항 다혜꺼");
-		makeWidget("notice", getTest2);
+		makeWidget("notice", 200, 400, getTest2);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-notice').classList.replace('unselected', 'selected');
@@ -66,7 +66,7 @@ function widgetFunction(e) {
 	case "출퇴근 체크":
 
 		console.log("출퇴근 언제하냐");
-		makeWidget("attendance", getTest3);
+		makeWidget("attendance", 200, 400, getTest3);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
@@ -75,7 +75,7 @@ function widgetFunction(e) {
 	case "결재함 목록":
 
 		console.log("결재차려 김나현!");
-		makeWidget("sign", getTest4);
+		makeWidget("sign", 200, 400, getTest4);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-sign').classList.replace('unselected', 'selected');
@@ -84,7 +84,7 @@ function widgetFunction(e) {
 	case "프로젝트 리스트":
 
 		console.log("프로젝트는 성훈이꺼");
-		makeWidget("project", getTest5);
+		makeWidget("project", 200, 400, getTest5);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-project').classList.replace('unselected', 'selected');
@@ -93,7 +93,7 @@ function widgetFunction(e) {
 	case "캘린더 일정":
 
 		console.log("캘린더는 경안이꺼");
-		makeWidget("calendar", getTest6);
+		makeWidget("calendar", 200, 400, getTest6);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-calendar').classList.replace('unselected', 'selected');
@@ -114,7 +114,7 @@ function widgetFunction(e) {
 
 const widgetSelectedContainer = document.getElementById('widget-selected-container');
 
-function makeWidget(widgetId, func) {
+function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 	
 	// clock만 inner 클래스명 다르게 줘서 CSS 다르게 먹이기 위함
 	if(widgetId == "clock") {
@@ -141,9 +141,18 @@ function makeWidget(widgetId, func) {
 	// 주의! 우선 테스트로 넣어둔 위치값과 너비, 높이 부분임. js로 변경도 하고 싶음.
 	var $widgetId = '#' + widgetId;
 	
+	console.log("widgetTop: " +widgetTop + "widgetLeft: " + widgetLeft);
+	
+	if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
+		$($widgetId).offset({
+			top: 200,
+			left: 400
+		}).width(250).height(150);
+	}
+	
 	$($widgetId).offset({
-		top: 200,
-		left: 400
+		top: widgetTop,
+		left: widgetLeft
 	}).width(250).height(150);
 	
 	func();
@@ -387,8 +396,9 @@ function importOffset(customNumber){
 	$.ajax({
 		  url: '/office/importOffset',
 		  data: jsonData,
-		  dataType: 'application/text; charset=UTF-8',
-		  type: 'GET',
+		  dataType: 'json',
+          contentType: 'application/json; charset=utf-8',
+		  type: 'POST',
 		  success: successHandler
 	  }); //end ajax
 	
@@ -402,5 +412,113 @@ function importOffset(customNumber){
 		
 	}
 	
+}
+
+//----------------------------------------------------------------------------------------
+//위젯 처음화면 열 때 기본값으로 불러오기 ----------------------------------------------------
+//----------------------------------------------------------------------------------------
+
+window.onload = function(){
+
+	// 배열 분할 작업
+	var widgetInfo = new Array();
+	var nameIdx;
+	var nameIdxCount = 0;
+	var valTop;
+	var valLeft;
+	
+	if(widgetArr == null || widgetArr == []){
+		return;
+	}
+	
+	$(widgetArr).each(function(index, item) {
+		console.log("불러온 위젯 정보" + item);
+
+			if(index % 5 == 0) { // 0, 5, 10, 15, 20, 25
+				nameIdx = item; // 1, 2, 3, 4, 5, 6
+				console.log("nameIdx: " + nameIdx);
+			}
+			
+			if(index % 5 == 1) {
+				valTop = item;
+				console.log("valTop: " + valTop);
+			}
+			
+			if(index % 5 == 2) {
+				valLeft = item;
+				nameIdxCount++;
+				console.log("valLeft: " + valLeft);
+			}
+			
+			
+			if(nameIdxCount > 0){
+				nameIdxCount--;
+				console.log("왜이러지 : " + nameIdxCount);
+				widgetSwitch(nameIdx, valTop, valLeft);
+			}
+	});
+	
+}
+
+
+function widgetSwitch(valName, valTop, valLeft){
+	switch (valName) {
+	case 1:
+		
+		console.log("우왕시계당");
+		makeWidget("clock", valTop, valLeft, setTime);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-clock').classList.replace('unselected', 'selected');
+		
+		break;
+	case 2:
+
+		console.log("공지사항 다혜꺼");
+		makeWidget("notice", valTop, valLeft, getTest2);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-notice').classList.replace('unselected', 'selected');
+
+		break;
+	case 3:
+
+		console.log("출퇴근 언제하냐");
+		makeWidget("attendance", valTop, valLeft, getTest3);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
+
+		break;
+	case 4:
+
+		console.log("결재차려 김나현!");
+		makeWidget("sign", valTop, valLeft, getTest4);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-sign').classList.replace('unselected', 'selected');
+
+		break;
+	case 5:
+
+		console.log("프로젝트는 성훈이꺼");
+		makeWidget("project", valTop, valLeft, getTest5);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-project').classList.replace('unselected', 'selected');
+
+		break;
+	case 6:
+
+		console.log("캘린더는 경안이꺼");
+		makeWidget("calendar", valTop, valLeft, getTest6);
+		
+		// Class 변경 : unselected -> selected
+		document.getElementById('thumb-calendar').classList.replace('unselected', 'selected');
+
+		break;
+	default:
+		break;
+	}
 }
 
