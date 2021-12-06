@@ -2,9 +2,10 @@ package org.easyway.mapper;
 
 import java.util.List;
 
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.member.MemberVO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
-import org.easyway.domain.sign.EmployeeVO;
 import org.easyway.domain.sign.SignListVO;
 import org.easyway.domain.sign.SignVO;
 import org.easyway.domain.sign.SpendSignVO;
@@ -48,7 +49,7 @@ public interface SignMapper {
 	public int getTotalCountDraft(Criteria cri);
 	
 	// 직원 목록
-	public List<EmployeeVO> getListEmployee();
+	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재선 등록(1,2,3,4번째)
 	public int insertLineFirst(SignListVO list);
@@ -68,5 +69,8 @@ public interface SignMapper {
 	
 	// 결재완료여부 변경
 	public int updateSignCheck(SignVO sign);
+	
+	// 직원 검색
+	public EmployeeVO get(String enteredName);
 	
 }

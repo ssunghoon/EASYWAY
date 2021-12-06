@@ -2,9 +2,10 @@ package org.easyway.service.sign;
 
 import java.util.List;
 
+import org.easyway.domain.employee.EmployeeDTO;
+import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
-import org.easyway.domain.sign.EmployeeVO;
 import org.easyway.domain.sign.SignListVO;
 import org.easyway.domain.sign.SignVO;
 import org.easyway.domain.sign.SpendSignVO;
@@ -130,12 +131,12 @@ public class SignServiceImpl implements SignService {
 	}
 	
 	// 직원 목록
-	public List<EmployeeVO> getListEmployee() {
+	/*public List<EmployeeVO> getListEmployee() {
 		log.info("getListEmployee..............");
 		
 		return mapper.getListEmployee();
 	}
-	
+	*/
 	// 결재선 등록 
 	@Override
 	public void applyLineFirst(SignListVO list, SignVO sign) {
@@ -180,5 +181,23 @@ public class SignServiceImpl implements SignService {
 	public boolean modifySignCheck(SignVO sign) {
 		log.info("modifySignCheck........" + sign);
 		return mapper.updateSignCheck(sign) == 1;
+	}
+	
+	// 직원 검색
+	@Override
+	public EmployeeVO get(String enteredName) {
+		
+		EmployeeVO findEmployee = mapper.get(enteredName);
+		
+		System.out.println("service : " + enteredName);
+		if(findEmployee == null) {
+			return null;
+		}
+		
+		EmployeeVO employeeVO = EmployeeVO.builder()
+								.employeeName(findEmployee.getEmployeeName())
+								.employeeId(findEmployee.getMemberId())
+								.build();
+		return employeeVO;
 	}
 }

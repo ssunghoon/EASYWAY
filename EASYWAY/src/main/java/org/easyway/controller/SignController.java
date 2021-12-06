@@ -1,20 +1,14 @@
 package org.easyway.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.SliderUI;
 
-import org.apache.commons.io.FileUtils;
+import org.easyway.domain.employee.EmployeeDTO;
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
-import org.easyway.domain.sign.EmployeeVO;
 import org.easyway.domain.sign.PageVO;
 import org.easyway.domain.sign.SignListVO;
 import org.easyway.domain.sign.SignVO;
@@ -23,20 +17,20 @@ import org.easyway.domain.sign.VacationSignVO;
 import org.easyway.service.sign.SignServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer.RedirectionEndpointConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.JsonObject;
+import com.sun.mail.iap.Response;
 
 import lombok.extern.log4j.Log4j;
 
@@ -65,10 +59,10 @@ public class SignController {
 	}
 	
 	@GetMapping("/applybasic")
-	public void applyBasic(EmployeeVO employee, Model model) {
+	public void applyBasic(/*EmployeeVO employee,*/ Model model) {
 		// 회원 목록
-		log.info("회원 목록 : "+service.getListEmployee());
-		model.addAttribute("employeeList", service.getListEmployee());
+		/*log.info("회원 목록 : "+service.getListEmployee());
+		model.addAttribute("employeeList", service.getListEmployee());*/
 		
 		log.info("applyBasic......................");
 	}
@@ -268,5 +262,19 @@ public class SignController {
 //
 //		return jsonObject;
 //	}
-
+	
+	// 직원 검색
+	@PostMapping(value="/search", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> searchMember(@RequestBody Map<String, String> data) {
+		
+		String enteredName = data.get("enteredName");
+		System.out.println("이름 : " + enteredName);
+		EmployeeVO selectEmployee = service.get(enteredName);
+		
+		if(selectEmployee == null) {
+			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<EmployeeVO>(selectEmployee, HttpStatus.OK);
 	}
+}
