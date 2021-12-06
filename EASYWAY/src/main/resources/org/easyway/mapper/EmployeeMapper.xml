@@ -22,12 +22,14 @@
 	</resultMap>
 
 	<resultMap id="employeeDTOResultMap" type="org.easyway.domain.employee.EmployeeDTO">
+		<result property="memberId" column="member_id" />
 		<result property="employeeName" column="employee_name" />
 		<result property="employeeEmail" column="member_email" />
 		<result property="employeePosition" column="position_name" />
 		<result property="employeeDepartment" column="department_name" />
 		<result property="employeeWorkType" column="employee_work_type" />
 		<result property="employeePhone" column="employee_phone" />
+		<result property="employeeHireDate" column="employee_hiredate" />		
 	</resultMap>
 
 	<insert id="insertEmployee">
@@ -39,7 +41,7 @@
 		values(
 		employee_seq.nextval, #{officeId},
 		#{memberId},#{departmentId},#{positionId},#{employeeName},
-		#{employeeCall},#{employeePhone},SYSDATE,#{employeeWorkType},#{employeeMaster},#{employeeLeftDay}
+		#{employeeCall},#{employeePhone},#{employeeHireDate},#{employeeWorkType},#{employeeMaster},#{employeeLeftDay}
 		)
 	</insert>
 
@@ -54,9 +56,9 @@
 	</select>
 
 	<select id="getListEmployee" resultMap="employeeDTOResultMap">
-		SELECT e.employee_name,
-		p.position_name, m.member_email, d.department_name,
-		e.employee_work_type, e.employee_phone
+		SELECT m.member_id, e.employee_name,
+		 p.position_name, m.member_email, d.department_name,
+		e.employee_work_type, e.employee_phone, e.employee_hiredate
 		FROM employee e, position p, department d, member m
 		WHERE e.position_id = p.position_id
 		AND e.department_id = d.department_id
