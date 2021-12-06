@@ -230,7 +230,7 @@
 		<include refid="search2"></include> 
 	</select>
 	 
-	 <select id="getListEmployee" resultType="org.easyway.domain.sign.EmployeeVO">
+	 <select id="get" resultType="org.easyway.domain.employee.EmployeeVO">
 	 	SELECT 
 	 		EMPLOYEE_ID AS employeeId,
 	 		EMPLOYEE_NAME AS employeeName,
@@ -238,6 +238,7 @@
 	 		POSITION_ID AS positionId	
 	 	FROM EMPLOYEE
 	 	WHERE EMPLOYEE_ID != 1
+	 	AND EMPLOYEE_NAME = #{employeeName}
 	 </select>
 	 
 	 <!-- 결재선 설정 -->
