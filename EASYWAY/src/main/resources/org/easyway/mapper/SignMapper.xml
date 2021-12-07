@@ -35,10 +35,10 @@
 	<cache />
 	<insert id="insert">
 		insert into sign(
-				sign_id,sf_id,employee_id,sign_title,sign_content,sign_importance,sign_date
+				sign_id,sf_id,employee_id,sign_title,sign_content,sign_importance,sign_date,file_name
 			)
 			values (
-				sign_seq.nextval,#{signFormId},1,#{signTitle},#{signContent},#{signImportance},SYSDATE
+				sign_seq.nextval,#{signFormId},#{employeeId},#{signTitle},#{signContent},#{signImportance},SYSDATE,#{fileName, jdbcType=VARCHAR}
 			)
 		<selectKey keyProperty="signId" resultType="long" order="AFTER">
          	select sign_seq.CURRVAL FROM DUAL
@@ -87,7 +87,8 @@
 			sign_content AS signContent,
 			sign_check AS signCheck,
 			sign_date AS signDate,
-			sign_importance AS signImportance 
+			sign_importance AS signImportance,
+			file_name AS fileName 
 		from sign 
 		where sign_id > 0
 		]]>
@@ -125,7 +126,7 @@
 	<!-- 기안함 상세 (기본기안서) -->
 	<select id="getDraftBasic" resultType="org.easyway.domain.sign.BasicSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			B.SB_RANGE AS signBasicRange,B.SB_START AS signBasicStart ,B.SB_END AS signBasicEnd, B.SF_ID AS signFormId
 		FROM SIGN A
 		JOIN SI_BASIC B
@@ -138,7 +139,7 @@
 	<!-- 기안함 상세 (지출결의서) -->
 	<select id="getDraftSpend" resultType="org.easyway.domain.sign.SpendSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			C.SS_RANGE AS signSpendRange,C.SF_ID AS signFormId
 		FROM SIGN A
 		JOIN SI_SPEND C
@@ -151,7 +152,7 @@
 	<!-- 기안함 상세 (휴가신청서) -->
 	<select id="getDraftVacation" resultType="org.easyway.domain.sign.VacationSignVO">
       SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			D.SV_TYPE AS signVacationType, D.SV_START AS signVacationStart ,D.SV_END AS signVacationEnd ,D.SF_ID AS signFormId
 			FROM SIGN A
 			JOIN SI_VACATION D
@@ -243,30 +244,11 @@
 	 
 	 <!-- 결재선 설정 -->
 	 <!-- employeeId는 임의로 24로 넣은 것 -->
-	 <insert id="insertLineFirst">
-	 	INSERT INTO
-	 		SI_LIST(
- 				sl_id, employee_id, sign_id, sl_order
-			)
-			VALUES (
-				si_list_seq.nextval, #{employeeId}, #{signId}, 1
-			)
-	 </insert>
-	<!--   <insert id="insertLineSecond">
+	<insert id="insertLine">
 	 	insert into 
 	 		si_list(sl_id, employee_id, sign_id, sl_order)
-			values (si_list_seq.nextval, 24, #{signId}, 2);
+			values (si_list_seq.nextval, #{employeeId}, #{signId}, #{slOrder});
 	 </insert>
-	  <insert id="insertLineThird">
-	 	insert into 
-	 		si_list(sl_id, employee_id, sign_id, sl_order)
-			values (si_list_seq.nextval, 24, #{signId}, 3);
-	 </insert>
-	  <insert id="insertLineFourth">
-	 	insert into 
-	 		si_list(sl_id, employee_id, sign_id, sl_order)
-			values (si_list_seq.nextval, 24, #{signId}, 4);
-	 </insert> -->
 	 
 	 <!-- 결재함 목록 -->
 	 <select id="getListPayment" resultType="org.easyway.domain.sign.SignListVO">
@@ -281,7 +263,6 @@
 		  	C.SIGN_TITLE AS signTitle,
 		  	C.SIGN_CONTENT AS signContent,
 		  	C.SIGN_DATE AS signDate,
-		  	C.SF_ID AS signFormId,
 		  	C.SIGN_IMPORTANCE AS signImportance
 		FROM
 		  	SI_LIST A

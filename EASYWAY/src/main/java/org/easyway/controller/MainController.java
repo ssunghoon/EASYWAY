@@ -72,35 +72,19 @@ public class MainController {
 	
 	// 위젯 메인 불러오기
 	@GetMapping("/main")
-	public void main(Model model){
+	public void main(HttpSession session, Model model){
 		
-		log.info("메인 getList 페이지");
+		log.info("메인에 오신 것을 환영합니다!");
 		
+		// WidgetCustom 구성 
 		WidgetCustom widgetCustom = new WidgetCustom();
-		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
-		widgetCustom.setMemberId(444L);
-		widgetCustom.setOfficeId(444L);
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		widgetCustom.setOfficeId(officeVO.getOfficeId());
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeVO.getMemberId());
 		
 		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
 		model.addAttribute("widgetList", service.getListWidget(widgetCustom));
-	}
-	
-	// 위젯 불러오기 요청
-	@GetMapping("/importOffset")
-	public String main(Map<String, Integer> data, Model model){
-		
-		log.info("메인 getList 페이지");
-		
-		WidgetCustom widgetCustom = new WidgetCustom();
-		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
-		widgetCustom.setMemberId(444L);
-		widgetCustom.setOfficeId(444L);
-		widgetCustom.setWsCustom(data.get("customNumber"));
-		
-		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
-		model.addAttribute("WidgetList", service.getListWidget(widgetCustom));
-		
-		return "redirect:/office/main";
 	}
 	
 	// 위젯 저장 요청
@@ -108,17 +92,20 @@ public class MainController {
 	@ResponseBody
 	public String saveOffset(@RequestPart("customNumber") Map<String, Integer> data,
 										@RequestPart("WidgetVO") List<WidgetVO> widgetList,
+										HttpSession session,
 										RedirectAttributes rttr){
 		
 		log.info("MIME TYPE: " + MediaType.TEXT_PLAIN_VALUE);
 		log.info("widgetList!!!!!!!!!!!!!!!!!!!!---------------------------" + widgetList);
 		log.info("widgetList!!!!!!!!!!!!!!!!!!!!---------------------------" + data);
 		
+		// WidgetCustom 구성
 		WidgetCustom widgetCustom = new WidgetCustom();
-		// Long memberId, Long officeId 얘들 어쩌냐 ㅎ 일단 임시
 		widgetCustom.setWsCustom(data.get("customNumber"));
-		widgetCustom.setMemberId(444L);
-		widgetCustom.setOfficeId(444L);
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		widgetCustom.setOfficeId(officeVO.getOfficeId());
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeVO.getMemberId());
 		widgetCustom.setWsImport("Y");
 		
 		// getList 만들기전까지 임시
@@ -126,5 +113,21 @@ public class MainController {
 				? "일단 성공했지?"
 				: "안됐어 돌아가";
 	}
+	
+	// 위젯 불러오기(기본값 변경) 요청
+	@PostMapping("/modifyDefault")
+	@ResponseBody
+	public String modifyDefault(@RequestBody Map<String, Integer> data){
+		
+		log.info("기본값 변경 요청 들어갑니다--------");
+		int wsCustom = data.get("customNumber");
+		log.info("customNumber : " + wsCustom);
+		service.modifyDefault(wsCustom);
+		
+		return "redirect:/office/main";
+	}
+	
+	//String url = request.getParameter("url");
+	//response.sendRedirect("/main");
 	
 }

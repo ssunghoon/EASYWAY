@@ -44,7 +44,7 @@ public interface SignService {
 	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재선 등록(1,2,3,4 번째)
-	public void applyLineFirst(SignListVO list, SignVO sign);
+	public void applyLine(Long employeeId, Long slOrder, SignVO sign, SignListVO list);
 //	public void applyLineSecond(SignListVO list, SignVO sign);
 //	public void applyLineThird(SignListVO list, SignVO sign);
 //	public void applyLineFourth(SignListVO list, SignVO sign);
@@ -65,5 +65,7 @@ public interface SignService {
 	
 	// 직원 검색
 	EmployeeVO get(String enterdeName);
+
+
 
 }

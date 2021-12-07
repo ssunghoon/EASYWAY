@@ -73,9 +73,10 @@
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form action="projectboardregister?projectId=${projectId}"
+						<form action="projectboardregister"
 							method="post">
 							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+							<input type="hidden" name="projectId" value="${projectId}"/>
 							<div class="modal-header">
 								<h5 class="modal-title" id="staticBackdropLabel">게시판 생성</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"

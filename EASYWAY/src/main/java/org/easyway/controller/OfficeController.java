@@ -1,5 +1,9 @@
 package org.easyway.controller;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.member.MemberVO;
+import org.easyway.domain.office.AnnualVacation;
 import org.easyway.domain.office.OfficeVO;
 import org.easyway.security.domain.CustomUser;
 import org.easyway.service.employee.EmployeeService;
@@ -19,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,11 +51,18 @@ public class OfficeController {
 		log.info(auth.getPrincipal());
 		
 		CustomUser member = (CustomUser)auth.getPrincipal();
-		List<OfficeVO> offices = officeService.getList(member.getMember().getMemberId());
-		offices.forEach((office)->{
-			log.info(office);
-		});
-		
+		List<OfficeVO> offices = new ArrayList<>();
+		if(member.getMember().getMemberAuth() == "ROLE_ADMIN"){
+			offices = officeService.getList(member.getMember().getMemberId());
+			offices.forEach((office)->{
+				log.info(office);
+			});
+		}else{
+			offices = officeService.getListByEmployee(member.getMember().getMemberId());
+			offices.forEach((office)->{
+				log.info(office);
+			});
+		}
 		model.addAttribute("ofiiceList", offices);
 		log.info("ofiice list...............");
 	}
@@ -77,14 +90,26 @@ public class OfficeController {
 		log.info("admin/departmentsetting Page");
 	}
 	
+	@GetMapping("/admin/officesetting/positionList")
+	public void positionList(HttpSession session, Model model){
+		log.info("admin/positionsetting Page");
+		log.info("admin/vactionsetting Page");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(officeVO);
+		model.addAttribute("positionInfos", officeService.getPosition(officeVO.getOfficeId()));
+	}
+	
 	@GetMapping("/admin/officesetting/positionsetting")
 	public void positionSetting(){
 		log.info("admin/positionsetting Page");
 	}
 	
 	@GetMapping("/admin/officesetting/vacationsetting")
-	public void vacationSetting(){
+	public void vacationSetting(HttpSession session, Model model){
 		log.info("admin/vactionsetting Page");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(officeVO);
+		model.addAttribute("vacationInfos", officeService.getAnnualVacation(officeVO.getOfficeId()));
 	}
 	
 	
@@ -104,10 +129,29 @@ public class OfficeController {
 		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
 		log.info(employees);
 		log.info(officeVO.getOfficeId());
+		
 		officeService.sendEmail(employees, officeVO.getOfficeId());
-		officeService.registerEmployees(employees, officeVO.getOfficeId());
+		employeeService.registerEmployees(employees, officeVO.getOfficeId());
 		
 		return new ResponseEntity<>("ok", HttpStatus.OK);
+	}
+	
+	@PostMapping("/vacation/modify")
+	@ResponseBody
+	public ResponseEntity<?> vacationModify(@RequestBody List<AnnualVacation> vacationInfos){
+		log.info(vacationInfos);
+		
+		officeService.modifyVacation(vacationInfos);
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
+	
+	@PostMapping("/enter/{officeId}")
+	@ResponseBody
+	public ResponseEntity<?> enterOffice(@RequestBody String officeCode, @PathVariable Long officeId){
+		if(officeService.checkOfficeCode(officeCode.replace("\"", ""), officeId)){
+			return new ResponseEntity<Long>(officeId, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 	}
 	
 }
