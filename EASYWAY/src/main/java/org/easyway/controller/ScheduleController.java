@@ -1,11 +1,19 @@
 package org.easyway.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.office.OfficeVO;
 import org.easyway.domain.schedule.ScheduleVO;
+import org.easyway.security.domain.CustomUser;
+import org.easyway.service.employee.EmployeeService;
+import org.easyway.service.office.OfficeService;
 import org.easyway.service.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +33,29 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService service;
+	
+	@Autowired
+	private OfficeService officeService;
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
 	//메인화면+리스트
 	@GetMapping("/schedulemain")
-	public void getList(Model model){
+	public void getList(Model model, ScheduleVO schedule,HttpSession session){
+		
+		//맴버id와 office id를 이용해 사원 정보 조회
+		log.info("사원 정보 불러오기");
+		//사원번호넘겨주기
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
 		log.info("getList..........");
 		model.addAttribute("list", service.getListDo());
+		schedule.setEmployeeId(employeeVO.getEmployeeId());
+		//사원번호넘겨주기
+		model.addAttribute("nowEmployeeInfo", session.getAttribute("nowEmployeeInfo"));
+		
+		log.info(employeeVO.getEmployeeId());
+		log.info(session.getAttribute("nowEmployeeInfo"));
 	}
 //	@GetMapping({"/schedulemain","/schedulemodify"})
 //	public void get(@RequestParam("schedule_id") Long scheduleId,Model model){
@@ -39,12 +65,18 @@ public class ScheduleController {
 	
 	//일정등록
 	@PostMapping("/scheduleregister")
-	public String register(ScheduleVO schedule, RedirectAttributes rttr){
+	public String register(ScheduleVO schedule, RedirectAttributes rttr, HttpSession session){
+		//사원번호넘겨주기
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		
 		log.info("register..........");
 		log.info("postregister: " + schedule);
+		
 		service.register(schedule);
-//		rttr.addFlashAttribute("scheduleInfo", schedule);
-		rttr.addFlashAttribute("scheduleInfo", schedule.getScheduleId());//클릭한번호 넘겨줌
+		rttr.addFlashAttribute("scheduleInfo", schedule.getScheduleId());//생성한 일정번호 넘겨줌
+		//사원번호넘겨주기
+		schedule.setEmployeeId(employeeVO.getEmployeeId());
+		
 		return "redirect:/schedule/schedulemain";
 	}
 	
@@ -52,6 +84,7 @@ public class ScheduleController {
 	@GetMapping(value="/scheduledetail/{scheduleId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<ScheduleVO> detail(@PathVariable Long scheduleId){
+
 		log.info("/detail");
 		return new ResponseEntity<ScheduleVO>(service.detail(scheduleId), HttpStatus.OK);
 	}

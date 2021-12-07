@@ -1,7 +1,5 @@
 package org.easyway.domain.sign;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
-
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Getter;

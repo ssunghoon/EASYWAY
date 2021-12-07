@@ -23,4 +23,6 @@ public class VacationSignVO implements Serializable{
 	
 	// 결재 때문에 추가
 	private String signListCheck; // SL_CHECK
+	
+	private String fileName; // FILE_NAME
 }

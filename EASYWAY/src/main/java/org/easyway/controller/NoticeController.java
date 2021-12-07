@@ -2,9 +2,14 @@ package org.easyway.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
+import javax.servlet.http.HttpSession;
+
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.notice.DepartmentDTO;
 import org.easyway.domain.notice.NoticeCriteria;
 import org.easyway.domain.notice.NoticePageDTO;
 import org.easyway.domain.notice.NoticeVO;
+import org.easyway.domain.office.OfficeVO;
 import org.easyway.service.notice.NoticeService;
 import org.easyway.service.notice.NoticeServicelmpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,27 +59,28 @@ public class NoticeController {
 	
 	//페이징 처리 리스트
 	@GetMapping("/noticelist")
-	public void noticelist(NoticeCriteria cri, Model model){
+	public void noticelist(NoticeCriteria cri, Model model, HttpSession session){
 		log.info("noticelist" + cri);
 		model.addAttribute("noticelist", service.getListAll(cri));
-//		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123));
+		
 		int total = service.getTotal(cri);
 		
-		log.info("total" + total);
-		
+		log.info("총게시글갯수" + total);
+//		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123)); //예전코드
 		model.addAttribute("pageMaker", new NoticePageDTO(cri, total));
 	}
 
 	@GetMapping({ "/noticedetail", "/noticemodify" })
-	public void noticedetail(@RequestParam("obId") int obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
+	public void noticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
 		log.info("/noticedetail or noticemodify");
 		model.addAttribute("of_board", service.detail(obId));
 		log.info("조회폼 잘 떴나요");
+		service.modifyViewCount(obId);
+		log.info("조회수 증가");
 	}
 
-
 	@PostMapping("/noticemodify")
-	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") int obId) {
+	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") Long obId) {
 		//데이터가 잘 전달됐는지 확인하기위한 로그
 		System.out.println("title: " + notice.getObTitle()); 
 		System.out.println("Id: " + notice.getObId());
@@ -91,7 +97,7 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/noticeremove")
-	public String remove(@RequestParam("obId") int obId, RedirectAttributes rttr){
+	public String remove(@RequestParam("obId") Long obId, RedirectAttributes rttr){
 //		System.out.println("Id: " + obId);
 //		System.out.println("title:" + obTitle);
 		if(service.remove(obId)){
@@ -102,19 +108,24 @@ public class NoticeController {
 	
 	
 	//부서 공지사항 컨트롤러
-	
-	//부서 공지 입력폼
+//	부서 공지 입력폼
 //	@GetMapping("/departmentnoticeregister")
 //	public void departmentnoticeRegister() {
 //		System.out.println("부서공지입력폼을 불러옵니다");
 //	}
 //	
-//	//부서 공지 리스트
-//	@GetMapping("/noticelist")
-//	public String noticeList(Model model) {
-//		log.info("listttttttttttttttttt");
-//		model.addAttribute("noticelist", service.getListAll());
-//		return "/notice/noticelist";
-//	}
+	//부서 공지 리스트
+	@GetMapping("/departmentnoticelist")
+	public String departmentnoticelist(Model model, HttpSession session, DepartmentDTO departmentDTO) {
+		
+		log.info("부서 게시판 띄웁니다");
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowemployeeInfo");
+//		log.info("부서번호" + employeeVO.getDepartmentId());
+//		departmentDTO.setDepartmentId(employeeVO.getDepartmentId());
+//		log.info("번호뜨나요"+ employeeVO.getDepartmentId());
+//		model.addAttribute("department", service.getListDepartment(employeeVO.getDepartmentId()));
+//		log.info("부서번호22" + employeeVO.getDepartmentId());
+		return "/notice/departmentnoticelist";
+	}
 	
 }

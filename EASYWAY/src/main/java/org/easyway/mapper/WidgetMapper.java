@@ -7,8 +7,19 @@ import org.easyway.domain.office.WidgetVO;
 
 public interface WidgetMapper {
 
-	public Long insertWidgetCustom(WidgetCustom widgetCustom); // 위젯 커스텀 테이블 모든 컬럼에 데이터 삽입
-	public int insertWidget(WidgetVO widget); // 위젯 테이블 모든 컬럼에 데이터 삽입
-	public List<WidgetVO> getListWidget(WidgetCustom widgetCustom); // 위젯 커스텀 데이터로 위젯 데이터 불러오기
+	// 위젯 커스텀 처음 저장하기 : WidgetCustom 테이블
+	public Long insertWidgetCustom(WidgetCustom widgetCustom);
+	// 위젯 커스텀 처음 저장하기 : Widget 테이블
+	public int insertWidget(WidgetVO widget);
+	// 마지막에 저장된 위젯리스트 불러오기
+	public List<WidgetVO> getListWidget(WidgetCustom widgetCustom);
+	// 마지막에 불러온 커스텀넘버 불러오기
+	public int readCustomNow();
+	// 위젯 기본값 변경하기 : 기존에 있던 기본값 취소
+	public int updateDefaultCancel();
+	// 위젯 기본값 변경하기 : 새로 기본값 설정
+	public int updateDefault(int wsCustom);
+	// 위젯 삭제
+	public int deleteWidget(WidgetVO widget, WidgetCustom widgetCustom);
 	
 }

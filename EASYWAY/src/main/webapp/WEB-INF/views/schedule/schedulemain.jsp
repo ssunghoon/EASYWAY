@@ -186,15 +186,6 @@
 	  Calendar.addEvent()
 	  
 	  
-	  $("a").click(function(evt){
-		    evt.stopPropagation();
-		    evt.preventDefault();
-		    $(".lightUp").toggle();
-		});
-	  
-	  
-	  
-	  
 	</script>
 	
 	
@@ -375,12 +366,15 @@
 							
 							<div class="modal-body">
 								<!--UI마스터-->
-								<form action="/schedule/scheduleregister" method="post" >
+								<form action="/schedule/scheduleregister" method="post">
 								<input type="hidden" id="token" name="${_csrf.parameterName}"
                   data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		                     <!--   accept-charset="utf-8"-->
 			                     <div class="mb-3">
-			                        <label>제목:</label>
+			                     	<label>사원번호</label>
+	                            	<input type="text" class="form-control" name="employeeId" readonly="readonly"
+	                            		value='${sessionScope.nowEmployeeInfo.employeeId}'>
+			                        <label>제목</label>
 	                            		<input type="text" class="form-control" name="scheduleTitle">
 	                        		<label>시작시간</label>
 	                            		<input type="date" class="form-control" name="scheduleStart">
@@ -388,14 +382,26 @@
 	                            		<input type="date" class="form-control" name="scheduleEnd">
 	                        		<label>내용</label>
 	                            		<input type="text" class="form-control" name="scheduleContent">
-								<%--value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>		                            
-			                        <label>중요도 </label>
+								<%--value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
+									<label>중요도 </label>
+<!-- 										<form action="/schedule/scheduleregister" method="post"> -->
+<%-- 										<input type="hidden" id="token" name="${_csrf.parameterName}" --%>
+<%--                   						data-token-name="${_csrf.headerName}" value="${_csrf.token}" /> --%>
+<!-- 										<select autofocus name="scheduleImportance"> -->
+<!-- 											<option name="scheduleImportance" id="first" value="상">상</option> -->
+<!-- 											<option name="scheduleImportance" id="second" value="중">중</option> -->
+<!-- 											<option name="scheduleImportance" id="third" value="하">하</option> -->
+<!-- 										</select> -->
+<!-- 										</form> -->
+<!-- 										<br> -->
 			                            <input type="radio" name="scheduleImportance" id="first" value="상">&nbsp;<label for="first">상</label>
 			                            <input type="radio" name="scheduleImportance" id="second" value="중">&nbsp;<label for="second">중</label>
 			                            <input type="radio" name="scheduleImportance" id="third" value="하">&nbsp;<label for="third">하</label>
 			                            <br>
 			                        <label>공사구분</label>
 			                            <input type="text" class="form-control" name="schedulePrivate">
+<!-- 			                            <input type="radio" name="schedulePrivate" value="Y">&nbsp;<label for="Y">Y</label> -->
+<!-- 			                            <input type="radio" name="schedulePrivate" value="N">&nbsp;<label for="N">N</label> -->
 			                     </div>
 			                     <div class="modal-footer">
 			                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -430,9 +436,9 @@
 	                       <label>일정번호</label>
 							<input type="text" class="form-control" name="scheduleId"
 								value='scheduleData.scheduleId' readonly="readonly">
-	                        <label>직원번호</label>
+	                        <label>사원번호</label>
 	                        <input type="text" class="form-control" name="employeeId"
-	                        	value='scheduleData.semployeeId' readonly="readonly">
+	                        	value='scheduleData.employeeId' readonly="readonly">
 	                        <label>제목:</label>
 	                        <input type="text" class="form-control" name="scheduleTitle"
 	                            	value='scheduleData.scheduleTitle'>
@@ -441,21 +447,32 @@
 	                        <!--기간 형식 바꾸기 -->
 <!-- 	                     <input type="date" class="form-control" name="scheduleStart" -->
 <!-- 	                        value='scheduleData.scheduleStart' readonly="readonly"> -->
-							 <input type="date" class="form-control" name="scheduleStart"
-							 		value='scheduleData.scheduleStart' >
-<%-- 	                            value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
+							 <input id="detail-start" type="text" class="form-control" name="scheduleStart"
+							 	value='scheduleData.scheduleStart'>
+<%--  value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
 	                        <label>종료시간</label>
-	                        <input type="date" class="form-control" name="scheduleEnd"
-	                            value='scheduleData.scheduleEnd' >
+	                        <input id="detail-end" type="text" class="form-control" name="scheduleEnd"
+	                            value='scheduleData.scheduleEnd'>
+	                            
 	                        <label>내용</label>
 	                        <input type="text" class="form-control" name="scheduleContent"
 	                            value='scheduleData.scheduleContent'>
 	                       	<label>중요도 </label>
+<!-- 	                       	<form> -->
+<!-- 								<select autofocus name="scheduleImportance" value ='scheduleData.scheduleImportance' > -->
+<!-- 									<option name="scheduleImportance" id="first" value="상">상</option> -->
+<!-- 									<option name="scheduleImportance" id="second" value="중">중</option> -->
+<!-- 									<option name="scheduleImportance" id="third" value="하">하</option> -->
+<!-- 								</select> -->
+<!-- 							</form> -->
 	                       	<input type="text"class="form-control"  name="scheduleImportance"  
 	                            value='scheduleData.scheduleImportance'>
+	                            
 	                        <label>공사구분</label>
 	                        <input type="text" class="form-control" name="schedulePrivate"
 	                            value='scheduleData.schedulePrivate'>
+<!-- 								<input type="radio" name="schedulePrivate" value="Y" id="yes">&nbsp;<label for="yes">Y</label> -->
+<!-- 			                    <input type="radio" name="schedulePrivate" value="N" id="no">&nbsp;<label for="no">N</label> -->
 	                     </div>
 	                     <div class="modal-footer">
 	                  	<!-- 책254p에는 버튼형식으로 되어있음 확인해보기 기존 버튼코드는 노션 kosta 최종프로젝트에있음-->
@@ -471,12 +488,13 @@
 		</div>
 	</div>
 		
-			<!-- 일정목록 리스트 출력 -->
+			<!-- 일정목록 출력 코드 -->
 				<div class="easyway-title1">
 					일정리스트
 				</div>
 					
 				<div class="table-container">
+					<div class="row">
 					<table style="text-align: center; border: 2px solid #dddddd;">
 						<!--style="-->
 						<tr>
@@ -505,8 +523,7 @@
 								<td><a id="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
  								data-bs-toggle="modal" data-bs-target="#modal-detail">
  								${schedule.scheduleTitle}</a></td>
- 								
- 								<td>$(schedule.scheduleStart)</td>
+								<td>${schedule.scheduleStart}</td>
 								<td>${schedule.scheduleEnd}</td>
 						
 								<td>${schedule.scheduleContent}</td>
@@ -516,7 +533,7 @@
 						</c:forEach>
 					</table>
 				</div>
-				
+				</div>
 	    </div> <!-- end easyway-wrapper -->
 	    
     </div> <!-- end page-divider -->
@@ -525,45 +542,27 @@
 <!--제목클릭시처리하는부분-->
 var scheduleData;
 
-$.ajax({
-    type: "post",
-    url: "/member/search",
-    data: JSON.stringify(data),
-    contentType: "application/json; charset=utf-8",
-    beforeSend: function (xhr) {
-      var $token = $("#token");
-      xhr.setRequestHeader($token.data("token-name"), $token.val());
-    },
-    success: function (result, status, xhr) {
-      console.log(result);
-      addEmail(result);
-    },
-    error: function (xhr, status, er) {
-      alert("해당 이메일을 가진 맴버가 존재하지 않습니다.");
-    },
-  });
-  
 $(document)
 	.on(
 			"click","#save-btn",
 			function(e) {
-				
 				var id = $(this).data("scheduleid");
 				console.log(id);
 				
 				$.ajax({
 				      type: "get",
 				      url: "/schedule/scheduledetail/" +id,
-					   /*   beforeSend: function (xhr) {	
-				        var $token = $("#token");
-				        xhr.setRequestHeader($token.data("token-name"), $token.val());
-				      }, */
+				      /*post 요청시 사용
+ 				      beforeSend: function (xhr) {
+				          var $token = $("#token");
+				          xhr.setRequestHeader($token.data("token-name"), $token.val());
+				        }, */
 				      success: function (result, status, xhr) {
 				        console.log(result);
 				        console.log(result.scheduleTitle);
 				        scheduleData = result;
 				      //조회모달창에 넘어가기
-				     // DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+				     // DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				      
 						$('input[name=scheduleId]').attr('value',scheduleData.scheduleId);
 						$('input[name=employeeId]').attr('value',scheduleData.employeeId);
@@ -571,7 +570,8 @@ $(document)
 						
 						$('input[name=scheduleStart]').attr('value',scheduleData.scheduleStart);
 						$('input[name=scheduleEnd]').attr('value',scheduleData.scheduleEnd);
-						
+// 						Date startdate = sdFormat.parse("2014-12-22");
+
 						$('input[name=scheduleContent]').attr('value',scheduleData.scheduleContent);
 						$('input[name=scheduleImportance]').attr('value',scheduleData.scheduleImportance);
 						$('input[name=schedulePrivate]').attr('value',scheduleData.schedulePrivate);
@@ -580,9 +580,19 @@ $(document)
 				        alert("실패!");
 				      },
 				    });
-				
-
 			});
+// $('#detail-start,#detail-end').click(function(){
+// 	var startday = new Date();
+// 	var endday = new Date();
+	
+// 	console.log("")
+// 	day = document.getElementById("detail-start,detail-end");
+	
+// 	day.value = 
+// 	var $this = $(this);
+	
+	
+// });
 </script>
 
 </html>

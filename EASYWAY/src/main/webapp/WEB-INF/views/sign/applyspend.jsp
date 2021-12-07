@@ -73,7 +73,7 @@
 	            
 	        <div class="easyway-boardapply-form">
 	            
-				<form class="form-container" action="/sign/applyspend" method="post" accept-charset="utf-8">
+				<form class="form-container" action="/sign/applyspend" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 					<div class="form-title">
 		                <!-- 제목 -->
 		                <div class="option-name">제목</div>
@@ -116,7 +116,7 @@
 								<input type="radio" name="signImportance" id="second" value="중">&nbsp;<label for="second">중</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signImportance" id="third" value="하">&nbsp;<label for="third">하</label>
+								<input type="radio" name="signImportance" id="third" value="하" checked="checked">&nbsp;<label for="third">하</label>
 				            </div>
 			            </div>
 						<div class="form-file">
@@ -125,6 +125,7 @@
 			            </div>
 		                <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
+			            	<div><input type="file" name="signFilePath"/></div>
 			            </div>
 			            <div class="form-content">
 			            	<!-- 내용 -->
