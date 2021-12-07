@@ -44,32 +44,7 @@ body{
 /* ----------------------------------------------------------------------------------------------- */
 /* 위젯 저장하기 */
 /* ----------------------------------------------------------------------------------------------- */
-/* 
-#save-btn {
-    font-size: 30px;
 
-	test 용
-    width: 50px;
-    height: 70px;
-    background: red;
-
-    position: absolute;
-    top: 15px;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-}
-
-#save-btn>div {
-	font-size: 13px;
-}
-
-#save-btn:HOVER {
-	color: #0397ed;
-}
-
- */
- 
 .custom {
     position: absolute;
     top: 20px;
@@ -133,6 +108,14 @@ body{
 	color: #0397ed;
 }
 
+.custom-delete {
+	font-size: 15px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #aaa;
+}
+
 .custom-selected {
 	width: 5px;
 	height: 5px;
@@ -144,6 +127,7 @@ body{
 .custom-unselected {
 	display: none;
 }
+
 
 /* ----------------------------------------------------------------------------------------------- */
 /* 위젯 썸네일 */
@@ -222,7 +206,7 @@ body{
 
 #clock {
 	font-family: 'LAB디지털', cursive;
-	font-size: 80px;
+	font-size: 70px;
 	color: #0397ed;
 	border: 0px;
 	padding: 0px;

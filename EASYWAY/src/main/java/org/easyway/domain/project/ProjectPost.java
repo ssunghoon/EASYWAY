@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectPost { // 프로젝트 게시물
 	
-	private long projectPostId; // 프로젝트 게시판 번호
-	private long projectBoardId; // 프로젝트 게시물 번호
-	private long projectMemberId; // 프로젝트 멤버 번호
+	private long projectPostId; // 프로젝트 게시물 번호
+	private long projectBoardId; // 프로젝트 게시판 번호
+	private long projectId; // 프로젝트 번호
+	private long employeeId; // 사원번호
 	private String projectPostTitle; // 제목
 	private String projectPostContent; // 내용
 	private String projectPostFilePath; // 첨부파일

@@ -78,7 +78,7 @@
 	            
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="/sign/applybasic" action="/sign/signFilePath" method="post">
+		            <form class="form-container" action="/sign/applybasic" action="/sign/signFilePath" method="post" enctype="multipart/form-data">
 		            
 			        	<div class="form-title">
 			                <!-- 제목 -->
@@ -95,7 +95,7 @@
 			            <div class="form-writer-input">
 			                <!-- 작성자 : 작성칸 -->
 			                <!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
-			                <div class="form-writer-name">전나은</div>
+			                <div class="form-writer-name">${sessionScope.nowEmployeeInfo.employeeName}</div>
 			            </div>
 			            
 			            <!-- 이하 옵션 필요한만큼 가져다 쓰고 안 쓰면 지우세요 ----------------------------------->
@@ -125,7 +125,7 @@
 								<input type="radio" name="signImportance" id="second" value="중">&nbsp;<label for="second">중</label>
 				            </div>
 							<div class="radio-wrapper">
-								<input type="radio" name="signImportance" id="third" value="하">&nbsp;<label for="third">하</label>
+								<input type="radio" name="signImportance" id="third" value="하" checked="checked">&nbsp;<label for="third">하</label>
 				            </div>
 			            </div>
 
@@ -146,6 +146,7 @@
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
+			            	<div><input type="file" name="signFilePath"/></div>
 			            </div>
 			            
 			            <div class="form-content">
@@ -163,7 +164,7 @@
 			            	<!-- 등록 버튼 -->
 							<!--  기안 양식번호 -->
 							<input type="hidden" name="signFormId" value="1">
-							<input type="submit" class="easyway-btn" value="등록">
+							<input type="submit" class="easyway-btn save-btn" value="등록">
 			            </div>
 			            <input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			    	</form>
@@ -217,24 +218,24 @@
 									</div>
 								</div>
 								<div class="col-lg-5">
-									<div class="sign-box" >
-										<p id="firstResult" align="center"></p>
+									<div class="sign-box" id="firstResult">
+									
 									</div>
-									<div class="sign-box">
-										<p id="secondResult" align="center"></p>
+									<div class="sign-box" id="secondResult">
+										
 									</div>
-									<div class="sign-box">
-										<p id="thirdResult" align="center"></p>
+									<div class="sign-box" id="thirdResult">
+										
 									</div>
-									<div class="sign-box">
-										<p id="fourthResult" align="center"></p>
+									<div class="sign-box" id="fourthResult">
+										
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-gray"
 									data-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-primary">저장</button>
+								<button type="button" class="btn btn-primary save-btn">저장</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -249,68 +250,7 @@
 	<script type="text/javascript">
 	$("#signLine").on("click", function() {
 		$("#myModal").modal("show");
-	});
-	
-	var employeeData = null;
-	// 첫번째 결재선 등록
- 	/* $('#firstIn').on("click",function() {
-		// firstResult 자리
-		const firstResult = document.getElementById('firstResult').value;
-		// 선택된 값
-		var firstVal = $('input[name="employeeId"]:checked').val();
-		alert("firstVal : " + firstVal);
-		// firstResult자리에 선택된 값을 넣음
-		document.getElementById("firstResult").innerHTML = firstVal;
-	});
-	// 첫번째 결재선 해제
- 		$('#firstOut').on("click", function() {
-			// firstResult 자리
-			document.getElementById("firstResult").innerHTML = "";
-		});
-
-		$('#secondIn').on("click", function() {
-			const
-			secondResult = document.getElementById('secondResult').value;
-			var secondVal = $('input[name="employeeId"]:checked').val();
-			alert("secondVal : " + secondVal);
-			document.getElementById("secondResult").innerHTML = secondVal;
-		});
-
-		$('#secondOut').on("click", function() {
-			document.getElementById("secondResult").innerHTML = "";
-		});
-
-		$('#thirdIn').on("click", function() {
-			const
-			thirdResult = document.getElementById('thirdResult').value;
-			var thirdVal = $('input[name="employeeId"]:checked').val();
-			alert("thirdVal : " + thirdVal);
-			document.getElementById("thirdResult").innerHTML = thirdVal;
-		});
-
-		$('#thridOut').on("click", function() {
-			document.getElementById("thridResult").innerHTML = "";
-		});
-
-		$('#fourthIn').on("click", function() {
-			const
-			fourthResult = document.getElementById('fourthResult').value;
-			var fourthVal = $('input[name="employeeId"]:checked').val();
-			alert("fourthVal : " + fourthVal);
-			document.getElementById("fourthResult").innerHTML = fourthVal;
-		});
-
-		$('#fourthOut').on("click", function() {
-			document.getElementById("fourthResult").innerHTML = "";
-			alert(document.getElementById("firstResult").innerHTML);
-		});
-		 */
-		
-		
-		
-		
-		
-		
+	});	
 		
 	</script>
 </body>

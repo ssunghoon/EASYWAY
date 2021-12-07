@@ -114,16 +114,16 @@
 			            </div>
 			            <div class="form-writer">
 			                <!-- 작성자 : 작성칸 -->			                
-			            <div class="option-name" name="employeeId" >작성자</div>
+			            <div class="option-name"  >작성자</div>
 			            </div>
 						<div class="form-writer-input">
 							<!-- 작성자 : 작성칸 -->
 							<!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
-							<input type="hidden" class="form-writer-name" placeholder="" name="employeeId" value="1">
+							<input type="hidden" class="form-writer-name" placeholder="" name="employeeId" value="4">
 						전나은</div>
 						<div class="form-dep-input">
 							<!-- 제목 : 작성칸 -->
-							<input type="hidden" class="form-control" placeholder="" name="departmentId" value="1">
+							<input type="hidden" class="form-control" placeholder="" name="departmentId" value="3">
 						</div>
 			            
 			            <!-- 이하 옵션 필요한만큼 가져다 쓰고 안 쓰면 지우세요 ----------------------------------->
@@ -137,10 +137,22 @@
 								<input type="radio" name="obFixedCheck" id="ch1" value="Y">&nbsp;<label for="ch1">상단 고정</label>
 				            </div>
 							<div class="radio-wrapper">
-					            <input type="radio" name="obFixedCheck" id="ch2" value="N">&nbsp;<label for="ch2">일반 공지</label>
+					            <input type="radio" name="obFixedCheck" id="ch2" value="N" checked="checked">&nbsp;<label for="ch2">일반 공지</label>
 				            </div>
 			            </div>
-			            
+			             <div class="form-option2">
+			                <!-- 상단 고정 여부 -->
+			                <div class="option-name">접근 여부</div>
+			            </div>
+			            <div class="form-option2-input">
+							<!-- 상단 고정 여부 : 작성칸 -->
+							<div class="radio-wrapper">
+								<input type="radio" name="obAccess" id="ch3" value="Y">&nbsp;<label for="ch3">부서글 이동</label>
+				            </div>
+							<div class="radio-wrapper">
+					            <input type="radio" name="obAccess" id="ch4" value="N" checked="checked">&nbsp;<label for="ch4">전체글 이동</label>
+				            </div>
+			            </div>
 			            <div class="form-file">
 			            	<!-- 첨부 파일 -->
 			            	<div class="option-name">첨부 파일</div>
@@ -160,7 +172,8 @@
 							<!-- summernote 넣은 부분 ---------------------------------------------------------------------->
 							<!------------------------------------------------------------------------------------------------->
 							<textarea class="summernote" placeholder="글내용" name="obContent"></textarea>
-			            </div><!-- end content -->
+			            </div>
+			            <!-- end content -->
 			            <div class="form-submit">
 			            	<!-- 등록 버튼 -->
 			            	<input type="submit" class="easyway-btn" value="글쓰기">
@@ -175,6 +188,23 @@
 	    
     </div> <!-- end page-divider -->
 
-</body>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".easyway-btn").click(function () {
+		var obfixedcheck = $("#ch1").val();
+		var obfixedcheck2 = $("#ch2").val();
+		 if(obfixedcheck == ""){
+             alert("상단 고정 여부를 선택하세요");
+             return;
+         }
+         if(obfixedcheck2 == ""){
+             alert("상단 고정 여부를 선택하세요");
+             return;
+         }
+         document.form.submit();
+     });
+ });
+</script>
+</body>
 </html>

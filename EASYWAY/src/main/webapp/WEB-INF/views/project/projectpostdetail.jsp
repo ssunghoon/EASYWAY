@@ -140,17 +140,19 @@
 	            	
 	            	<!-- 수정 / 삭제 / 돌아가기 버튼 -->
 	            	<div class="buttons">
-		            	<button type="button" class="modify-btn easyway-btn">
+		            	<button type="button" class="modify-btn easyway-btn" onclick="location.href='projectpostmodify?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}'">
 		            		수정하기
 		            	</button>
-		            	<form action="">
-		            	
+		            	<form action="projectpostremove" method="post">
+		            		<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+		            		<input type="hidden" name="projectId" value="${projectId} "/>
+		            		<input type="hidden" name="projectBoardId" value="${projectBoardId}"/>
+		            		<input type="hidden" name="projectPostId" value="${projectPost.projectPostId}"/>
+		            		<input type="submit" class="delete-btn easyway-btn" value="삭제"/>	
 		            	</form>
-		            	
-		            	
-		            	<button type="button" class="delete-btn easyway-btn">
-		            		삭제하기
-		            	</button>
+<!-- 		            	<button type="button" class="delete-btn easyway-btn"> -->
+<!-- 		            		삭제하기 -->
+<!-- 		            	</button> -->
 		            	<button type="button" class="list-btn easyway-btn" onclick="location.href='projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoardId}'">
 		            		돌아가기
 		            	</button>

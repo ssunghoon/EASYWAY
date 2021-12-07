@@ -78,9 +78,9 @@
 			 	 	<i id="save-btn-icon" class="fas fa-save"></i>
 			 	 	<span>저장하기</span>
 				</div>
-				<div id="import-btn" class="custom-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-import">
-			 	 	<i id="import-btn-icon" class="fas fa-file-import"></i>
-			 	 	<span>불러오기</span>
+				<div id="import-btn" class="custom-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-default">
+			 	 	<i id="import-btn-icon" class="fas fa-cog"></i>
+			 	 	<span>기본설정</span>
 				</div>
 			</div>
 			<input type="hidden" id="token" name="${_csrf.parameterName}"
@@ -92,7 +92,6 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <h5 class="modal-title" id="staticBackdropLabel">위젯 상태 저장하기</h5>
-			        <button type="button" class="easyway-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-default">기본 커스텀 설정</button>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
@@ -118,7 +117,7 @@
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="staticBackdrop2Label">해당 오피스에 사용할 기본 커스텀 선택</h5>
+			        <h5 class="modal-title" id="staticBackdrop2Label">해당 오피스의 기본 커스텀을 변경하고 새로고침해주세요</h5>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
@@ -135,33 +134,6 @@
 			    </div>
 			  </div>
 			</div>
-			
-			<!-- 커스텀 불러오기 모달창 -->
-			<div class="modal fade" id="staticBackdrop-import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="staticBackdropLabel">위젯 상태 불러오기</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <div class ="custom-import">
-			        	<div id="custom-import1">커스텀 1</div>
-			        	<div class ="custom-unselected"></div>
-			        </div>
-			        <div class ="custom-import">
-			        	<div id="custom-import2">커스텀 2</div>
-			        	<div class ="custom-unselected"></div>
-			        </div>
-			        <div class ="custom-import">
-			        	<div id="custom-import3">커스텀 3</div>
-			        	<div class ="custom-unselected"></div>
-			        </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			
 			
 			<!-- 썸네일 컨테이너 (draggable) -->
 			<ul class="widget-thumb-container" onclick="widgetFunction(event)">

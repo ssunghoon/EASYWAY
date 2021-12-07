@@ -46,10 +46,8 @@ public class ProjectController {
 	// 프로젝트 게시판 등록
 	@PostMapping("/projectboardregister")
 	public String projectBoardRegister(ProjectBoard projectBoard, RedirectAttributes rttr) {
-		log.info("프로젝트 시퀀스 아이디"+projectBoard.getProjectId());
-		log.info("프로젝트 보드 객체"+projectBoard);
-		service.registerProjectBoard(projectBoard);
 		rttr.addAttribute("projectId", projectBoard.getProjectId());
+		service.registerProjectBoard(projectBoard);
 		return "redirect:/project/projectboardlist";
 	}
 	
@@ -69,11 +67,10 @@ public class ProjectController {
 	
 	// 프로젝트 게시물 생성
 	@PostMapping("/projectpostregister")
-	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, @RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId) {
+	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr) {
 //		log.info(projectId.getClass().getName());
-//		log.info(projectId); 
-		rttr.addAttribute("projectId", projectId);
-		rttr.addAttribute("projectBoardId", projectBoardId);
+		rttr.addAttribute("projectId", projectPost.getProjectId());
+		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
 		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
 		service.registerProjectPost(projectPost);
 		return "redirect:/project/projectpostlist";
@@ -97,6 +94,35 @@ public class ProjectController {
 		model.addAttribute("pb", service.getProjectBoard(projectId, projectBoardId));
 		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
 	}
+	
+	// 프로젝트 게시물 수정 페이지
+	@GetMapping("/projectpostmodify")
+	public void projectPostGetModify(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, @RequestParam("projectPostId") Long projectPostId, Model model) {
+		model.addAttribute("projectId", projectId);
+		model.addAttribute("projectBoardId", projectBoardId);
+		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
+		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
+	}
+	
+	@PostMapping("/projectpostmodify")
+	public String projectPostPostModify(ProjectPost projectPost, RedirectAttributes rttr) {
+		rttr.addAttribute("projectId", projectPost.getProjectId());
+		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
+		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
+		service.modifyProjectPost(projectPost);
+		return "redirect:/project/projectpostlist";
+	}
+	
+	// 프로젝트 게시물 삭제
+	@PostMapping("/projectpostremove")
+	public String projectPostRemove(ProjectPost projectPost, RedirectAttributes rttr) {
+		rttr.addAttribute("projectId", projectPost.getProjectId());
+		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
+		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
+		service.removeProjectPost(projectPost.getProjectBoardId(), projectPost.getProjectPostId());
+		return "redirect:/project/projectpostlist";
+	}
+	
 	
 	
 

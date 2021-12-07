@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -69,6 +71,7 @@
 				</div>
 
 				<%-- ${sessionScope.nowOfficeInfo} --%>
+
 				<div class="setting-title">
 					<div class="easyway-title1">사원 등록</div>
 				</div>
@@ -88,7 +91,6 @@
 							<th>근로형태</th>
 							<th>휴대전화</th>
 						</tr>
-
 						<c:forEach var="employee" items="${employeeList}">
 							<tr>
 								<td>${employee.employeeName}</td>
@@ -116,7 +118,7 @@
 					<div class="modal-body">
 						<div class="input-group">
 							<input type="search" class="form-control rounded"
-								placeholder="초대할 맴버 이메일을 작성해주세요" aria-label="Search"
+								placeholder="초대할 멤버 이메일을 작성해주세요" aria-label="Search"
 								aria-describedby="search-addon" name="memberEmail" />
 							<button type="button" id="search-email" class="btn easyway-btn">search</button>
 						</div>
@@ -131,21 +133,27 @@
 						</div>
 						<input type="hidden" id="token" name="${_csrf.parameterName}"
 							data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-					</div>
-				</div>
+					</div>					
+				</div>				
 			</div>
 		</div>
 </body>
 <script type="text/javascript">
+	/* <c:set var="nowMemberEmail" value="${principal}"></c:set> */
+	<sec:authentication property="principal" var="principal" />
+	var nowMemberEmail = '<c:out value="${principal.member.memberEmail}"/>';
 	var positionList = new Array();
-	var ps = {};
+	var employeeEmails = new Array();
+	<c:forEach var="employee" items="${employeeList}">
+		employeeEmails.push("${employee.employeeEmail}");
+	</c:forEach>
+	console.log(employeeEmails);
 	<c:forEach items="${positionList}" var="position">
 	positionList.push({
 		"positionId": "${position.positionId}",
 		"positionName":"${position.positionName}"
 		});
 	</c:forEach>
-	console.log(positionList);
 	var departmentList = new Array();
 	<c:forEach items="${departmentList}" var="department">
 	departmentList.push({
