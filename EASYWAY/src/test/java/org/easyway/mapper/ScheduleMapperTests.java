@@ -72,8 +72,8 @@ public class ScheduleMapperTests {
 		schedule.setScheduleId(106L);
 //		schedule.setEmployeeId(1L);
 		schedule.setScheduleTitle("수정테스트제목1");
-		schedule.setScheduleStart(new Date(2021/12/3));
-		schedule.setScheduleEnd(new Date (2021/12/4));
+//		schedule.setScheduleStart(new Date(2021/12/3));
+//		schedule.setScheduleEnd(new Date (2021/12/4));
 		schedule.setScheduleContent("Modify내용1");
 		schedule.setScheduleImportance("하");
 		schedule.setSchedulePrivate("N");
