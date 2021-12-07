@@ -24,8 +24,9 @@
 		<result property="officeId" column="office_id" />
 		<result property="departmentName" column="department_name" />
 	</resultMap>
+	
 	<resultMap id="annualVacationVOResultMap" type="org.easyway.domain.office.AnnualVacation">
-		<id property="annualVacationId" column="department_id" />
+		<id property="annualVacationId" column="av_id" />
 		<result property="officeId" column="office_id" />
 		<result property="annual" column="annual" />
 		<result property="vacations" column="vacations" />
@@ -80,6 +81,9 @@
 	<select id="getAnnualVacation" resultMap="annualVacationVOResultMap">
 		select * from annual_vacation where office_id = #{officeId} and annual = #{annual}
 	</select>
+	<select id="getAnnualVacationList" resultMap="annualVacationVOResultMap">
+		select * from annual_vacation where office_id = #{officeId}
+	</select>
 	<select id="getPositionList" resultMap="positionVOResultMap">
 		select * from position where office_id = #{officeId}
 	</select>
@@ -105,6 +109,13 @@
 		where
 		office_id = #{office_id}
 	</delete>
+	
+	<update id="updateVacation" parameterType="org.easyway.domain.office.AnnualVacation">
+		update
+		annual_vacation set
+		vacations = #{vacations}
+		where av_id = #{annualVacationId}
+	</update>
 </mapper>
 
 

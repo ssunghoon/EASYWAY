@@ -69,7 +69,7 @@
   align-self: flex-end;
 }
 .position-setting-table {
-  grid-column: 2/ 11;
+  grid-column: 4/ 8;
 }
 .position-add-btn {
   color: #0397ed;
