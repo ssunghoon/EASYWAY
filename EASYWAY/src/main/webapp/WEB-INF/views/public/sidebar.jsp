@@ -70,6 +70,27 @@
 			</li>
 		</ul> <!-- end manager-menu -->
 		
+		<!-- 사이드바 하단 : 오피스로 돌아가기,  -->
+		<ul class="nav nav-footer nav-pills flex-column mb-auto">
+			<li>
+				<a href="/office/officelist" class="nav-link link-dark"> 
+					<i class="nav-element far fa-building"></i>
+					<span class="nav-element">오피스로 돌아가기</span>
+				</a>
+			</li>
+			<li>
+				<form action="/member/logout" method="post" accept-charset="utf-8">
+					<a href="" class="nav-link link-dark">
+						<i class="nav-element fas fa-power-off"></i>
+						<input type="submit" class="nav-element log-out" value="로그아웃" />
+						<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+					</a>
+				</form>
+			</li>
+		</ul> <!-- end manager-menu -->
+		
+		
 	</div> <!-- end sidebar -->
 
 </nav>
