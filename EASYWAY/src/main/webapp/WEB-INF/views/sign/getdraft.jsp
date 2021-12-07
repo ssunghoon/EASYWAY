@@ -92,6 +92,12 @@
 						<th class="sign-th">중요도</th>
 						<td>${basicSign.signImportance }</td>
 					</tr>
+					<c:if test="${basicSign.fileName ne null}">
+					<tr>
+						<th class="sign-th">파일</th>
+						<td><a href="/filedownload?fileName=${basicSign.fileName}">${basicSign.fileName}</a></td>
+					</tr>
+					</c:if>
 					</table>
 					</c:when>
 					<c:when test="${spendSign.signFormId == '2'}">
@@ -128,6 +134,12 @@
 						<th class="sign-th">중요도</th>
 						<td>${spendSign.signImportance }</td>
 					</tr>
+					<c:if test="${spendSign.fileName != null}">
+					<tr>
+						<th class="sign-th">파일</th>
+						<td><a href="/filedownload?fileName=${spendSign.fileName}">${spendSign.fileName}</a></td>
+					</tr>
+					</c:if>
 					</table>
 					</c:when>
 					<c:when test="${vacationSign.signFormId == '3'}">
@@ -162,6 +174,12 @@
 						<th class="sign-th">중요도</th>
 						<td>${vacationSign.signImportance }</td>
 					</tr>
+					<c:if test="${vacationSign.fileName ne null}">
+					<tr>
+						<th class="sign-th">파일</th>
+						<td><a href="/filedownload?fileName=${vacationSign.fileName}">${vacationSign.fileName}</a></td>
+					</tr>
+					</c:if>
 					</table>
 					</c:when>
 				</c:choose>
