@@ -24,6 +24,7 @@
     	<result property="widgetHeight" column="widget_height" />
 	</resultMap>
 	
+	<!-- 위젯 커스텀 처음 저장하기 : WidgetCustom 테이블 -->
 	<insert id="insertWidgetCustom">
 		INSERT INTO widget_save(
 			ws_id, member_id, office_id, ws_custom, ws_import
@@ -36,6 +37,7 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 위젯 커스텀 처음 저장하기 : Widget 테이블 -->
 	<insert id="insertWidget">
 		INSERT INTO widget(
 			widget_id, ws_id, widget_name, widget_position_x, widget_position_y, widget_width, widget_height
@@ -43,7 +45,8 @@
 			widget_seq.nextval, #{wsId}, #{widgetName}, #{widgetPositionX}, #{widgetPositionY}, #{widgetWidth}, #{widgetHeight}
 		)
 	</insert>
-  	
+	
+  	<!-- 기본 위젯 불러오기 -->
 	<select id="getListWidget" resultMap="widgetVOResultMap">
 		SELECT w.widget_name, w.widget_position_x, w.widget_position_y, w.widget_width, w.widget_height
 			FROM widget w JOIN widget_save ws
@@ -52,6 +55,41 @@
 			AND ws.office_id = #{officeId}
 			AND ws.ws_import = 'Y'
 	</select>
-	  
+	
+	<!-- 현재 저장된 커스텀번호 불러오기 -->
+	<select id="readCustomNow" resultType="int">
+		SELECT ws_custom FROM widget_save
+			WHERE member_id = #{memberId}
+			AND office_id = #{officeId}
+			AND ws_custom = 'Y'
+	</select>
+	
+	<!-- 위젯 기본값 변경하기 : 기존에 있던 기본값 취소 -->
+	<update id="updateDefaultCancel">
+		UPDATE widget_save SET ws_import = 'N'
+			WHERE ws_custom = ( SELECT ws_custom FROM widget_save
+			WHERE ws_import = 'Y')
+	</update>
+
+	<!-- 위젯 기본값 변경하기 : 새로 기본값 설정 -->
+	<update id="updateDefault">
+	  	UPDATE widget_save	SET ws_import = 'Y'
+	  		WHERE ws_custom = #{wsCustom}
+	</update>
+	
+	<!-- 위젯 삭제 구현 -->
+	<delete id="deleteWidget">
+		DELETE FROM widget
+		WHERE widget_id = (
+			SELECT widget_id FROM widget
+			WHERE ws_id = (
+				SELECT ws_id FROM widget_save
+				WHERE member_id = #{memberId}
+				AND office_id = #{officeId}
+				AND ws_custom = #{wsCustom}
+			)
+			AND widget_name = #{widgetName}
+		)
+	</delete>
 	
 </mapper>

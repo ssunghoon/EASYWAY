@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import lombok.extern.log4j.Log4j;
 
@@ -41,7 +42,7 @@ public class WidgetMapperTests {
 	}
 */
 	
-	
+/*	
 	@Test
 	public void test(){
 		WidgetVO widget = new WidgetVO();
@@ -57,6 +58,14 @@ public class WidgetMapperTests {
 		
 		log.info("테스트!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + widget);
 		
+	}*/
+	
+/*	@Test
+	public void test(){
+		
+		mapper.updateDefaultCancel();
+		mapper.updateDefault(3);
+		
 	}
-
+*/
 }
