@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.easyway.domain.office.WidgetCustom;
 import org.easyway.domain.office.WidgetVO;
 import org.easyway.mapper.WidgetMapperTests;
 import org.easyway.service.office.WidgetService;
@@ -20,10 +21,10 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class WidgetServiceTests {
-
+/*
 	@Autowired
 	private WidgetService service;
-/*	
+	
 	@Test
 	public void test() {
 		
@@ -46,12 +47,14 @@ public class WidgetServiceTests {
 			log.info("widgetList!!!!!!!!!!!!!!!!!!!!!!------------" + widgetList);
 		}
 		
-		Long memberId = 88L;
-		Long officeId = 88L;
-		int customNum = 3;
+		WidgetCustom widgetCustom = new WidgetCustom();
+		widgetCustom.setMemberId(88L);
+		widgetCustom.setOfficeId(88L);
+		widgetCustom.setWsCustom(3);
+		widgetCustom.setWsImport("N");
 		
-		service.save(widgetList, memberId, officeId, customNum);
+		service.save(widgetList, widgetCustom);
 		
-	}*/
-
+	}
+*/
 }

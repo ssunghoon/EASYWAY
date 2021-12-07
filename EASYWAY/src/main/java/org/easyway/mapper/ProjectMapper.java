@@ -27,6 +27,8 @@ public interface ProjectMapper {
 	
 	public ProjectPost readProjectPost(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 프로젝트 게시물 상세
 	
+	public int updateProjectPost(ProjectPost projectPost); // 프로젝트 게시물 수정
+	
 	public int deleteProjectPost(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 프로젝트 게시물 삭제
 	
 }

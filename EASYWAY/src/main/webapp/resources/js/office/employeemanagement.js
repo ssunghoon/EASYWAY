@@ -64,10 +64,30 @@ $(document).ready(function () {
   }
 
   searchEmailBtn.on("click", function (e) {
-    if (modalInputEmail.val() === "") {
-      alert("메일을 작성해주세요!");
-      return;
-    }
+	  
+	 if (modalInputEmail.val() === "") {
+	      alert("메일을 작성해주세요!");
+	      return;
+	    }
+	 if(modalInputEmail.val() === nowMemberEmail){
+	      alert("본인 이메일은 추가 할 수 없습니다.");
+	      return;
+	    }	  
+	 if(Object.keys(memberList).length != 0){//memberList가 빈객체가 아니면
+		 for (let key in memberList) {
+			var test =  memberList[key].memberEmail;
+			if(modalInputEmail.val() === test){
+				alert("이미 추가리스트에 올라온 이메일 입니다.")
+				return;
+			}
+		}
+	  }
+	 for (let email of employeeEmails) {
+		if(email === modalInputEmail.val()){
+			alert("이미 사원으로 존재하는 이메일입니다.");
+			return;
+		}
+	}
     var data = {
       enteredEmail: modalInputEmail.val(),
     };
@@ -81,11 +101,12 @@ $(document).ready(function () {
 	 $(this).parent().remove();
   });
   
-  $(document).on("click", ".all-clear-btn", function (e) {
+/*  $(document).on("click", ".all-clear-btn", function (e) {
 	    $(".search-member-info").remove();
 	    count = 0;
 	    memberList = {};
-	  });
+	  });*/
+//닫기 누르면 list다 날리는건데 이건 안할라고
   
   addEmployee.on("click", function (e) {
 	    var space = document.getElementById("employee-list");
@@ -123,7 +144,7 @@ $(document).ready(function () {
   $(document).on("click", "#save-btn", function (e) {
 	   	var saveEmployees = [];
 	   	
-	   	//json 키값 변경을 위해 새로 만듬
+	   	// json 키값 변경을 위해 새로 만듬
 	   	for (var key in memberList) {
 	   		var json = memberList[key];
 	   		var tmp = {};
