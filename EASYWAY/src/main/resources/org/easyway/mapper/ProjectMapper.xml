@@ -27,9 +27,11 @@
 	</select>
 	
 	<update id="updateProject">
-		update project set project_name = #{projectName}, project_end = #{projectEnd}, project_content = #{projectContent} WHERE project_id = #{projectId}
+		UPDATE
+			project
+		SET
+			project_name = #{projectName}, project_end = #{projectEnd}, project_content = #{projectContent} WHERE project_id = #{projectId}
 	</update>
-	
 	
 	<insert id="insertProjectBoard">
 		INSERT INTO P_BOARD VALUES(P_BOARD_SEQ.nextval, #{projectId}, #{projectBoardName})
@@ -56,14 +58,15 @@
 	
 	
 	<insert id="insertProjectPost">
-		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
+		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, #{projectId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
 	</insert>
 
 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost">
 		SELECT
 			pp_id AS projectPostId,
 			pb_id AS projectBoardId,
-			pm_id AS projectMemberId,
+			project_id AS projectId,
+			employee_id AS employeeId,
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
 			pp_file_path AS projectPostFilePath,
@@ -77,7 +80,8 @@
 		SELECT
 			pp_id AS projectPostId,
 			pb_id AS projectBoardId,
-			pm_id AS projectMemberId,
+			project_id AS projectId,
+			employee_id AS employeeId,
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
 			pp_file_path AS projectPostFilePath,
@@ -87,8 +91,17 @@
 			P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID = ${projectPostId}
 	</select>
 	
+	<update id="updateProjectPost">
+		UPDATE
+			P_POST
+		SET
+			PP_TITLE = #{projectPostTitle}, PP_CONTENT = #{projectPostContent}, PP_FILE_PATH = #{projectPostFilePath}
+		WHERE 
+			PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
+	</update>
+	
 	<delete id="deleteProjectPost">
-		DELETE FROM P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID #{projectPostId}
+		DELETE FROM P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
 	</delete>
 	
 </mapper>

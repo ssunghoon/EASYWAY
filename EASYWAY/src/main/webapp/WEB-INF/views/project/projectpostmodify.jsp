@@ -117,10 +117,13 @@ input.easy-btn {
 	            <!-- form -->
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="projectpostregister" method="post">
+		            <form class="form-container" action="projectpostmodify" method="post">
 		            	<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            	<input type="hidden" name="projectId" value="${projectId}">
-		            	<input type="hidden" name="projectBoardId" value="${projectBoardId }">
+		            	<input type="hidden" name="projectPostId" value="${projectPost.projectPostId }">
+		            	<input type="hidden" name="projectBoardId" value="${projectPost.projectBoardId }">
+		            	<input type="hidden" name="projectPostDate" value="${projectPost.projectPostDate }">
+		            	<input type="hidden" name="projectPostViews" value="${projectPost.projectPostViews }">
 			        	<div class="form-title">
 			                <!-- 제목 -->
 			                <div class="option-name">제목</div>
