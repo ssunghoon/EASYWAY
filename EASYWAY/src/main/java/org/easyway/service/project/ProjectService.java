@@ -26,6 +26,8 @@ public interface ProjectService {
 	
 	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId); // 프로젝트 게시물 상세
 	
+	public boolean modifyProjectPost(ProjectPost projectPost); // 프로젝트 게시물 수정
+	
 	public boolean removeProjectPost(Long projectBoardId, Long projectPostId); // 프로젝트 게시물 삭제
 	
 }

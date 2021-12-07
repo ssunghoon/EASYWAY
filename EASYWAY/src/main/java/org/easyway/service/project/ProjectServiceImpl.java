@@ -64,8 +64,15 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) {
+	public boolean modifyProjectPost(ProjectPost projectPost) { // 프로젝트 게시물 수정
+		return mapper.updateProjectPost(projectPost)==1;
+	}
+	
+	@Override
+	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) { // 프로젝트 게시물 삭제
 		return mapper.deleteProjectPost(projectBoardId, projectPostId) == 1;
 	}
+
+
 
 }
