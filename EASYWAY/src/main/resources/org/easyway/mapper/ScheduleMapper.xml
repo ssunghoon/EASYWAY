@@ -4,24 +4,23 @@
 
 <mapper namespace="org.easyway.mapper.ScheduleMapper">
 	<cache />
-	<!--스케쥴테이블 전체 불러오기 CDATA는 추후 부등호(<,>)를 사용하기 위해서-->
+	<!--스케쥴테이블 전체 불러오기<![CDATA[ ]]>는 추후 부등호(<,>)를 사용하기 위해서-->
 	<select id="getList" resultType = "org.easyway.domain.schedule.ScheduleVO">
-	<![CDATA[
 			SELECT
 			schedule_id AS scheduleId , employee_id AS employeeId, schedule_title AS scheduleTitle,
 			schedule_start AS scheduleStart, schedule_end AS scheduleEnd,
 			schedule_content AS scheduleContent, schedule_importance AS scheduleImportance, schedule_private AS schedulePrivate
-			FROM schedule ORDER BY schedule_id
-			]]>
+			FROM schedule
 	</select>
+<!-- 	WHERE employee_id =#{employeeId} ORDER by schedule_id -->
 	<!--일정등록 schedule_seq.nextval 자동으로 1씩증가-->
 	<insert id="insert">
 		INSERT INTO schedule(
-			schedule_id , employee_id, schedule_title , schedule_start, schedule_end,
-			schedule_content , schedule_importance , schedule_private
+			schedule_id, employee_id, schedule_title , schedule_start, schedule_end,
+			schedule_content, schedule_importance , schedule_private
 		)
 		VALUES(
-			schedule_seq.nextval, '1', #{scheduleTitle}, #{scheduleStart},#{scheduleEnd},
+			schedule_seq.nextval, #{employeeId}, #{scheduleTitle}, #{scheduleStart},#{scheduleEnd},
 			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate}
 		)
 	</insert>
@@ -42,8 +41,8 @@
 		INSERT INTO schedule (schedule_id , employee_id, schedule_title , schedule_start, schedule_end,
 			schedule_content , schedule_importance , schedule_private )
 		VALUES
-		(#{scheduleId}, '1', #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
-			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate})
+		(#{scheduleId}, #{employeeId}, #{scheduleTitle},#{scheduleStart},#{scheduleEnd},
+			#{scheduleContent}, #{scheduleImportance}, #{schedulePrivate}
 	</insert>
 	
 	 
@@ -54,7 +53,8 @@
 			schedule_content AS scheduleContent, schedule_importance AS scheduleImportance, schedule_private AS schedulePrivate
 		FROM schedule WHERE schedule_id = #{scheduleId}
 	</select>
-	
+<!-- 	WHERE schedule_id = #{scheduleId} -->
+
 	<delete id="remove">
 		delete schedule where schedule_id = #{scheduleId}
 	</delete>

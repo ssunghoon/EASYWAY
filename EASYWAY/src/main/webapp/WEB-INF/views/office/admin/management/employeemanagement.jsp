@@ -141,7 +141,7 @@
 	var ps = {};
 	<c:forEach items="${positionList}" var="position">
 	positionList.push({
-		"positionId": ${position.positionId},
+		"positionId": "${position.positionId}",
 		"positionName":"${position.positionName}"
 		});
 	</c:forEach>
@@ -149,7 +149,7 @@
 	var departmentList = new Array();
 	<c:forEach items="${departmentList}" var="department">
 	departmentList.push({
-		"departmentId": ${department.departmentId},
+		"departmentId": "${department.departmentId}",
 		"departmentName":"${department.departmentName}"
 		});
 	</c:forEach>
