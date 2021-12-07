@@ -47,7 +47,7 @@ public class NoticeControllerTests {
 //		List<NoticeVO> list = mapper.getListPaging(cri);
 //		list.forEach(notice -> log.info(notice.getObId()));
 //	}
-	 
+//	 
 	 //페이징 처리 2차 테스트
 //	 @Test
 //	 public void testpsing2() throws Exception{

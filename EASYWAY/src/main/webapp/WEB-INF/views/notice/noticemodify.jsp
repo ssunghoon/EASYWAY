@@ -58,11 +58,11 @@
   grid-row: 4 / 5;
 }
 
-.form-file-input {
-  /* 첨부 파일 : 작성칸 */
-  grid-column: 2 / 13;
-  grid-row: 4 / 5;
-}
+/* .form-file-input { */
+/*   /* 첨부 파일 : 작성칸 */ */
+/*   grid-column: 2 / 13; */
+/*   grid-row: 4 / 5; */
+/* } */
 
 .form-option1-input {
     display: flex;
@@ -71,7 +71,7 @@
 .form-content {
   /* 내용 */
   grid-column: 1 / 13;
-  grid-row: 5 / 6;
+  grid-row: 7 / 8;
 }
 
 </style>
@@ -102,6 +102,7 @@
   			 <div class="easyway-boardapply-form">
 
 				<form class="form-container" action="/notice/noticemodify" method="post">
+				
 						<input type="hidden" id="token" name="${_csrf.parameterName}"
                 		  data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<input type="hidden" name="obId" value="${of_board.obId }">
@@ -118,7 +119,7 @@
 						</div>
 					 <div class="form-writer">
 			                <!-- 작성자 : 작성칸 -->			                
-			            <div class="option-name" name="employeeId" >작성자</div>
+			            <div class="option-name">작성자</div>
 			         </div>
 						<div class="form-writer-input">
 							<!-- 작성자 : 작성칸 -->
@@ -146,36 +147,37 @@
 					            id="ch2" value="N">&nbsp;<label for="ch2">일반 공지</label>
 				            </div>
 			            </div>
-			              <div class="form-file">
-			            	<!-- 첨부 파일 -->
-			            	<div class="option-name">첨부 파일</div>
-			            </div>
-			            <div class="form-file-input">
-			            	<!-- 첨부 파일 -->
-			            	<input type="text" class="form-control" placeholder="파일첨부" name="obFilePath"
-			            	value='<c:out value="${of_board.obFilePath }"/>'>
-			            </div>
+			         
 			            
 			            
 			             <div class="form-content">
 			            	<!-- 내용 -->
-			            	<div class="option-name">내용</div>
+<!-- 			            	<div class="option-name">내용</div> -->
 			            </div>
 			            <div class="form-content-input">
 			            	<!-- 내용 작성칸 -->
 							<!------------------------------------------------------------------------------------------------->
 							<!-- summernote 넣은 부분 ---------------------------------------------------------------------->
 							<!------------------------------------------------------------------------------------------------->
-							<textarea class="summernote" placeholder="글내용" name="obContent">
-							<c:out value="${of_board.obContent }"/>
+							<textarea id="board_content" class="summernote" placeholder="글내용" name="obContent">
+							${of_board.obContent }
 							</textarea>
-			            </div><!-- end content -->
-			           <div class="form-submit">
-			            	<!-- 등록 버튼 -->
-			            	<input type="submit" class="easyway-btn" value="수정완료">
+							 <div class="form-file">
+<!-- 			            	첨부 파일 -->
+			            	<div class="option-name">첨부 파일</div>
 			            </div>
-			            
-			    	</form>
+			            <div class="form-file-input">
+<!-- 			            	첨부 파일 -->
+			            	<input type="text" class="form-control" placeholder="파일첨부" name="obFilePath"
+			            	value='<c:out value="${of_board.obFilePath }"/>'>
+			            </div> 
+			            </div><!-- end content -->
+							<div class="form-submit">
+							<!-- 등록 버튼 -->
+							<input type="submit" class="easyway-btn" value="수정완료">
+						</div>
+
+					</form>
 			    	
 	            </div> <!-- end easyway-boardapply-form -->
 	            
@@ -186,6 +188,11 @@
 </body>
 
 <script type="text/javascript">
+
+$(document).ready(function () {
+	   $('#board_content').summernote('editor.insertText', "${of_board.BOARD_CONTENT}")
+	 });
+	 
 function checkOnlyOne(element) {
 	  
 	  const checkboxes 
