@@ -89,12 +89,14 @@
 					<ul>
 						<li class="topMenuLi">
 							<div class="easyway-title1">
-								<a class="menuLink" href="noticelist"> 전체 공지사항 </a>
+								<a class="menuLink" href="noticelist"> 
+								전체 공지사항
+								 </a>
 							</div>
 							<ul class="submenu">
 								<li><a href="noticelist" class="submenuLink longLink">전체
 										공지사항</a></li>
-								<li><a href="noticelist" class="submenuLink longLink">부서
+								<li><a href="departmentnoticelist" class="submenuLink longLink">부서
 										공지사항</a></li>
 							</ul>
 						</li>
@@ -129,7 +131,7 @@
 					<table class="board-list">
 						<tr>
 							<th>글번호</th>
-							<th>파일첨부</th>
+							<th>작성자</th>
 							<th>글제목</th>
 							<th>날짜</th>
 							<th>조회수</th>
@@ -137,7 +139,7 @@
 						<c:forEach var="of_board" items="${noticelist }">
 							<tr>
 								<td><c:out value="${of_board.obId }" /></td>
-								<td><c:out value="${of_board.obFilePath }" /></td>
+								<td><c:out value="${of_board.employeeName }" /></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
 								<td><a class="move"
 									href='<c:out value="${of_board.obId}"/>'> <c:out
@@ -268,7 +270,7 @@
 		<!-- page-divider end  -->
 	</div>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(document)
 				.ready(
 						function() {

@@ -35,14 +35,14 @@ $(document).ready(function () {
 	    let space = document.getElementById("search-name-list");
 	    let receivedBox = document.createElement("div");
 	    receivedBox.className = "search-employee-info";
-	    receivedBox.innerHTML = `<div style="display: flex;"><input type="radio" value="${data.employeeName }" name="employeeId" id="${data.employeeName }">
-    							 <label for="${data.employeeName }">${data.employeeName}</label><br></div>`;
+	    receivedBox.innerHTML = `<div style="display: flex;"><input type="radio" value="${data.employeeId }" name="employeeId" id="employeeId${data.employeeId }">
+    							 <label for="employeeId${data.employeeId }">${data.employeeName}</label><br></div>`;
 	    space.append(receivedBox);
 	    count++;
    } 
   searchNameBtn.on("click", function (e) {
 	  if(nameList[0]){
-		  alert(nameList[0].employeeName);
+		  //alert(nameList[0].employeeName);
 		  document.getElementById("search-name-list").innerHTML = "";
 	  }
 	    if (modalInputName.val() === "") {
@@ -71,25 +71,35 @@ $(document).ready(function () {
   
   $('#firstIn').on("click",function() {
 	  var firstVal = $('input[name="employeeId"]:checked').val();
-	  alert("firstVal : " + firstVal);
-	  document.getElementById("firstResult").innerHTML = firstVal;
-		
+	  var output = $("label[for='employeeId"+firstVal+"']").text();
+	  //alert("firstVal : " + firstVal);
+	  //alert("label값 : " +output);
+	  document.getElementById("firstResult").innerHTML = `<input type="hidden" id="employee1" name="employeeId" value="`+firstVal+`"/><p align="center">`+output+`</p>`;
 	});
+  
   $('#secondIn').on("click", function() {
-		var secondVal = $('input[name="employeeId"]:checked').val();
-		alert("secondVal : " + secondVal);
-		document.getElementById("secondResult").innerHTML = secondVal;
+	  var secondVal = $('input[name="employeeId"]:checked').val();
+	  var output = $("label[for='employeeId"+secondVal+"']").text();
+	  //alert("firstVal : " + secondVal);
+	  //alert("label값 : " +output);
+	  document.getElementById("secondResult").innerHTML =  `<input type="hidden" id="employee2" name="employeeId" value="`+secondVal+`"/><p align="center">`+output+`</p>`;
 	});
+  
   $('#thirdIn').on("click", function() {
-		var thirdVal = $('input[name="employeeId"]:checked').val();
-		alert("thirdVal : " + thirdVal);
-		document.getElementById("thirdResult").innerHTML = thirdVal;
+	  var thirdVal = $('input[name="employeeId"]:checked').val();
+	  var output = $("label[for='employeeId"+thirdVal+"']").text();
+	  //alert("firstVal : " + thirdVal);
+	  //alert("label값 : " +output);
+	  document.getElementById("thirdResult").innerHTML =  `<input type="hidden"  id="employee3" name="employeeId" value="`+thirdVal+`"/><p align="center">`+output+`</p>`;
 	});
-  $('#fourthIn').on("click", function() {
-		var fourthVal = $('input[name="employeeId"]:checked').val();
-		alert("fourthVal : " + fourthVal);
-		document.getElementById("fourthResult").innerHTML = fourthVal;
-	});
+  $(document).on("click","#fourthIn", function() {
+	  var fourthVal = $('input[name="employeeId"]:checked').val();
+	  var output = $("label[for='employeeId"+fourthVal+"']").text();
+	  //alert("firstVal : " + fourthVal);
+	  //alert("label값 : " +output);
+	  document.getElementById("fourthResult").innerHTML =  `<input type="hidden"  id="employee4" name="employeeId" value="`+fourthVal+`"/><p align="center">`+output+`</p>`;
+	 
+  });
   
   $('#firstOut').on("click", function() {
 		// firstResult 자리
@@ -105,4 +115,38 @@ $(document).ready(function () {
 		document.getElementById("fourthResult").innerHTML = "";
 		alert(document.getElementById("firstResult").innerHTML);
 	});
+  
+  
+  $(document).on("click",".save-btn", function() {
+	  var firstOutput = $('#employee1').val();
+	  var secondOutput = $('#employee2').val();
+	  var thirdOutput = $('#employee3').val();
+	  var fourthOutput = $('#employee4').val();
+	  
+	  var idList = new Array();
+	  idList.push(firstOutput);
+	  idList.push(secondOutput);
+	  idList.push(thirdOutput);
+	  idList.push(fourthOutput);
+	  
+	  console.log(idList);
+	  
+	  $.ajax({
+		  url : "/sign/applypaymentline",
+		  type : "post",
+		  data : {
+		    chbox : idList
+		  }, 
+		  beforeSend: function (xhr) {
+		        var $token = $("#token");
+		        xhr.setRequestHeader($token.data("token-name"), $token.val());
+		      },
+		  success : function(result){
+			  console.log(result);
+		  },
+	      error: function (result) {
+	    	  alert("실패.");
+	      },
+		});
+	  });
 });

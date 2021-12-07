@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectMember { // 프로젝트 멤버
+public class ProjectCreate { // 프로젝트 생성
 	
-	private long projectMemberId; //프로젝트 멤버 번호
+	private long projectCreateId; //프로젝트 생성 번호
 	private long employeeId; // 사원 번호
 	private long projectId; // 프로젝트 번호
-	private String projectMemberRole; // 프로젝트 권한
+	private String projectCreateRole; // 프로젝트 권한
 
 }

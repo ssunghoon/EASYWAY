@@ -37,7 +37,7 @@
 <link href="/resources/css/reset.css" rel="stylesheet">
 <link href="/resources/css/sidebars.css" rel="stylesheet">
 <link href="/resources/css/common.css" rel="stylesheet">
-<link href="/resources/css/office/vacation_setting.css" rel="stylesheet">
+<link href="/resources/css/office/position_setting.css" rel="stylesheet">
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 <script src="/resources/js/menu.js"></script>
@@ -57,10 +57,10 @@
 
 			<div class="easyway-container">
 				<div class="tab-header">
-					<div class="tab-label-choice">
+					<div class="tab-label">
 						<a href="/office/admin/officesetting/vacationsetting">휴가 설정</a>
 					</div>
-					<div class="tab-label">
+					<div class="tab-label-choice">
 						<a href="/office/admin/officesetting/positionsetting">직위 설정</a>
 					</div>
 					<div class="tab-label">
@@ -69,29 +69,38 @@
 				</div>
 
 				<div class="setting-title">
-					<div class="easyway-title1">휴가 설정</div>
+					<div class="easyway-title1">직위 설정</div>
 				</div>
-
-				<button id="save-vacation-btn" class="easyway-btn">저장</button>
 				
-				<div class="vacation-setting-inputs">
-					<input type="hidden" id="token" name="${_csrf.parameterName}"
-							data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-						<c:forEach var="vacationInfo" items="${vacationInfos}" varStatus="status">
-							<div class="vacation-items">
-								<p>${vacationInfo.annual}년차</p>
-								<!-- 휴가 리스트 보내기 -->
-								<input type="hidden" id="annualVacationId" name="annualVacationId" value="${vacationInfo.annualVacationId}" />
-								<input type="hidden" id="officeId" name="officeId" value="${sessionScope.nowOfficeInfo.officeId}" />
-								<input type="hidden" id="annual" name="annual" value="${vacationInfo.annual}" />
-								<input class="vacation-item" type="number" id="vacations"  name="vacations"	value="${vacationInfo.vacations}">
-							</div>
-						</c:forEach>						
+				<button class="easyway-btn">저장</button>
+
+				<div class="position-setting-table ">
+					<div class="position-level-item">
+						<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
+						<!-- 임의의 5열 x 15줄 태그 (th포함하면 16줄) -->
+						<table class="position-list">
+							<tr>
+								<th>등급</th>
+								<th>직위명</th>
+							</tr>
+							<c:forEach var="position" items="${positionInfos}">
+							<tr>
+								<td>${position.positionLevel}등급</td>
+								<td>
+									<p>${position.positionName}</p>
+								</td>
+							</tr>
+							</c:forEach>
+						</table>
+
+					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
+
 </body>
-<script src="/resources/js/office/vacationSettiong.js"></script>
+
+
 </html>

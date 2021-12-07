@@ -21,4 +21,6 @@ public class SpendSignVO implements Serializable{
 	private String signContent; // SIGN_CONTENT
 	private String signImportance; // SIGN_IMPORTANCE
 	private String signListCheck; // SL_CHECK
+	
+	private String fileName; // FILE_NAME
 }

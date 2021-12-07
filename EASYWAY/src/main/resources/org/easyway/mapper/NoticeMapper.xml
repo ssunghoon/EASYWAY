@@ -4,6 +4,14 @@
 
 <mapper namespace="org.easyway.mapper.NoticeMapper">
 
+<!-- <resultMap type="DepartmentDTO" id="DepartmentDTO">
+<result column="DEPARTMENT_ID" property="departmentId"/>
+<result column="EMPLOYEE_ID" property="employeeId"/>
+</resultMap>
+
+<resultMap type="NoticeVO" id="NoticeVO">
+<result column=""/>
+</resultMap> -->
 <!-- sql문을 저장했다 필요할때 불러올수있다(include) -->
 
 	<sql id="criteria">
@@ -26,23 +34,27 @@
 	<insert id="insert">
 		INSERT INTO
 		OF_BOARD
-		VALUES(ob_seq.nextval,#{employeeId},#{departmentId},#{obFilePath},#{obTitle},#{obContent},0,SYSDATE,#{obFixedCheck})
+		VALUES(ob_seq.nextval,#{employeeId},#{departmentId},#{obFilePath},#{obTitle},#{obContent},0,SYSDATE,#{obFixedCheck}, #{obAccess})
 	</insert>
 
-	<select id="getListAll" resultType="org.easyway.domain.notice.NoticeVO">
-		SELECT
-		OB_ID AS obId,
-		EMPLOYEE_ID AS employeeId,
-		DEPARTMENT_ID AS departmentId,
-		OB_FILE_PATH AS obFilePath,
-		OB_TITLE AS obTitle,
-		OB_CONTENT AS obContent,
-		OB_VIEW AS obView,
-		OB_DATE AS obDate,
-		OB_FIXED_CHECK AS obFixedCheck
-		FROM OF_BOARD
-		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
-	</select>
+<!-- 	<select id="getListAll" resultType="org.easyway.domain.notice.NoticeVO"> -->
+<!-- 		SELECT -->
+<!-- 		OB_ID AS obId, -->
+<!-- 		EMPLOYEE_ID AS employeeId, -->
+<!-- 		DEPARTMENT_ID AS departmentId, -->
+<!-- 		OB_FILE_PATH AS obFilePath, -->
+<!-- 		OB_TITLE AS obTitle, -->
+<!-- 		OB_CONTENT AS obContent, -->
+<!-- 		OB_VIEW AS obView, -->
+<!-- 		OB_DATE AS obDate, -->
+<!-- 		OB_FIXED_CHECK AS obFixedCheck, -->
+<!-- 		OB_ACCESS AS obAccess -->
+<!-- 		FROM OF_BOARD -->
+<!-- 		WHERE -->
+<!-- 		OB_ACCESS = 'N'  -->
+<!-- 		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC -->
+
+<!-- 	</select> -->
 
 
 	<select id="read" resultType="org.easyway.domain.notice.NoticeVO">
@@ -82,30 +94,35 @@
 	<!-- 페이지를 넘길때 마다 중요 게시글이 상단에 고정뜨게하는 페이징+검색 리스트 쿼리문 -->
 	<select id="getListPaging" resultType="org.easyway.domain.notice.NoticeVO">
 	<![CDATA[
-		SELECT 
-				OB_ID AS obId,
-				EMPLOYEE_ID AS employeeId,
-				DEPARTMENT_ID AS departmentId,
-				OB_TITLE AS obTitle,
-				OB_CONTENT AS obContent,
-				OB_FILE_PATH AS obFilePath,
-				OB_DATE AS obDate,
-				OB_VIEW AS obView,
-				OB_FIXED_CHECK AS obFixedCheck
+			SELECT 
+				O.OB_ID AS obId,
+				E.EMPLOYEE_NAME AS employeeName,
+				O.DEPARTMENT_ID AS departmentId,
+				O.EMPLOYEE_ID AS employeeId,
+				O.OB_TITLE AS obTitle,
+				O.OB_CONTENT AS obContent,
+				O.OB_FILE_PATH AS obFilePath,
+				O.OB_DATE AS obDate,
+				O.OB_VIEW AS obView,
+				O.OB_FIXED_CHECK AS obFixedCheck,
+				O.OB_ACCESS AS obAccess
 				FROM ( 
 				SELECT 
-						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
+						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK, OB_ACCESS
 					FROM (
 			SELECT /*+INDEX_DESC(OF_BOARD PK_OF_BOARD) */
-						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK 
+						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK, OB_ACCESS
 					FROM OF_BOARD
 									ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
 				)WHERE 
 							]]>
 				<include refid="criteria"></include>
 							<![CDATA[
-				ROWNUM  < = #{pageNum} * #{amount}
+				ROWNUM  < = #{pageNum} * #{amount} 
+				AND
+				OB_ACCESS = 'N'
 				)
+				O JOIN EMPLOYEE E ON O.EMPLOYEE_ID = E.EMPLOYEE_ID
 				WHERE RN > (#{pageNum} -1) * #{amount}
 			]]>
 				ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
@@ -115,24 +132,48 @@
 		SELECT
 		COUNT(*) AS obId FROM OF_BOARD
 		WHERE OB_ID > 0
+		AND OB_ACCESS = 'N'
 	</select>
+	
+	<update id="updateViewCount" parameterType="Long">
+		UPDATE
+		OF_BOARD
+		SET OB_VIEW = OB_VIEW + 1
+		WHERE OB_ID = #{obId}
+	</update>
+
 	<!-- 부서 공지사항 영역 -->
 	
-		<select id="getListDepartment" resultType="org.easyway.domain.notice.NoticeVO">
+	<select id="getListDepartment" resultType="org.easyway.domain.notice.DepartmentDTO">
 		SELECT
-		OB_ID AS obId,
-		EMPLOYEE_ID AS employeeId,
-		DEPARTMENT_ID AS departmentId,
-		OB_FILE_PATH AS obFilePath,
-		OB_TITLE AS obTitle,
-		OB_CONTENT AS obContent,
-		OB_VIEW AS obView,
-		OB_DATE AS obDate,
-		OB_FIXED_CHECK AS obFixedCheck
-		FROM OF_BOARD
-		WHERE DEPARTMENT_ID = #{departmentId}
+			O.OB_ID AS obId,
+			O.OB_TITLE AS obTitle, 
+			O.OB_CONTENT AS obContent,
+			O.OB_VIEW AS obView,
+			O.OB_DATE AS obDate,
+     		O.OB_ACCESS AS obAccess,
+			O.OB_FIXED_CHECK AS obFixedCheck,
+			E.EMPLOYEE_ID AS employeeId, 
+			E.EMPLOYEE_NAME AS employeeName, 
+			D.DEPARTMENT_ID AS departmentId,
+			D.DEPARTMENT_NAME AS departmentName 
+		FROM
+			OF_BOARD O
+		JOIN
+			EMPLOYEE	E
+		ON
+			O.EMPLOYEE_ID = E.EMPLOYEE_ID
+		JOIN
+			DEPARTMENT D
+		ON
+			O.DEPARTMENT_ID = D.DEPARTMENT_ID
+		WHERE
+			D.DEPARTMENT_ID = #{departmentId}
+      AND O.OB_ACCESS = 'Y'
 		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
 	</select>
 	
 
+
+		
 </mapper>
