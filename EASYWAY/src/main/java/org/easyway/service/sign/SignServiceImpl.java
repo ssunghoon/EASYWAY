@@ -139,13 +139,12 @@ public class SignServiceImpl implements SignService {
 	*/
 	// 결재선 등록 
 	@Override
-	public void applyLineFirst(SignListVO list, SignVO sign) {
-		log.info("applyLineFirst..............." + list);
+	public void applyLine(Long employeeId, Long slOrder,SignVO sign, SignListVO list) {
+		log.info("applyLineFirst..............." + employeeId);
 		// sign 테이블의 signId를 넣어줌
-		System.out.println("안녕 나는 김나현이야");
-		long signId = sign.getSignId();
-		list.setSignId(signId);
-		mapper.insertLineFirst(list);
+//		long signId = sign.getSignId();
+		list.setSignId(1);
+		mapper.insertLine(employeeId, slOrder, sign, list);
 		
 	}
 	// 결재함 목록
@@ -196,7 +195,7 @@ public class SignServiceImpl implements SignService {
 		
 		EmployeeVO employeeVO = EmployeeVO.builder()
 								.employeeName(findEmployee.getEmployeeName())
-								.employeeId(findEmployee.getMemberId())
+								.employeeId(findEmployee.getEmployeeId())
 								.build();
 		return employeeVO;
 	}

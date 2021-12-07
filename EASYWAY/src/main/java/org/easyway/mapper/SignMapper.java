@@ -2,6 +2,7 @@ package org.easyway.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.member.MemberVO;
 import org.easyway.domain.sign.BasicSignVO;
@@ -52,10 +53,7 @@ public interface SignMapper {
 	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재선 등록(1,2,3,4번째)
-	public int insertLineFirst(SignListVO list);
-	public int insertLineSecond(SignListVO list);
-	public int insertLineThird(SignListVO list);
-	public int insertLineFourth(SignListVO list);
+	public int insertLine(@Param("employeeId") Long employeeId, @Param("employeeId") Long slOrder, SignVO sign, SignListVO list);
 	
 	// 결재함 목록
 	public List<SignListVO> getListPayment();
