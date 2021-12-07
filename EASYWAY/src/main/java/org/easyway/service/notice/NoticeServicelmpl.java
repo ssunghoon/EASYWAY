@@ -2,6 +2,8 @@ package org.easyway.service.notice;
 
 import java.util.List;
 
+import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.notice.DepartmentDTO;
 import org.easyway.domain.notice.NoticeCriteria;
 import org.easyway.domain.notice.NoticeVO;
 import org.easyway.mapper.NoticeMapper;
@@ -31,7 +33,7 @@ public class NoticeServicelmpl implements NoticeService {
 //	}
 
 	@Override
-	public NoticeVO detail(int obId) {
+	public NoticeVO detail(Long obId) {
 		log.info("read!!!!!!!!!!!!!!!!!!!!!!!!!!1dk!!!!");
 		return mapper.read(obId);
 	}
@@ -43,7 +45,7 @@ public class NoticeServicelmpl implements NoticeService {
 	}
 
 	@Override
-	public boolean remove(int obId) {
+	public boolean remove(Long obId) {
 		return mapper.delete(obId);
 	}
 
@@ -56,6 +58,16 @@ public class NoticeServicelmpl implements NoticeService {
 	@Override
 	public int getTotal(NoticeCriteria cri) {
 		return mapper.getTotalCount(cri);
+	}
+
+	@Override
+	public boolean modifyViewCount(Long obId) {
+		return mapper.updateViewCount(obId);
+	}
+
+	@Override
+	public List<DepartmentDTO> getListDepartment(Long departmentId) {
+		return mapper.getListDepartment(departmentId);
 	}
 
 

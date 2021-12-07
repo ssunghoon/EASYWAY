@@ -49,7 +49,7 @@
 
 				<div class="easyway-board-item">
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
-					<div class="easyway-title1"><c:out value="${of_board.departmentId } "/> 공지사항</div>
+					<div class="easyway-title1"><c:out value="${of_board.departmentId } "/> 부 공지사항</div>
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->
@@ -78,27 +78,28 @@
 					<table class="board-list">
 						<tr>
 							<th>글번호</th>
-							<th>파일첨부</th>
+							<th>작성자</th>
 							<th>글제목</th>
 							<th>날짜</th>
 							<th>조회수</th>
 						</tr>
-						<c:forEach var="of_board" items="${noticelist }">
+						<c:forEach var="department" items="${department }">
 							<tr>
-								<td><c:out value="${of_board.obId }" /></td>
-								<td><c:out value="${of_board.obFilePath }" /></td>
+							<td><input type="text" value='<c:out value="${sessionScope.nowemployeeInfo.departmentId }"/>'>
+								<td><c:out value="${department.obId }" /></td>
+								<td><c:out value="${department.employeeName }" /></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
-								<td><a class="move" href='<c:out value="${of_board.obId}"/>'>
-										<c:out value="${of_board.obTitle}" /> 
-										<c:if test="${of_board.obFixedCheck == 'Y' }">
+								<td><a class="move" href='<c:out value="${department.obId}"/>'>
+										<c:out value="${department.obTitle}" /> 
+										<c:if test="${department.obFixedCheck == 'Y' }">
 											<img src="//t1.daumcdn.net/editor/deco/contents/emoticon/things_14.gif?v=2" 
 											border="0" class="txc-emo">
 										</c:if></a>
 								</td>
 								<td><fmt:formatDate var="setObDate"
-										value="${of_board.obDate }" pattern="yyyy-MM-dd" />${setObDate }
+										value="${department.obDate }" pattern="yyyy-MM-dd" /><%-- ${setObDate } --%>
 								</td>
-								<td><c:out value="${of_board.obView }" /></td>
+								<td><c:out value="${department.obView }" /></td>
 							</tr>
 						</c:forEach>
 
@@ -195,7 +196,7 @@
 		</div>
 		<!-- page-divider end  -->
 	</div>
-	
+
 	<script type="text/javascript">
 	
 	$(document).ready(function() {
@@ -256,5 +257,5 @@
 	});
 								});
 </script>
-</body>
+	</body>
 </html>

@@ -83,5 +83,9 @@ public class AttendanceController {
 		
 	}
 	
+	@GetMapping("/test")
+	public void test(){
+		
+	}
 	
 }
