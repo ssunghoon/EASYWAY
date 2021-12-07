@@ -209,25 +209,33 @@ public class OfficeServiceImpl implements OfficeService {
 	}
 
 	@Override
-	public void registerEmployees(List<EmployeeDTO> employees, Long officeId) {
-		
-		AnnualVacation av = officeMapper.getAnnualVacation(1, officeId);
-		employees.forEach((employee)->{
-			EmployeeVO employeeVO = EmployeeVO.builder()
-							.officeId(officeId)
-							.memberId(employee.getMemberId())
-							.departmentId(Long.parseLong(employee.getEmployeeDepartment()))
-							.positionId(Long.parseLong(employee.getEmployeePosition()))
-							.employeeLeftDay(av.getAnnual())
-							.employeeCall("010-000-000")
-							.employeeMaster("n")
-							.employeeName(employee.getEmployeeName())
-							.employeePhone(employee.getEmployeePhone())
-							.employeeWorkType(employee.getEmployeeWorkType())
-							.employeeHireDate(employee.getEmployeeHireDate())
-							.build();
-							
-			employeeMapper.insertEmployee(employeeVO);
-		});
+	public List<AnnualVacation> getAnnualVacation(Long officeId) {
+		return officeMapper.getAnnualVacationList(officeId);
+	}
+
+	@Override
+	public int modifyVacation(List<AnnualVacation> vacationInfos) {
+	
+		int count = 0;
+		for (AnnualVacation annualVacation : vacationInfos) {
+			count += officeMapper.updateVacation(annualVacation);
+		}
+		return count;
+	}
+
+	@Override
+	public List<OfficeVO> getListByEmployee(Long memberId) {
+		return officeMapper.getListByEmployee(memberId);
+	}
+
+	@Override
+	public boolean checkOfficeCode(String officeCode, Long officeId) {
+		System.out.println(officeCode);
+		OfficeVO office = officeMapper.getOffice(officeId);
+		System.out.println(office.getOfficeCode());
+		if(office.getOfficeCode().equals(officeCode)){
+			return true;
+		}
+		return false;
 	}
 }
