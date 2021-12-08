@@ -14,6 +14,7 @@ import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.member.MemberVO;
 import org.easyway.domain.office.AnnualVacation;
 import org.easyway.domain.office.OfficeVO;
+import org.easyway.domain.office.PositionVO;
 import org.easyway.security.domain.CustomUser;
 import org.easyway.service.employee.EmployeeService;
 import org.easyway.service.office.OfficeService;
@@ -86,11 +87,16 @@ public class OfficeController {
 	
 	//office setting page
 	@GetMapping("/admin/officesetting/departmentsetting")
-	public void departmentSetting(){
+	public void departmentSetting(HttpSession session, Model model){
 		log.info("admin/departmentsetting Page");
+		log.info("admin/positionsetting Page");
+		log.info("admin/vactionsetting Page");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(officeVO);
+		model.addAttribute("departmentInfos", officeService.getDepartment(officeVO.getOfficeId()));
 	}
 	
-	@GetMapping("/admin/officesetting/positionList")
+	@GetMapping("/admin/officesetting/positionlist")
 	public void positionList(HttpSession session, Model model){
 		log.info("admin/positionsetting Page");
 		log.info("admin/vactionsetting Page");
@@ -99,9 +105,12 @@ public class OfficeController {
 		model.addAttribute("positionInfos", officeService.getPosition(officeVO.getOfficeId()));
 	}
 	
-	@GetMapping("/admin/officesetting/positionsetting")
-	public void positionSetting(){
-		log.info("admin/positionsetting Page");
+	@GetMapping("/admin/officesetting/positionmodify")
+	public void positionSetting(HttpSession session, Model model){
+		log.info("admin/positionmodify Page");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(officeVO);
+		model.addAttribute("positionInfos", officeService.getPosition(officeVO.getOfficeId()));
 	}
 	
 	@GetMapping("/admin/officesetting/vacationsetting")
@@ -151,6 +160,17 @@ public class OfficeController {
 		if(officeService.checkOfficeCode(officeCode.replace("\"", ""), officeId)){
 			return new ResponseEntity<Long>(officeId, HttpStatus.OK);
 		}
+		return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
+	}
+	
+	@PostMapping("/position/modify")
+	@ResponseBody
+	public ResponseEntity<?> positionModify(@RequestBody List<PositionVO> positionInfos){
+		log.info(positionInfos);
+		
+		if(officeService.modifyPosition(positionInfos) > 0){
+			return new ResponseEntity<String>("ok", HttpStatus.OK);
+		};
 		return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 	}
 	

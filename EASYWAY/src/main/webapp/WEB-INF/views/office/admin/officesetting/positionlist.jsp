@@ -60,7 +60,7 @@
 						<a href="/office/admin/officesetting/vacationsetting">휴가 설정</a>
 					</div>
 					<div class="tab-label-choice">
-						<a href="/office/admin/officesetting/positionsetting">직위 설정</a>
+						<a href="/office/admin/officesetting/positionlist">직위 설정</a>
 					</div>
 					<div class="tab-label">
 						<a href="/office/admin/officesetting/departmentsetting">부서 설정</a>
@@ -71,7 +71,7 @@
 					<div class="easyway-title1">직위 설정</div>
 				</div>
 				
-				<button class="easyway-btn">저장</button>
+				<button class="easyway-btn modify-btn">수정하기</button>
 
 				<div class="position-setting-table ">
 					<div class="position-level-item">
@@ -82,55 +82,12 @@
 								<th>등급</th>
 								<th>직위명</th>
 							</tr>
-							<tr>
-								<td>1등급</td>
-								<td>
-									<p>대표이사</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>2등급</td>
-								<td>
-									<p>이사</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>3등급</td>
-								<td>
-									<p>부장</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>4등급</td>
-								<td>
-									<p>차장</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>5등급</td>
-								<td>
-									<p>과장</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>6등급</td>
-								<td>
-									<p>대리</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>7등급</td>
-								<td>
-									<p>사원</p>
-									<i class="fas fa-plus-circle position-add-btn"></i>
-								</td>
-							</tr>
+							<c:forEach var="position" items="${positionInfos}">
+									<tr>
+										<td>${position.positionLevel}등급</td>
+										<td>${position.positionName}</td>
+									</tr>
+								</c:forEach>
 						</table>
 
 					</div>
@@ -141,6 +98,11 @@
 	</div>
 
 </body>
+<script type="text/javascript">
+$(".easyway-btn").on("click", function name() {
+	location.href="/office/admin/officesetting/positionmodify";
+})
 
+</script>
 
 </html>
