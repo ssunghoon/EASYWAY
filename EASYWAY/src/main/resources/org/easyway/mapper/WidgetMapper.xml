@@ -77,27 +77,24 @@
 	  		WHERE ws_custom = #{wsCustom}
 	</update>
 	
-	<!-- 위젯 삭제 구현 -->
+	<!-- 위젯 리셋을 위한 삭제 구현 : 해당 커스텀 번호의 위젯 테이블 삭제 -->
 	<delete id="deleteWidget">
-		DELETE FROM widget
-		WHERE widget_id = (
-			SELECT widget_id FROM widget
-			WHERE ws_id = (
-				SELECT ws_id FROM widget_save
+		DELETE FROM widget w
+		WHERE w.ws_id =  (
+			SELECT ws.ws_id
+			FROM widget_save ws
 				WHERE member_id = #{memberId}
 				AND office_id = #{officeId}
 				AND ws_custom = #{wsCustom}
-			)
-			AND widget_name = #{widgetName}
 		)
 	</delete>
-<!-- 	
-	위젯 리셋을 위한 삭제 구현
-	<delete id="deleteWidget">
-		DELETE FROM widget
+	
+	<!-- 위젯 리셋을 위한 삭제 구현 : 해당 커스텀 번호의 위젯 커스텀 테이블 삭제 -->
+	<delete id="deleteWidgetCustom">
+		DELETE FROM widget_save
 			WHERE member_id = #{memberId}
 			AND office_id = #{officeId}
 			AND ws_custom = #{wsCustom}
 	</delete>
-	 -->
+
 </mapper>

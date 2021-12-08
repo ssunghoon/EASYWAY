@@ -28,12 +28,19 @@ public class WidgetServiceImpl implements WidgetService {
 		// 1. 기존에 저장된 기본 불러오기 취소 
 		mapper.updateDefaultCancel();
 		
-		// 2. 새로 저장될 멤버와 오피스와 위젯 매핑
+		// 2. 기존 저장되어있는 위젯들 지우기
+		log.info("wsCustom : " + widgetCustom.getWsCustom());
+		mapper.deleteWidget(widgetCustom);
+		
+		// 3. 기존 저장되어있는 위젯들 지우기
+		mapper.deleteWidgetCustom(widgetCustom);
+		
+		// 4. 새로 저장될 멤버와 오피스와 위젯 매핑
 		mapper.insertWidgetCustom(widgetCustom);
 		Long wsId = widgetCustom.getWsId();
 		log.info("wsId------------------------------" + wsId);
 		
-		// 3. 위젯 정보 저장
+		// 5. 위젯 정보 저장
 		widgetList.forEach(widget -> {
 			log.info("widget---------------------------" + widget);
 			widget.setWsId(wsId);
@@ -83,14 +90,13 @@ public class WidgetServiceImpl implements WidgetService {
 		return 1;
 	}
 
-	// 위젯 삭제하기
+	// 위젯 리셋(전체 삭제)하기
 	@Override
-	public int removeWidget(int widgetName, WidgetCustom widgetCustom) {
+	public int removeWidget(WidgetCustom widgetCustom) {
 		
-		log.info("서비스 widgetName: " + widgetName);
 		log.info("서비스 widgetCustom: " + widgetCustom);
 		
-		return mapper.deleteWidget(widgetName, widgetCustom);
+		return mapper.deleteWidget(widgetCustom);
 	}
 
 }

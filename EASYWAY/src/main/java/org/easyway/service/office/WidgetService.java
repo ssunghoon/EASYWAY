@@ -14,6 +14,6 @@ public interface WidgetService {
 	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) throws Exception;
 	// 위젯 기본값 변경하기. updateDefaultCancel + updateDefault. 성공시 1 반환
 	public int modifyDefault(int wsCustom);
-	// 위젯 삭제
-	public int removeWidget(int widgetName, WidgetCustom widgetCustom);
+	//  위젯 리셋(전체 삭제)하기
+	public int removeWidget(WidgetCustom widgetCustom);
 }

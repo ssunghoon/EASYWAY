@@ -141,37 +141,31 @@
 				<!-- 위젯 썸네일들 -->
 				<li id="thumb-clock" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">실시간 시계</div>
 				</li>
 				<li id="thumb-notice" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">공지사항 목록</div>
 				</li>
 				<li id="thumb-attendance" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">출퇴근 체크</div>
 				</li>
 				<li id="thumb-sign" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">결재함 목록</div>
 				</li>
 				<li id="thumb-project" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">프로젝트 리스트</div>
 				</li>
 				<li id="thumb-calendar" class="widget-thumb unselected">
 					<div class="custom-delete">
-						<i class="fas fa-times"></i>
 					</div>
 					<div class="widget-thumb-label">캘린더 일정</div>
 				</li><!-- end 위젯 썸네일들 -->
