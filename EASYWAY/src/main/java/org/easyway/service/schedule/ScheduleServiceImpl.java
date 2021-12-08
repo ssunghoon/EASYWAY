@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Service
@@ -41,14 +40,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public boolean modify(ScheduleVO schedule) {
 		log.info("modify........");
 		mapper.modify(schedule);
-		return false;
+		return mapper.modify(schedule)==1;
 	}
 
 	@Override//제거
 	public boolean remove(Long scheduleId) {
 		log.info("remove........");
 		mapper.remove(scheduleId);
-		return false;
+		return mapper.remove(scheduleId) == 1;
 	}
 	
 	
