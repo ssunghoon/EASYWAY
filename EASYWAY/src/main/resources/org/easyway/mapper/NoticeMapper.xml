@@ -99,6 +99,7 @@
 				E.EMPLOYEE_NAME AS employeeName,
 				O.DEPARTMENT_ID AS departmentId,
 				O.EMPLOYEE_ID AS employeeId,
+				E.OFFICE_ID AS officeId,
 				O.OB_TITLE AS obTitle,
 				O.OB_CONTENT AS obContent,
 				O.OB_FILE_PATH AS obFilePath,
@@ -123,6 +124,8 @@
 				OB_ACCESS = 'N'
 				)
 				O JOIN EMPLOYEE E ON O.EMPLOYEE_ID = E.EMPLOYEE_ID
+				AND
+				E.OFFICE_ID = 1
 				WHERE RN > (#{pageNum} -1) * #{amount}
 			]]>
 				ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
@@ -135,6 +138,13 @@
 		AND OB_ACCESS = 'N'
 	</select>
 	
+		<select id="getTotalDepartmentNoticeCount" resultType="int">
+		SELECT
+		COUNT(*) AS obId FROM OF_BOARD
+		WHERE OB_ID > 0
+		AND OB_ACCESS = 'Y'
+		</select>
+	
 	<update id="updateViewCount" parameterType="Long">
 		UPDATE
 		OF_BOARD
@@ -145,6 +155,7 @@
 	<!-- 부서 공지사항 영역 -->
 	
 	<select id="getListDepartment" resultType="org.easyway.domain.notice.DepartmentDTO">
+		<!-- 페이징하기전 부서별 게시판 목록-->
 		SELECT
 			O.OB_ID AS obId,
 			O.OB_TITLE AS obTitle, 
@@ -155,6 +166,7 @@
 			O.OB_FIXED_CHECK AS obFixedCheck,
 			E.EMPLOYEE_ID AS employeeId, 
 			E.EMPLOYEE_NAME AS employeeName, 
+			E.OFFICE_ID AS officeId,
 			D.DEPARTMENT_ID AS departmentId,
 			D.DEPARTMENT_NAME AS departmentName 
 		FROM
@@ -168,12 +180,54 @@
 		ON
 			O.DEPARTMENT_ID = D.DEPARTMENT_ID
 		WHERE
-			D.DEPARTMENT_ID = #{departmentId}
-      AND O.OB_ACCESS = 'Y'
+			D.DEPARTMENT_ID = 2
+			AND
+			O.OB_ACCESS = 'Y'
 		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
 	</select>
 	
-
-
+	<!-- 페이징 부서 공지사항 목록(예정) -->
+	<select id="getDepartmentListPaging" resultType="org.easyway.domain.notice.DepartmentDTO">
+	<![CDATA[
+			SELECT 
+				O.OB_ID AS obId,
+				E.EMPLOYEE_NAME AS employeeName,
+				O.DEPARTMENT_ID AS departmentId,
+				O.EMPLOYEE_ID AS employeeId,
+				O.OB_TITLE AS obTitle,
+				O.OB_CONTENT AS obContent,
+				O.OB_FILE_PATH AS obFilePath,
+				O.OB_DATE AS obDate,
+				O.OB_VIEW AS obView,
+				O.OB_FIXED_CHECK AS obFixedCheck,
+				O.OB_ACCESS AS obAccess
+				FROM ( 
+				SELECT 
+						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK, OB_ACCESS
+					FROM (
+				SELECT /*+INDEX_DESC(OF_BOARD PK_OF_BOARD) */
+						ROWNUM RN, OB_ID, EMPLOYEE_ID, DEPARTMENT_ID, OB_TITLE, OB_CONTENT, OB_FILE_PATH, OB_DATE, OB_VIEW, OB_FIXED_CHECK, OB_ACCESS
+					FROM OF_BOARD
+									ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
+				)WHERE 
+							]]>
+				<include refid="criteria"></include>
+							<![CDATA[
+				ROWNUM  < = #{pageNum} * #{amount} 
+				AND
+				OB_ACCESS = 'Y'
+				)
+				O JOIN EMPLOYEE E 
+		        ON 
+		        O.EMPLOYEE_ID = E.EMPLOYEE_ID
+		        JOIN DEPARTMENT D
+		        ON 
+		        O.DEPARTMENT_ID = D.DEPARTMENT_ID
+		        AND
+		        D.DEPARTMENT_ID = #{departmentId} 
+				WHERE RN > (#{pageNum} -1) * #{amount}
+			]]>
+				ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
+	</select>
 		
 </mapper>

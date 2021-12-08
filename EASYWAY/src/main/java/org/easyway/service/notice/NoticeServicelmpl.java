@@ -66,8 +66,14 @@ public class NoticeServicelmpl implements NoticeService {
 	}
 
 	@Override
-	public List<DepartmentDTO> getListDepartment(Long departmentId) {
-		return mapper.getListDepartment(departmentId);
+	public List<DepartmentDTO> getListDepartment() {
+		return mapper.getListDepartment();
+	}
+
+	@Override
+	public List<DepartmentDTO> getDepartmentListPaging(NoticeCriteria cri) {
+			log.info("페이징처리한 부서 리스트 납시오" + cri);
+			return mapper.getDepartmentListPaging(cri);
 	}
 
 
