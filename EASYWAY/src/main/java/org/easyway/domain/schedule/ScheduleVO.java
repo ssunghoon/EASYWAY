@@ -1,8 +1,6 @@
 package org.easyway.domain.schedule;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
 
 import lombok.Data;
 

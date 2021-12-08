@@ -26,10 +26,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	//서비스 구현하면됨. 구현하고 메인컨트롤러 수정
 	@Override
-	public EmployeeVO getEmployee(Long employeeId) {
+	public EmployeeDTO getEmployee(Long employeeId) {
 		
 		log.info(employeeId + "get!");
-		return employeeMapper.getEmployee(employeeId);
+		return employeeMapper.getEmployeeByEmployeeId(employeeId);
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public EmployeeVO getEmployee2(Long nowMemberId, Long officeId) {
-		return employeeMapper.getEmployee2(nowMemberId, officeId);
+	public EmployeeDTO getEmployeeByMemberId(Long nowMemberId, Long officeId) {
+		return employeeMapper.getEmployeeByMemberId(nowMemberId, officeId);
 	}
 	
 	@Override

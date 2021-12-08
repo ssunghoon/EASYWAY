@@ -57,7 +57,7 @@
 }
 
 .employee-btns {
-  grid-column: 1/11;
+  grid-column: 1/12;
   display: flex;
   justify-content: flex-end;
 }
@@ -76,7 +76,7 @@
   font-size: 18px;
   border-radius: 7px;
   border: #eee;
-  background-color: #0dbb9d;
+  background-color: #74DF00;
   color: white;
   align-self: flex-end;
   margin-right: 10px;

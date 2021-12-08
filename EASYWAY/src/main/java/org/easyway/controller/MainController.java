@@ -2,7 +2,7 @@ package org.easyway.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.office.OfficeVO;
 import org.easyway.security.domain.CustomUser;
 import org.easyway.service.employee.EmployeeService;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
@@ -57,7 +56,7 @@ public class MainController {
 		log.info("사원 정보 불러오기");
 		CustomUser member = (CustomUser)auth.getPrincipal();
 		Long nowMemberId = member.getMember().getMemberId();
-		EmployeeVO nowEmployeeInfo = employeeService.getEmployee2(nowMemberId, officeId);
+		EmployeeDTO nowEmployeeInfo = employeeService.getEmployeeByMemberId(nowMemberId, officeId);
 		session.setAttribute("nowEmployeeInfo", nowEmployeeInfo);
 		
 		return "redirect:/office/main";
@@ -73,8 +72,8 @@ public class MainController {
 		WidgetCustom widgetCustom = new WidgetCustom();
 		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
 		widgetCustom.setOfficeId(officeVO.getOfficeId());
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		widgetCustom.setMemberId(employeeVO.getMemberId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeDTO.getMemberId());
 		
 		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
 		model.addAttribute("widgetList", service.getListWidget(widgetCustom).getWidgetList());
@@ -97,8 +96,8 @@ public class MainController {
 		widgetCustom.setWsCustom(data.get("customNumber"));
 		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
 		widgetCustom.setOfficeId(officeVO.getOfficeId());
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		widgetCustom.setMemberId(employeeVO.getMemberId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeDTO.getMemberId());
 		widgetCustom.setWsImport("Y");
 		
 		// getList 만들기전까지 임시
@@ -128,30 +127,11 @@ public class MainController {
 		WidgetCustom widgetCustom = new WidgetCustom();
 		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
 		widgetCustom.setOfficeId(officeVO.getOfficeId());
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		widgetCustom.setMemberId(employeeVO.getMemberId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeDTO.getMemberId());
 		
 		service.removeWidget(widgetCustom);
 		
 		return "redirect:/office/main";
-	}
-	
-	// 위젯 메인 불러오기 테스트!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	@GetMapping("/main2")
-	public void main2(HttpSession session, Model model) throws Exception {
-		
-		log.info("메인에 오신 것을 환영합니다!");
-		
-		// WidgetCustom 구성 
-		WidgetCustom widgetCustom = new WidgetCustom();
-		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
-		widgetCustom.setOfficeId(officeVO.getOfficeId());
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		widgetCustom.setMemberId(employeeVO.getMemberId());
-		
-		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
-		model.addAttribute("widgetList", service.getListWidget(widgetCustom).getWidgetList());
-		model.addAttribute("customNow", service.getListWidget(widgetCustom).getWsCustom());
-	}
-	
+	}	
 }

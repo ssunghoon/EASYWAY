@@ -130,7 +130,7 @@
 	            	<div class="writer-info">
 		            	<div class="writer-name">
 		            		<i class="writer-icon fas fa-user-circle"></i>
-		            		임동혁
+		            		${sessionScope.nowEmployeeInfo.employeeName}
 		            	</div>
 		            	<div class="writer-department">
 		            		개발팀

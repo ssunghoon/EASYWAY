@@ -92,7 +92,7 @@
 }
 
 .position-list th {
-  border-bottom: 1px solid #ccc;
+ border: 1px solid #ccc;
   height: 35px;
   text-align: center;
 }
@@ -111,7 +111,7 @@
 }
 
 .position-list td {
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
   height: 35px;
 }
 
@@ -125,10 +125,12 @@
   /* 게시물 목록 컬럼내용 2 */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: content-box;
   height: 35px;
-  padding: 0 30px 0 40px;
+}
+.modify-btn{
+	background: #74DF00;
 }
 
 /* ----------------------------------------------------------------------------------------------- */

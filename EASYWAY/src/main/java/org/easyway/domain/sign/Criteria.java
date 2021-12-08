@@ -17,6 +17,7 @@ public class Criteria {
 	private String type;
 	private String keyword1;
 	private String keyword2;
+	private Long employeeId;
 	
 	public Criteria() {
 		this(1, 15);

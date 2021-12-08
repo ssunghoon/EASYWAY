@@ -1,5 +1,5 @@
 /**
- *  기본 기안서 결재선 모달
+ *  지출 결의서 결재선 모달
  */
 $(document).ready(function () {
   var searchNameBtn = $("#search-name");
