@@ -57,11 +57,11 @@
 	</select>
 	
 	<!-- 현재 저장된 커스텀번호 불러오기 -->
-	<select id="readCustomNow" resultType="int">
+	<select id="readCustomNow" resultType="String">
 		SELECT ws_custom FROM widget_save
 			WHERE member_id = #{memberId}
 			AND office_id = #{officeId}
-			AND ws_custom = 'Y'
+			AND ws_import = 'Y'
 	</select>
 	
 	<!-- 위젯 기본값 변경하기 : 기존에 있던 기본값 취소 -->
@@ -91,5 +91,13 @@
 			AND widget_name = #{widgetName}
 		)
 	</delete>
-	
+<!-- 	
+	위젯 리셋을 위한 삭제 구현
+	<delete id="deleteWidget">
+		DELETE FROM widget
+			WHERE member_id = #{memberId}
+			AND office_id = #{officeId}
+			AND ws_custom = #{wsCustom}
+	</delete>
+	 -->
 </mapper>

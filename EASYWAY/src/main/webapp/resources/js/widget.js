@@ -18,12 +18,6 @@ window.onbeforeunload = function() {
 
 */
 
-//----------------------------------------------------------------------------------------
-// 현재 페이지 커스텀 번호 ------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-
-var customNow = 0;
-
 
 //----------------------------------------------------------------------------------------
 // 썸네일을 클릭하면 해당 위젯 만들기 --------------------------------------------------------
@@ -43,8 +37,11 @@ function widgetFunction(e) {
 	}
 	
 	// 한 번 생성된 위젯은 삭제하기 전까지는 다시 생성할 수 없음
-	if (e.target.parentNode.classList.item(2) == "selected") {
-		console.log("이미 선택된 위젯입니다.");
+	if (e.target.parentNode.classList.item(1) == "selected") {
+		console.log("이게뭘까 : " + selected);
+		
+		removeWidget(selected);
+		
 		return;
 	}
 	
@@ -133,9 +130,6 @@ function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 		
 		var str = "";
 		
-		str += '<div class="custom-delete">';
-		str += '		<i class="fas fa-times"></i>';
-		str += '</div>';
 		str += '<div class="widgetClockInner"></div>';
 		
 		widgetTag.innerHTML = str;
@@ -150,9 +144,6 @@ function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 		
 		var str = '';
 		
-		str += '<div class="custom-delete">';
-		str += '		<i class="fas fa-times"></i>';
-		str += '</div>';
 		str += '<div class="widgetInner"></div>';
 		
 		widgetTag.innerHTML = str;
@@ -411,7 +402,6 @@ $('.custom-save').on('click', function(){
 	// 저장버튼 태그의 "커스텀 1" 중 1만 숫자로 가져오기
 	var str = $(this).children().first().text();
 	var customNumber = parseInt(str.substr(str.length-1, 1));
-	customNow = customNumber;
 	
 	saveOffset(customNumber);
 	
@@ -512,7 +502,7 @@ function saveOffset(customNumber){
 
 
 //----------------------------------------------------------------------------------------
-//위젯 기본 커스텀 변경하기 -----------------------------------------------------------------
+//위젯 불러오기 ---------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
 $('.custom-default-save').on('click', function(){
@@ -520,6 +510,7 @@ $('.custom-default-save').on('click', function(){
 	// 저장버튼 태그의 "커스텀 1" 중 1만 숫자로 가져오기
 	var str = $(this).children().first().text();
 	var customNumber = parseInt(str.substr(str.length-1, 1));
+	customNow = customNumber;
 	
 	modifyDefault(customNumber);
 	
@@ -528,8 +519,6 @@ $('.custom-default-save').on('click', function(){
 function modifyDefault(customNumber){
 	
 	var data;
-	
-	//var jsonData = JSON.stringify(data);
 	
 	// ajax를 통한 위치 및 너비, 높이 데이터 저장
 	$.ajax({
@@ -558,48 +547,75 @@ function modifyDefault(customNumber){
 //위젯 삭제하기 ---------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
-$('.custom-delete').on('click', function(){
+function removeWidget(selected) {
 	
-	// 위젯 닫기 버튼 클릭하면 위젯영역에서 삭제
 	var widgetName;
-	var getId = $(this).closest('div').attr('id');
-	alert("getId : " + getId + "getIdType : " + typeof getId );
 	
-	switch (getId) {
-	case "clock":
-		widgetName = "1";
+	switch (selected) {
+	case "실시간 시계":
+		
+		var widget = document.getElementById('clock');
+		widget.innerHTML = "";
+		widgetName = 1;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-clock').classList.replace('selected', 'unselected');
+		
 		break;
-	case "notice":
-		widgetName = "2";
-		break;
-	case "attendance":
-		widgetName = "3";
-		break;
-	case "sign":
-		widgetName = "4";
-		break;
-	case "project":
-		widgetName = "5";
-		break;
-	case "calendar":
-		widgetName = "6";
-		break;
+	case "공지사항 목록":
 
+		var widget = document.getElementById('notice');
+		widget.innerHTML = "";
+		widgetName = 2;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-notice').classList.replace('selected', 'unselected');
+
+		break;
+	case "출퇴근 체크":
+
+		var widget = document.getElementById('attendance');
+		widget.innerHTML = "";
+		widgetName = 3;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-attendance').classList.replace('selected', 'unselected');
+
+		break;
+	case "결재함 목록":
+
+		var widget = document.getElementById('sign');
+		widget.innerHTML = "";
+		widgetName = 4;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-sign').classList.replace('selected', 'unselected');
+
+		break;
+	case "프로젝트 리스트":
+
+		var widget = document.getElementById('project');
+		widget.innerHTML = "";
+		widgetName = 5;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-project').classList.replace('selected', 'unselected');
+
+		break;
+	case "캘린더 일정":
+
+		var widget = document.getElementById('calendar');
+		widget.innerHTML = "";
+		widgetName = 6;
+		// Class 변경 : selected -> unselected
+		document.getElementById('thumb-calendar').classList.replace('selected', 'unselected');
+
+		break;
 	default:
 		break;
 	}
-	
-	var customNumber = parseInt(str.substr(str.length-1, 1));
-	
-	deleteWidget(customNumber, widgetName);
-	
-})//end click custom-default-save
-
-
-function deleteWidget(customNumber,widgetName){
-	
-	location.href="/office/main/customNumber="+customNumber+"&widgetName="+widgetName;
+	console.log(customNow);
+	deleteWidget(customNow, widgetName);
 	
 }
 
+function deleteWidget(customNumber,widgetName){
+	
+	location.href="/office/delete/widgetName="+widgetName+"&customNumber="+customNumber	
+}
 

@@ -11,9 +11,9 @@ public interface WidgetService {
 	// 위젯 위치 처음 저장하기. insertWidgetCustom + insertWidget. 성공시 1 반환
 	public int save(List<WidgetVO> widgetList, WidgetCustom widgetCustom);
 	// 기본 위젯 불러오기
-	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom);
+	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) throws Exception;
 	// 위젯 기본값 변경하기. updateDefaultCancel + updateDefault. 성공시 1 반환
 	public int modifyDefault(int wsCustom);
 	// 위젯 삭제
-	public int removeWidget(WidgetVO widget, WidgetCustom widgetCustom);
+	public int removeWidget(int widgetName, WidgetCustom widgetCustom);
 }
