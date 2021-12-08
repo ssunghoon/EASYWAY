@@ -56,7 +56,7 @@
 <!-- 	WHERE schedule_id = #{scheduleId} -->
 
 	<delete id="remove">
-		delete schedule where schedule_id = #{scheduleId}
+		delete from schedule where schedule_id = #{scheduleId}
 	</delete>
 	
 	<update id="modify">	

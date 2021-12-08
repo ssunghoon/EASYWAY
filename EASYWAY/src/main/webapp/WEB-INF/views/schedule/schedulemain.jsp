@@ -37,17 +37,15 @@
     <link href="/resources/css/reset.css" rel="stylesheet">
     <link href="/resources/css/sidebars.css" rel="stylesheet">
     <link href="/resources/css/common.css" rel="stylesheet">
+    <link href="/resources/css/schedule.css" rel="stylesheet">
     <script src="/resources/js/menu.js"></script>
+    
     
     <!-- CALENDAR CSS, JS -->
 	<link href="/resources/css/calendarMain.css" rel="stylesheet">
 	<script src="/resources/js/calendarMain.js"></script>
 
 <script>
-	//등록시 같이 전달되는 글번호처리 모달창처리위해 246p
-	$(document).ready(function(){
-		var result = '<c:out value="${result}"/>';
-	});
 
 	  document.addEventListener('DOMContentLoaded', function() {
 	    var calendarEl = document.getElementById('calendar');
@@ -268,12 +266,11 @@
 #calendar {
 	max-width: 1100px;
 	margin: 0 auto;
-	
 }
 
-#save-btn:hover{
-	background:#0397ed; 
-	color: #FFFFFF;
+.save-btn:hover{
+	color: #0397ed;
+	cursor: pointer;
 }
 /* <클래스 영역> */
 .container {
@@ -344,15 +341,15 @@
 			<h1 class="easyway-title1" height = "10px">
 				캘린더
 			</h1>
+			<!-- Button trigger modal -->				
+			<button type="button" class="easyway-btn" data-bs-toggle="modal"
+				data-bs-target="#exampleModal">일정추가</button>
 			<!--풀캘린더 달력 폼-->
 			<div id='calendar-wrap'>
 			<div id='calendar'></div>
 		
 			<!--일정추가버튼  -->
 			<div id="modalwrapper">
-				<!-- Button trigger modal -->				
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-					data-bs-target="#exampleModal">일정추가</button>
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -404,22 +401,24 @@
 <!-- 			                            <input type="radio" name="schedulePrivate" value="N">&nbsp;<label for="N">N</label> -->
 			                     </div>
 			                     <div class="modal-footer">
-			                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			                        <button id='regBtn' type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			                        <input type="submit" class="btn btn-primary" value="일정 생성"> 
 			                     </div>
 		                 		 </form>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</div><!--일정등록 Modal end-->
+			</div><!--일정추가 div end-->
 			
-			<!--일정조회모달창+수정+삭제 저장 버튼 포함 -->
+			
+		<!--일정조회모달창+수정+삭제 저장 버튼 포함 -->
 		<div id="modalwrapperdetail">
 		<!-- Button trigger modal  -->
 		<!--Modal  -->
 		<div class="modal fade" id="modal-detail" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -428,8 +427,9 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
+		
+					<form role="" method="post" action="/schedule/schedulemodify">
 <%-- 					<form role="" method="post" action="/schedule/schedulemodify?scheduleId=${schedule.scheduleId}"> --%>
-					<form role="" method="get" action="/schedule/scheduledetail?scheduleId=${schedule.scheduleId}">
 					<input type="hidden" id="token" name="${_csrf.parameterName}"
                   data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	                     <div id="scheduleInfo">
@@ -442,7 +442,6 @@
 	                        <label>제목:</label>
 	                        <input type="text" class="form-control" name="scheduleTitle"
 	                            	value='scheduleData.scheduleTitle'>
-	                            	
 	                        <label>시작시간</label>
 	                        <!--기간 형식 바꾸기 -->
 <!-- 	                     <input type="date" class="form-control" name="scheduleStart" -->
@@ -476,26 +475,26 @@
 	                     </div>
 	                     <div class="modal-footer">
 	                  	<!-- 책254p에는 버튼형식으로 되어있음 확인해보기 기존 버튼코드는 노션 kosta 최종프로젝트에있음-->
-	                    <input type="submit" class="schedule-btn schedule-btn-save" value="저장">
-						<input type="submit" class="schedule-btn schedule-btn-modify" value="수정">
+	                    <input type="button" class="schedule-btn schedule-btn-save" value="확인">
+						<input type="submit" id="modify-btn" class="schedule-btn schedule-btn-modify" value="수정"> 
 						<input type="submit" class="schedule-btn schedule-btn-delete" value="삭제">
 	                     </div>
-                 	</form><!-- end detail -->
-<!--                  	</form>end modify -->
+<%--                  	data-scheduleId="${schedule.scheduleId}" --%>
+                   	</form><!--end modify -->
 					</div>
 				</div>
 			</div>
-		</div>
+		</div><!-- end detail -->
+		
 	</div>
 		
 			<!-- 일정목록 출력 코드 -->
-				<div class="easyway-title1">
+				<div id="todo-list" class="easyway-title1">
 					일정리스트
 				</div>
 					
 				<div class="table-container">
-					<div class="row">
-					<table style="text-align: center; border: 2px solid #dddddd;">
+					<table class="board-list" style="text-align: center; border: 2px solid #dddddd;">
 						<!--style="-->
 						<tr>
 							<th style="background-color: #eeeeee; text-align: center;">일정번호
@@ -520,7 +519,7 @@
 							<tr style="background-color: #11111; text-align: center; border: 1px;">
 								<td>${schedule.scheduleId}</td>
 								<td>${schedule.employeeId}</td>
-								<td><a id="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
+								<td><a class="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
  								data-bs-toggle="modal" data-bs-target="#modal-detail">
  								${schedule.scheduleTitle}</a></td>
 								<td>${schedule.scheduleStart}</td>
@@ -533,7 +532,6 @@
 						</c:forEach>
 					</table>
 				</div>
-				</div>
 	    </div> <!-- end easyway-wrapper -->
 	    
     </div> <!-- end page-divider -->
@@ -541,10 +539,10 @@
 <script type="text/javascript"> 
 <!--제목클릭시처리하는부분-->
 var scheduleData;
-
+var scheduleMFData;
 $(document)
 	.on(
-			"click","#save-btn",
+			"click",".save-btn",
 			function(e) {
 				var id = $(this).data("scheduleid");
 				console.log(id);
@@ -580,19 +578,8 @@ $(document)
 				        alert("실패!");
 				      },
 				    });
-			});
-// $('#detail-start,#detail-end').click(function(){
-// 	var startday = new Date();
-// 	var endday = new Date();
-	
-// 	console.log("")
-// 	day = document.getElementById("detail-start,detail-end");
-	
-// 	day.value = 
-// 	var $this = $(this);
-	
-	
-// });
+				});
+
 </script>
 
 </html>
