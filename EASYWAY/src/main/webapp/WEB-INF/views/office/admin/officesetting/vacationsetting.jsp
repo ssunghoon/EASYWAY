@@ -61,7 +61,7 @@
 						<a href="/office/admin/officesetting/vacationsetting">휴가 설정</a>
 					</div>
 					<div class="tab-label">
-						<a href="/office/admin/officesetting/positionsetting">직위 설정</a>
+						<a href="/office/admin/officesetting/positionlist">직위 설정</a>
 					</div>
 					<div class="tab-label">
 						<a href="/office/admin/officesetting/departmentsetting">부서 설정</a>

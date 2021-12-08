@@ -238,4 +238,14 @@ public class OfficeServiceImpl implements OfficeService {
 		}
 		return false;
 	}
+
+	@Override
+	public int modifyPosition(List<PositionVO> positionInfos) {
+		
+		int count = 0;
+		for (PositionVO position : positionInfos) {
+			count += officeMapper.updatePosition(position);
+		}
+		return count;
+	}
 }

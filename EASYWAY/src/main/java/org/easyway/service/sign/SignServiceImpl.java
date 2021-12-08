@@ -2,7 +2,6 @@ package org.easyway.service.sign;
 
 import java.util.List;
 
-import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
@@ -29,37 +28,81 @@ public class SignServiceImpl implements SignService {
 	}*/
 	
 	@Override
-	public void applySpend(SpendSignVO spend, SignVO sign) {
+	public void applySpend(SpendSignVO spend, SignVO sign, SignListVO list) {
 		log.info("applySpend..............." + spend);
 		
 		mapper.insert(sign);
+		
 		// sign 테이블의 signId를 넣어줌
 		long signId = sign.getSignId();
-		spend.setSignId(signId);
+		System.out.println("받아온 signId = " +signId);
+		spend.setSignId(sign.getSignId());
+		list.setSignId(sign.getSignId());
 		mapper.insertSpend(spend);
+		if(list.getEmployeeId1() != 0){
+			mapper.insertLine1(list);
+		}
+		if(list.getEmployeeId2() != 0){
+			mapper.insertLine2(list);
+		}
+		if(list.getEmployeeId3() != 0){
+			mapper.insertLine3(list);
+		}
+		if(list.getEmployeeId4() != 0){
+			mapper.insertLine4(list);
+		}
 		
 	}
 	
 
 	@Override
-	public void applyBasic(BasicSignVO basic, SignVO sign) {
+	public void applyBasic(BasicSignVO basic, SignVO sign, SignListVO list) {
 		log.info("applyBasic..............." + basic);
 		mapper.insert(sign);
+		
 		// sign 테이블의 signId를 넣어줌
 		long signId = sign.getSignId();
-		basic.setSignId(signId);
+		basic.setSignId(sign.getSignId());
+		list.setSignId(sign.getSignId());
 		mapper.insertBasic(basic);
+		if(list.getEmployeeId1() != 0){
+			mapper.insertLine1(list);
+		}
+		if(list.getEmployeeId2() != 0){
+			mapper.insertLine2(list);
+		}
+		if(list.getEmployeeId3() != 0){
+			mapper.insertLine3(list);
+		}
+		if(list.getEmployeeId4() != 0){
+			mapper.insertLine4(list);
+		}
 		
 	}
 	
 	@Override
-	public void applyVacation(VacationSignVO vacation, SignVO sign) {
+	public void applyVacation(VacationSignVO vacation, SignVO sign, SignListVO list) {
 		log.info("applyVacation..............." + vacation);
 		mapper.insert(sign);
+
 		// sign 테이블의 signId를 넣어줌
 		long signId = sign.getSignId();
-		vacation.setSignId(signId);
+		vacation.setSignId(sign.getSignId());
+		list.setSignId(signId);
 		mapper.insertVacation(vacation);
+		
+		if(list.getEmployeeId1() != 0){
+			mapper.insertLine1(list);
+		}
+		if(list.getEmployeeId2() != 0){
+			mapper.insertLine2(list);
+		}
+		if(list.getEmployeeId3() != 0){
+			mapper.insertLine3(list);
+		}
+		if(list.getEmployeeId4() != 0){
+			mapper.insertLine4(list);
+		}
 	}
 	
 	/*@Override
@@ -101,26 +144,27 @@ public class SignServiceImpl implements SignService {
 		
 	// 결재함 상세(기본기안서)
 	@Override
-	public BasicSignVO getPaymentBasic(Long signId, Long signFormId){
+	public BasicSignVO getPaymentBasic(Long signId, Long signFormId, Long employeeId){
 									
 		log.info("getPaymentBasic............... signId = " + signId + "signFormId = " + signFormId );
-		return mapper.getPaymentBasic(signId);
+		log.info("표시: " +mapper.getPaymentBasic(signId, employeeId));
+		return mapper.getPaymentBasic(signId, employeeId);
 
 	}
 	// 결재함 상세(지출결의서)
 	@Override
-	public SpendSignVO getPaymentSpend(Long signId, Long signFormId){
+	public SpendSignVO getPaymentSpend(Long signId, Long signFormId, Long employeeId){
 									
 		log.info("getPaymentSpend............... signId = " + signId + "signFormId = " + signFormId );
-		return mapper.getPaymentSpend(signId);
+		return mapper.getPaymentSpend(signId, employeeId);
 
 	}
 	// 결재함 상세(휴가신청서)
 	@Override
-	public VacationSignVO getPaymentVacation(Long signId, Long signFormId){
+	public VacationSignVO getPaymentVacation(Long signId, Long signFormId, Long employeeId){
 									
 		log.info("getPaymentVacation............... signId = " + signId + "signFormId = " + signFormId );
-		return mapper.getPaymentVacation(signId);
+		return mapper.getPaymentVacation(signId, employeeId);
 
 	}
 	
@@ -130,23 +174,6 @@ public class SignServiceImpl implements SignService {
 		return mapper.getTotalCountDraft(cri);
 	}
 	
-	// 직원 목록
-	/*public List<EmployeeVO> getListEmployee() {
-		log.info("getListEmployee..............");
-		
-		return mapper.getListEmployee();
-	}
-	*/
-	// 결재선 등록 
-	@Override
-	public void applyLine(Long employeeId, Long slOrder,SignVO sign, SignListVO list) {
-		log.info("applyLineFirst..............." + employeeId);
-		// sign 테이블의 signId를 넣어줌
-//		long signId = sign.getSignId();
-		list.setSignId(1);
-		mapper.insertLine(employeeId, slOrder, sign, list);
-		
-	}
 	// 결재함 목록
 	/*@Override
 	public List<SignListVO> getListPayment() {
@@ -157,6 +184,7 @@ public class SignServiceImpl implements SignService {
 	// 결재함 목록 + 페이징
 	@Override
 	public List<SignVO> getListPayment(Criteria cri){
+		
 		log.info("getList with Criteria" + cri);
 		return mapper.getListPaymentWithPaging(cri);
 	}
@@ -168,6 +196,12 @@ public class SignServiceImpl implements SignService {
 		System.out.println("결재 signId : " + list.getSignId());
 		return mapper.payment(list) == 1;
 	}
+	// 결재완료 여부 변경
+	@Override
+	public boolean modifySignCheck(SignVO sign) {
+		log.info("modifySignCheck........" + sign);
+		return mapper.updateSignCheck(sign) == 1;
+	}
 	
 	// 기안 갯수
 	public int getTotalPayment(Criteria cri) {
@@ -175,17 +209,12 @@ public class SignServiceImpl implements SignService {
 		return mapper.getTotalCountPayment(cri);
 	}
 	
-	// 결재함 결재
-	@Override
-	public boolean modifySignCheck(SignVO sign) {
-		log.info("modifySignCheck........" + sign);
-		return mapper.updateSignCheck(sign) == 1;
-	}
+	
 	
 	// 직원 검색
 	@Override
 	public EmployeeVO get(String enteredName) {
-		
+		System.out.println("getService----------------!!!!");
 		EmployeeVO findEmployee = mapper.get(enteredName);
 		
 		System.out.println("service : " + enteredName);

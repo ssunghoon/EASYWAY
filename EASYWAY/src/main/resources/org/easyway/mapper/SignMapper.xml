@@ -3,8 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-
-
 <mapper namespace="org.easyway.mapper.SignMapper">
 	
 	<!-- 검색 (기안종류) - 기안 -->
@@ -112,7 +110,7 @@
 	    	from 
 	    		sign
 	    	where
-	    	 rownum <= #{pageNum} * #{amount} and employee_id = 1
+	    	 rownum <= #{pageNum} * #{amount} and employee_id = #{employeeId}
 	    	]]>
 	    	<include refid="search1"></include>
 			<include refid="search2"></include> 
@@ -178,7 +176,7 @@
 		WHERE 
 			A.SIGN_ID = #{signId}
 			AND
-			E.EMPLOYEE_ID = 1	
+			E.EMPLOYEE_ID = #{employeeId}	
 	</select> 
 	
 	<!-- 결재함 상세 (지출결의서) -->
@@ -197,7 +195,7 @@
 		WHERE 
 			A.SIGN_ID = #{signId}
 			AND 
-			E.EMPLOYEE_ID = 1	
+			E.EMPLOYEE_ID = #{employeeId}	
 	</select> 
 	
 	<!-- 결재함 상세 (휴가신청서) -->
@@ -216,7 +214,7 @@
 		WHERE 
 			A.SIGN_ID = #{signId}
         	AND 
-        	E.EMPLOYEE_ID = 1
+        	E.EMPLOYEE_ID = #{employeeId}	
 				
 	</select>
 	
@@ -225,7 +223,7 @@
 	<![CDATA[
 		SELECT COUNT(*) FROM SIGN
 		WHERE 
-		SIGN_ID > 0 AND EMPLOYEE_ID = 1
+		SIGN_ID > 0 AND EMPLOYEE_ID = #{employeeId}
 	]]>
 		<include refid="search1"></include>
 		<include refid="search2"></include> 
@@ -238,16 +236,33 @@
 	 		DEPARTMENT_ID AS departmentId,
 	 		POSITION_ID AS positionId	
 	 	FROM EMPLOYEE
-	 	WHERE EMPLOYEE_ID != 1
-	 	AND EMPLOYEE_NAME = #{employeeName}
+	 	WHERE EMPLOYEE_NAME = #{employeeName}
 	 </select>
 	 
 	 <!-- 결재선 설정 -->
 	 <!-- employeeId는 임의로 24로 넣은 것 -->
-	<insert id="insertLine">
+	<insert id="insertLine1">
 	 	insert into 
 	 		si_list(sl_id, employee_id, sign_id, sl_order)
-			values (si_list_seq.nextval, #{employeeId}, #{signId}, #{slOrder});
+			values (si_list_seq.nextval, #{employeeId1}, #{signId}, 1)
+	 </insert>
+	 
+	 <insert id="insertLine2">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, #{employeeId2}, #{signId}, 2)
+	 </insert>
+	 
+	 <insert id="insertLine3">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, #{employeeId3}, #{signId}, 3)
+	 </insert>
+	 
+	 <insert id="insertLine4">
+	 	insert into 
+	 		si_list(sl_id, employee_id, sign_id, sl_order)
+			values (si_list_seq.nextval, #{employeeId4}, #{signId}, 4)
 	 </insert>
 	 
 	 <!-- 결재함 목록 -->
@@ -356,12 +371,12 @@
 	ON
 	  	A.SIGN_ID = C.SIGN_ID
 	  	WHERE 
-	  		A.SL_ORDER IN (select (SL_ORDER - 1) FROM SI_LIST WHERE EMPLOYEE_ID = 1) 
+	  		A.SL_ORDER IN (select (SL_ORDER - 1) FROM SI_LIST) 
  			AND SL_CHECK = 'Y' ))
  			<include refid="search1"></include>
 			<include refid="search2"></include> 
-	        AND A.EMPLOYEE_ID = 1
-	        OR (A.SL_ORDER = 1 AND A.SL_CHECK = 'N' AND A.EMPLOYEE_ID = 1 <include refid="search1" /><include refid="search2" /> )
+	        AND A.EMPLOYEE_ID = #{employeeId}
+	        OR (A.SL_ORDER = 1 AND A.SL_CHECK = 'N' AND A.EMPLOYEE_ID = #{employeeId} <include refid="search1" /><include refid="search2" /> )
 	 </sql>
 	 
 	 
@@ -369,7 +384,7 @@
 	 <update id="payment">
 	 	UPDATE SI_LIST
  		 SET SL_CHECK = 'Y'
-  		WHERE SIGN_ID = #{signId} AND EMPLOYEE_ID = 1
+  		WHERE SIGN_ID = #{signId} AND EMPLOYEE_ID = #{employeeId}
 	 </update>
 	 
 	 <!-- 결재 갯수  -->

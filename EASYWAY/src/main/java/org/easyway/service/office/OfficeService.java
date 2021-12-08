@@ -22,8 +22,11 @@ public interface OfficeService {
 	public List<PositionVO> getPosition(Long officeId);
 	public List<DepartmentVO> getDepartment(Long officeId);
 	public List<AnnualVacation> getAnnualVacation(Long officeId);
-	public int modifyVacation(List<AnnualVacation> vacationInfos);
 
 	public List<OfficeVO> getListByEmployee(Long memberId);
 	public boolean checkOfficeCode(String officeCode, Long officeId);
+	
+	//update
+	public int modifyPosition(List<PositionVO> positionInfos);
+	public int modifyVacation(List<AnnualVacation> vacationInfos);
 }
