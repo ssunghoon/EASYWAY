@@ -131,12 +131,27 @@ public class MainController {
 		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
 		widgetCustom.setMemberId(employeeVO.getMemberId());
 		
-		service.removeWidget(widgetName, widgetCustom);
+		service.removeWidget(widgetCustom);
 		
 		return "redirect:/office/main";
 	}
 	
-	//String url = request.getParameter("url");
-	//response.sendRedirect("/main");
+	// 위젯 메인 불러오기 테스트!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	@GetMapping("/main2")
+	public void main2(HttpSession session, Model model) throws Exception {
+		
+		log.info("메인에 오신 것을 환영합니다!");
+		
+		// WidgetCustom 구성 
+		WidgetCustom widgetCustom = new WidgetCustom();
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		widgetCustom.setOfficeId(officeVO.getOfficeId());
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeVO.getMemberId());
+		
+		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
+		model.addAttribute("widgetList", service.getListWidget(widgetCustom).getWidgetList());
+		model.addAttribute("customNow", service.getListWidget(widgetCustom).getWsCustom());
+	}
 	
 }

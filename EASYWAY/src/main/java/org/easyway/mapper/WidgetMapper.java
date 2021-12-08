@@ -19,7 +19,9 @@ public interface WidgetMapper {
 	public int updateDefaultCancel();
 	// 위젯 기본값 변경하기 : 새로 기본값 설정
 	public int updateDefault(int wsCustom);
-	// 위젯 삭제
-	public int deleteWidget(int widgetName, WidgetCustom widgetCustom);
+	// 위젯 테이블 삭제 : 해당 커스텀번호 한정
+	public int deleteWidget(WidgetCustom widgetCustom);
+	// 위젯 커스텀 테이블 삭제 : 해당 커스텀번호 한정
+	public int deleteWidgetCustom(WidgetCustom widgetCustom);
 	
 }

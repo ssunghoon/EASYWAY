@@ -196,7 +196,7 @@ function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 
 // 시간을 구해서 innerHTML로 넣는 함수
 function getTime(){
-	const clock = document.getElementById('clock').lastChild;
+	const clock = document.getElementById('clock').firstChild;
 	
     const time = new Date();
     const hour = time.getHours();
@@ -217,7 +217,7 @@ function setTime(){
 // ----------------------------------------------------------------------------------------
 
 function getTest2(){
-	const notice = document.getElementById('notice').lastChild;
+	const notice = document.getElementById('notice').firstChild;
 	
 	notice.innerHTML = '공지사항 관련 들어갈 자리입니다';
 }
@@ -228,12 +228,32 @@ function getTest2(){
 // ----------------------------------------------------------------------------------------
 
 function getTest3(){
-	const attendance = document.getElementById('attendance').lastChild;
+	const attendance = document.getElementById('attendance').firstChild;
 	
-	attendance.innerHTML = '출퇴근 관련 들어갈 자리입니다';
-	//let text = document.createElement('div');
-	//text.innerHTML = '출퇴근 관련 들어갈 자리입니다';
-	//attendance.append(text);
+	var str = "";
+	
+	str += "<div class='widget-title'>";
+	str += "출 / 퇴근 체크";
+	str += "</div>";
+	str += "<div class='widget-content'>";
+	str += "<div class='attendance-start'>";
+	str += "<div id='attendance-start-icon' class='attendance-icons'>";
+	str += "<i class='far fa-play-circle'></i>";
+	str += "</div>";
+	str += "<div id='attendance-start-time' class='attendance-time'>";
+	str += "</div>";
+	str += "</div>";
+	str += "<div class='attendance-end'>";
+	str += "<div id='attendance-end-icon' class='attendance-icons'>";
+	str += "<i class='far fa-stop-circle'></i>";
+	str += "</div>";
+	str += "<div id='attendance-end-time' class='attendance-time'>";
+	str += "</div>";
+	str += "</div>";
+	str += "</div>";
+					
+		attendance.innerHTML = str;
+	
 }
 
 
@@ -242,7 +262,7 @@ function getTest3(){
 // ----------------------------------------------------------------------------------------
 
 function getTest4(){
-	const sign = document.getElementById('sign').lastChild;
+	const sign = document.getElementById('sign').firstChild;
 	
 	sign.innerHTML = '전자결재 관련 들어갈 자리입니다';
 }
@@ -253,7 +273,7 @@ function getTest4(){
 // ----------------------------------------------------------------------------------------
 
 function getTest5(){
-	const project = document.getElementById('project').lastChild;
+	const project = document.getElementById('project').firstChild;
 	
 	project.innerHTML = '프로젝트 관련 들어갈 자리입니다';
 }
@@ -264,7 +284,7 @@ function getTest5(){
 // ----------------------------------------------------------------------------------------
 
 function getTest6(){
-	const calendar = document.getElementById('calendar').lastChild;
+	const calendar = document.getElementById('calendar').firstChild;
 	
 	calendar.innerHTML = '캘린더 관련 들어갈 자리입니다';
 }
@@ -388,13 +408,7 @@ function widgetSwitch(valName, valTop, valLeft){
 
 // 저장버튼과 저장할 위젯 변수들
 var saveBtn = document.getElementById("save-btn");
-var createdWidget = document.getElementsByClassName("created-widget");
-
-// 위치 및 너비, 높이를 담는 변수들
-var positionTop;
-var positionLeft;
-var positionWidth;
-var positionHeight;
+var createdWidget = "";
 
 // 위치 및 너비, 높이를 저장하는 함수
 $('.custom-save').on('click', function(){
@@ -410,7 +424,15 @@ $('.custom-save').on('click', function(){
 
 function saveOffset(customNumber){
 	
+	// 위치 및 너비, 높이를 담는 변수들
+	var positionTop = 0;
+	var positionLeft = 0;
+	var positionWidth = 0;
+	var positionHeight = 0;
+	
 	var positionArr = new Array();
+	
+	createdWidget = document.getElementsByClassName("created-widget");
 	
 	for(var i = 0; i < createdWidget.length; i++){
 
@@ -555,8 +577,7 @@ function removeWidget(selected) {
 	case "실시간 시계":
 		
 		var widget = document.getElementById('clock');
-		widget.innerHTML = "";
-		widgetName = 1;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-clock').classList.replace('selected', 'unselected');
 		
@@ -564,8 +585,7 @@ function removeWidget(selected) {
 	case "공지사항 목록":
 
 		var widget = document.getElementById('notice');
-		widget.innerHTML = "";
-		widgetName = 2;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-notice').classList.replace('selected', 'unselected');
 
@@ -573,8 +593,7 @@ function removeWidget(selected) {
 	case "출퇴근 체크":
 
 		var widget = document.getElementById('attendance');
-		widget.innerHTML = "";
-		widgetName = 3;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-attendance').classList.replace('selected', 'unselected');
 
@@ -582,8 +601,7 @@ function removeWidget(selected) {
 	case "결재함 목록":
 
 		var widget = document.getElementById('sign');
-		widget.innerHTML = "";
-		widgetName = 4;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-sign').classList.replace('selected', 'unselected');
 
@@ -591,8 +609,7 @@ function removeWidget(selected) {
 	case "프로젝트 리스트":
 
 		var widget = document.getElementById('project');
-		widget.innerHTML = "";
-		widgetName = 5;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-project').classList.replace('selected', 'unselected');
 
@@ -600,8 +617,7 @@ function removeWidget(selected) {
 	case "캘린더 일정":
 
 		var widget = document.getElementById('calendar');
-		widget.innerHTML = "";
-		widgetName = 6;
+		widget.remove();
 		// Class 변경 : selected -> unselected
 		document.getElementById('thumb-calendar').classList.replace('selected', 'unselected');
 
@@ -610,12 +626,6 @@ function removeWidget(selected) {
 		break;
 	}
 	console.log(customNow);
-	deleteWidget(customNow, widgetName);
 	
-}
-
-function deleteWidget(customNumber,widgetName){
-	
-	location.href="/office/delete/widgetName="+widgetName+"&customNumber="+customNumber	
 }
 
