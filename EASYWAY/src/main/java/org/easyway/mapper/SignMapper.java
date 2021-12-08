@@ -39,11 +39,11 @@ public interface SignMapper {
 	public VacationSignVO getDraftVacation(Long signId);
 	
 	// 결재함 상세(기본기안서)
-	public BasicSignVO getPaymentBasic(Long signId);
+	public BasicSignVO getPaymentBasic(@Param("signId") Long signId, @Param("employeeId") Long  employeeId);
 	// 결재함 상세(지출결의서)
-	public SpendSignVO getPaymentSpend(Long signId);
+	public SpendSignVO getPaymentSpend(Long signId, Long employeeId);
 	// 결재함 상세(휴가신청서)
-	public VacationSignVO getPaymentVacation(Long signId);
+	public VacationSignVO getPaymentVacation(Long signId, Long employeeId);
 		
 	
 	// 기안 갯수
@@ -53,7 +53,11 @@ public interface SignMapper {
 	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재선 등록(1,2,3,4번째)
-	public int insertLine(@Param("employeeId") Long employeeId, @Param("employeeId") Long slOrder, SignVO sign, SignListVO list);
+	//public int insertLine(@Param("employeeId") Long employeeId, @Param("employeeId") Long slOrder, SignVO sign, SignListVO list);
+	public void insertLine1(SignListVO list);
+	public void insertLine2(SignListVO list);
+	public void insertLine3(SignListVO list);
+	public void insertLine4(SignListVO list);
 	
 	// 결재함 목록
 	public List<SignListVO> getListPayment();
