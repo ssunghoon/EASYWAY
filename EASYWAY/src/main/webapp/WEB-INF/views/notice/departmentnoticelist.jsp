@@ -49,7 +49,11 @@
 
 				<div class="easyway-board-item">
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
-					<div class="easyway-title1"><c:out value="${of_board.departmentId } "/> 부 공지사항</div>
+					<div class="easyway-title1">
+<%-- 					<c:out value="${sessionScope.nowEmployeeInfo.employeeName} "/>  --%>
+					<c:out value="${of_board.departmentName }"/> 게시판</div>
+					<input type="hidden" value="${sessionScope.departmentId }" >
+					<input type="hidden" value="${sessionScope.nowEmployeeInfo.employeeId } ">
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->
@@ -81,25 +85,27 @@
 							<th>작성자</th>
 							<th>글제목</th>
 							<th>날짜</th>
+							<th>부서</th>
 							<th>조회수</th>
 						</tr>
-						<c:forEach var="department" items="${department }">
+						<c:forEach var="dto" items="${departmentnoticelist }">
 							<tr>
-							<td><input type="text" value='<c:out value="${sessionScope.nowemployeeInfo.departmentId }"/>'>
-								<td><c:out value="${department.obId }" /></td>
-								<td><c:out value="${department.employeeName }" /></td>
+<%-- 							<td><input type="hidden" value='<c:out value="${dto.departmentId }"/>'></td> --%>
+								<td><c:out value="${dto.obId }" /></td>
+								<td><c:out value="${dto.employeeName} "/></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
-								<td><a class="move" href='<c:out value="${department.obId}"/>'>
-										<c:out value="${department.obTitle}" /> 
-										<c:if test="${department.obFixedCheck == 'Y' }">
+								<td><a class="move" href='<c:out value="${dto.obId}"/>'>
+										<c:out value="${dto.obTitle}" /> 
+										<c:if test="${dto.obFixedCheck == 'Y' }">
 											<img src="//t1.daumcdn.net/editor/deco/contents/emoticon/things_14.gif?v=2" 
 											border="0" class="txc-emo">
 										</c:if></a>
 								</td>
-								<td><fmt:formatDate var="setObDate"
-										value="${department.obDate }" pattern="yyyy-MM-dd" /><%-- ${setObDate } --%>
+								<td><fmt:formatDate var="setobDate"
+										value="${dto.obDate }" pattern="yyyy-MM-dd" />${setobDate }
 								</td>
-								<td><c:out value="${department.obView }" /></td>
+								<td>${dto.departmentName }</td>
+								<td><c:out value="${dto.obView }" /></td>
 							</tr>
 						</c:forEach>
 
@@ -134,8 +140,8 @@
                   <form id="actionForm" action="/notice/noticelist" method="get">
 					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'>
 					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'>
-<%-- 					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> --%>
-<%-- 					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
+					<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 				</form>
 				
 				

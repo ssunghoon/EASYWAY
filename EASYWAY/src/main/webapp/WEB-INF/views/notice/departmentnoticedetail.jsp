@@ -63,8 +63,8 @@
 	            <div class="easyway-boarddetail-title">
 	            	<!-- 게시물 타이틀 -->
 	            	<div class="post-title">
-	                   NO:<c:out value="${of_board.obId }"/>
-	                   <c:out value="${of_board.obTitle}"/>
+	                   NO:<c:out value="${dto.obId }"/>
+	                   <c:out value="${dto.obTitle}"/>
 	                </div>
 	            </div>
 	            <div class="easyway-boarddetail-writer">
@@ -77,7 +77,7 @@
 							홍길동
 		            	</div>
 						<div class="writer-department">
-						개발부<c:out value="${of_board.departmentId }"/>
+						개발부<c:out value="${dto.departmentId }"/>
 						</div>
 					</div>
 	            	
@@ -85,9 +85,9 @@
 	            	<input type="hidden" id="token" name="${_csrf.parameterName}"
               		    data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	            	<div class="buttons">
-	            	<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>' >
+	            	<input type="hidden" name="obId" value='<c:out value="${dto.obId}"/>' >
 						<!--수정페이지로 이동 버튼 -->
-						<a href="/notice/noticemodify?obId=${of_board.obId }"> <input
+						<a href="/notice/noticemodify?obId=${dto.obId }"> <input
 							type="button" value="수정" class="modify-btn easyway-btn"></a>
 						<!-- form태그에서 경로 넣고포스트로 삭제 실행하고 리스트로 돌아감(컨트롤러) -->
 						<input type="submit" value="삭제" class="delete-btn easyway-btn">
@@ -105,7 +105,7 @@
 						<div class="info-time">
 	            		<i class="time-icon far fa-clock"></i>
 						<fmt:formatDate var="setObDate" 
-						value="${of_board.obDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+						value="${dto.obDate }" pattern="yyyy-MM-dd HH:mm:ss" />
 						${setObDate }
 	            	</div>
 	
@@ -123,7 +123,7 @@
 				</div>
 				
 				<div class="easyway-boarddetail-content">
-						 ${of_board.obContent}
+						 ${dto.obContent}
 				</div>
 	        </div>
 	

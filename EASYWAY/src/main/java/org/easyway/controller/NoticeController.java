@@ -9,6 +9,7 @@ import org.easyway.domain.notice.DepartmentDTO;
 import org.easyway.domain.notice.NoticeCriteria;
 import org.easyway.domain.notice.NoticePageDTO;
 import org.easyway.domain.notice.NoticeVO;
+import org.easyway.domain.office.DepartmentVO;
 import org.easyway.domain.office.OfficeVO;
 import org.easyway.service.notice.NoticeService;
 import org.easyway.service.notice.NoticeServicelmpl;
@@ -116,10 +117,18 @@ public class NoticeController {
 //	
 	//부서 공지 리스트
 	@GetMapping("/departmentnoticelist")
-	public String departmentnoticelist(Model model, HttpSession session, DepartmentDTO departmentDTO) {
+	public String departmentnoticelist(Model model, HttpSession session, DepartmentDTO dto) {
 		
 		log.info("부서 게시판 띄웁니다");
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowemployeeInfo");
+		
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+//		dto.setEmployeeId(employeeVO.getEmployeeId());
+		log.info("뭔가 나오나요");
+//		dto.setDepartmentId(employeeVO.getDepartmentId());
+		
+		DepartmentVO departmentVO = (DepartmentVO)session.getAttribute("nowDepartmentInfo");
+		model.addAttribute("departmentnoticelist", service.getListDepartment());
+//		return "/notice/noticelist";
 //		log.info("부서번호" + employeeVO.getDepartmentId());
 //		departmentDTO.setDepartmentId(employeeVO.getDepartmentId());
 //		log.info("번호뜨나요"+ employeeVO.getDepartmentId());
@@ -128,4 +137,31 @@ public class NoticeController {
 		return "/notice/departmentnoticelist";
 	}
 	
+//	@GetMapping("/departmentnoticelist")
+//	public void departmentnoticelist(NoticeCriteria cri, Model model, HttpSession session){
+//		log.info("departmentnoticelist" + cri);
+//		
+//		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+////		mosel.addAttribute("nowEmployeeInfo", employeeVO.getEmployeeId());
+//		log.info("뭔가 나오나요");
+////		dto.setDepartmentId(employeeVO.getDepartmentId());
+//		
+////		DepartmentVO departmentVO = (DepartmentVO)session.getAttribute("nowDepartmentInfo");
+//		model.addAttribute("departmentnoticelist", service.getDepartmentListPaging(cri));
+//		
+//		int total = service.getTotal(cri);
+//		
+//		log.info("총게시글갯수" + total);
+////		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123)); //예전코드
+//		model.addAttribute("pageMaker", new NoticePageDTO(cri, total));
+//	}
+	
+//	@GetMapping({ "/departmentnoticedetail", "/noticemodify" })
+//	public void departmentnoticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
+//		log.info("/noticedetail or noticemodify");
+//		model.addAttribute("dto", service.detail(obId));
+//		log.info("조회폼 잘 떴나요");
+//		service.modifyViewCount(obId);
+//		log.info("조회수 증가");
+//}
 }
