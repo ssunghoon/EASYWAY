@@ -51,9 +51,8 @@
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
 					<div class="easyway-title1">
 <%-- 					<c:out value="${sessionScope.nowEmployeeInfo.employeeName} "/>  --%>
-					<c:out value="${of_board.departmentName }"/> 게시판</div>
-					<input type="hidden" value="${sessionScope.departmentId }" >
-					<input type="hidden" value="${sessionScope.nowEmployeeInfo.employeeId } ">
+					<c:out value="${sessionScope.nowEmployeeInfo.employeeDepartment}"/> 게시판</div>
+
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->

@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.servlet.http.HttpSession;
 
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.notice.DepartmentDTO;
 import org.easyway.domain.notice.NoticeCriteria;
@@ -117,16 +118,15 @@ public class NoticeController {
 //	
 	//부서 공지 리스트
 	@GetMapping("/departmentnoticelist")
-	public String departmentnoticelist(Model model, HttpSession session, DepartmentDTO dto) {
+	public String departmentnoticelist(NoticeVO notice, Model model, HttpSession session) {
 		
 		log.info("부서 게시판 띄웁니다");
 		
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-//		dto.setEmployeeId(employeeVO.getEmployeeId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		notice.setEmployeeId(employeeDTO.getEmployeeId());
+		notice.setDepartmentId(employeeDTO.getDepartmentId());
 		log.info("뭔가 나오나요");
-//		dto.setDepartmentId(employeeVO.getDepartmentId());
-		
-		DepartmentVO departmentVO = (DepartmentVO)session.getAttribute("nowDepartmentInfo");
+//		dto.setDepartmentId(EmployeeDTO.getDepartmentId());
 		model.addAttribute("departmentnoticelist", service.getListDepartment());
 //		return "/notice/noticelist";
 //		log.info("부서번호" + employeeVO.getDepartmentId());
