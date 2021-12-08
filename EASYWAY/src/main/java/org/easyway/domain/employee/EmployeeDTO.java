@@ -11,12 +11,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeDTO {
 	
+	private Long employeeId;
+	private Long officeId;
 	private Long memberId;
-	private String employeeName; 
+	private Long departmentId;
+	private Long positionId;
+	
 	private String employeeEmail;
 	private String employeePosition;
 	private String employeeDepartment;
-	private String employeeWorkType;
+	private String employeeName;
+	private String employeeCall;
 	private String employeePhone;
 	private Date employeeHireDate;
+	private String employeeWorkType;
+	private String employeeMaster;
+	private int employeeLeftDay;
 }

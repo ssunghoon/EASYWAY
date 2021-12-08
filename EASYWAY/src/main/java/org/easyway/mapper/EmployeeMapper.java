@@ -13,8 +13,8 @@ public interface EmployeeMapper {
 	public int insertEmployee(EmployeeVO employee);	
 	
 	//select	
-	public EmployeeVO getEmployee(Long employeeId);
-	public EmployeeVO getEmployee2(@Param("memberId")Long nowMemberId, @Param("officeId")Long officeId);
+	public EmployeeDTO getEmployeeByEmployeeId(Long employeeId);
+	public EmployeeDTO getEmployeeByMemberId(@Param("memberId")Long nowMemberId, @Param("officeId")Long officeId);
 	public List<EmployeeDTO> getListEmployee(Long officeId);
 	public void insertEmployee(EmployeeDTO employee);
 }

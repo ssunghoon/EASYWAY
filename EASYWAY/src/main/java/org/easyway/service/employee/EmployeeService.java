@@ -7,9 +7,9 @@ import org.easyway.domain.employee.EmployeeVO;
 
 public interface EmployeeService {
 	
-	public EmployeeVO getEmployee(Long employeeId);
+	public EmployeeDTO getEmployee(Long employeeId);
 	public List<EmployeeDTO> getListEmployee(Long officeId);
 	public int resiter(EmployeeVO employee);
 	public void registerEmployees(List<EmployeeDTO> employees, Long officeId);
-	public EmployeeVO getEmployee2(Long nowMemberId, Long officeId);
+	public EmployeeDTO getEmployeeByMemberId(Long nowMemberId, Long officeId);
 }

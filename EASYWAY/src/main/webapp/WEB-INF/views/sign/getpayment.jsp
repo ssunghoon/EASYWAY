@@ -93,8 +93,8 @@
 						<tr>
 							<th class="sign-th">기간</th>
 							<td>
-								<fmt:formatDate value="${basicSign.signBasicStart}" pattern="yyyy-MM-dd"/>
-								<fmt:formatDate value="${basicSign.signBasicEnd}" pattern="yyyy-MM-dd"/> ~
+							<fmt:formatDate value="${basicSign.signBasicStart}" pattern="yyyy.MM.dd"/> ~
+							<fmt:formatDate value="${basicSign.signBasicEnd}" pattern="yyyy.MM.dd"/>
 							</td>
 						</tr>
 						<tr>
@@ -176,9 +176,8 @@
 							<tr>
 							<th class="sign-th">기간</th>
 							<td>
-								${vacationSign.signVacationStart} ~ ${vacationSign.signVacationEnd}
-								<%-- <fmt:formatDate value="${vacationSign.signVacationStart}" pattern="yyyy-MM-dd"/> --%>
-								<%-- <fmt:formatDate value="${vacationSign.signVacationEnd}" pattern="yyyy-MM-dd"/> --%>
+							<fmt:formatDate value="${vacationSign.signVacationStart}" pattern="yyyy-MM-dd"/>
+								 ~ ${vacationSign.signVacationEnd}
 							</td>
 						</tr>
 						<tr>

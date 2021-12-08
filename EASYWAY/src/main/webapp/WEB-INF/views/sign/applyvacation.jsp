@@ -45,6 +45,8 @@
 <link href="/resources/css/sign/applySignVacation.css" rel="stylesheet">
 <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
 <script src="/resources/js/menu.js"></script>
+    <script src="/resources/js/sign/applyVacation.js"></script>
+
 
 </head>
 <body>
@@ -69,6 +71,10 @@
 	            </div>
 	            <div class="easyway-boardapply-whitespace">
 	            	<!-- 여백 -->
+	            </div>
+	            <div class="easyway-boardapply-save">
+	                <!-- 결재선 버튼 -->
+	                <button id="signLine" class="easyway-btn ls-modal sign-line" data-toggle="modal" data-target="#modal">결재선</button>
 	            </div>
 	            <div class="easyway-boardapply-form">
 	            
@@ -160,11 +166,88 @@
 							<input type="hidden" name="signFormId" value="3">
 							<input type="submit" class="easyway-btn" value="등록">
 						</div>
+					    <div class="hidden-box">
+				            <div id="firstEmployee"></div>
+				            <div id="secondEmployee"></div>
+				            <div id="thirdEmployee"></div>
+				            <div id="fourthEmployee"></div>
+			            </div>
 				    <input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-					</form>
+					</form><!-- end easyway-boardapply-form -->
+									<!-- 결재선 모달 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								<h4 class="modal-title" id="myModalLabel">결재선</h4>
+							</div>
+							<div class="modal-body">
+								<div class="col-lg-6 sign-list-box">
+									<div class="input-group">
+										<input type="search" class="form-control rounded"
+											placeholder="이름을 입력해주세요" aria-label="Search"
+											aria-describedby="search-addon" name="employeeName"/>
+										<button type="button" id="search-name" class="btn easyway-btn">검색</button>
+									</div>
+									<div id="search-name-list" class="mb-3">
+									
+									</div>
+								</div>
+								<div class="col-lg-1">
+									<div class="in-out-box">
+										<a id="firstIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="firstOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="secondIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="secondOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="thirdIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="thirdOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+									<div class="in-out-box">
+										<a id="fourthIn"><i class="fas fa-caret-square-right fa-2x"></i></a>
+										<a id="fourthOut"><i class="fas fa-caret-square-left fa-2x"></i></a>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="sign-box" id="firstResult">
+									
+									</div>
+									<div class="sign-box" id="secondResult">
+										
+									</div>
+									<div class="sign-box" id="thirdResult">
+										
+									</div>
+									<div class="sign-box" id="fourthResult">
+										
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-gray btn-clear"
+									data-dismiss="modal">초기화</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">저장</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$("#signLine").on("click", function() {
+		$("#myModal").modal("show");
+	});	
+		
+	</script>
 </body>
 </html>

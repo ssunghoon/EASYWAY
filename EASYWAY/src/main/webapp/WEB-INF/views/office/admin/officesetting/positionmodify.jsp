@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -61,7 +61,7 @@
 						<a href="/office/admin/officesetting/vacationsetting">휴가 설정</a>
 					</div>
 					<div class="tab-label-choice">
-						<a href="/office/admin/officesetting/positionsetting">직위 설정</a>
+						<a href="/office/admin/officesetting/positionlist">직위 설정</a>
 					</div>
 					<div class="tab-label">
 						<a href="/office/admin/officesetting/departmentsetting">부서 설정</a>
@@ -71,28 +71,31 @@
 				<div class="setting-title">
 					<div class="easyway-title1">직위 설정</div>
 				</div>
-				
+
 				<button class="easyway-btn">저장</button>
 
 				<div class="position-setting-table ">
 					<div class="position-level-item">
 						<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
 						<!-- 임의의 5열 x 15줄 태그 (th포함하면 16줄) -->
-						<table class="position-list">
-							<tr>
-								<th>등급</th>
-								<th>직위명</th>
-							</tr>
-							<c:forEach var="position" items="${positionInfos}">
-							<tr>
-								<td>${position.positionLevel}등급</td>
-								<td>
-									<p>${position.positionName}</p>
-								</td>
-							</tr>
-							</c:forEach>
-						</table>
-
+							<table class="position-list">
+								<tr>
+									<th>등급</th>
+									<th>직위명</th>
+								</tr>
+								<c:forEach var="position" items="${positionInfos}">
+									<tr>
+										<td>${position.positionLevel}등급</td>
+										<td class="position-box">
+										<input type="hidden" name="positionId" value="${position.positionId}">
+										<input type="hidden" name="officeId" value="${sessionScope.nowOfficeInfo.officeId}">										
+										<input type="hidden" name="positionLevel" value="${position.positionLevel}">
+										<input id="textOnchange" type="text" name="positionName" value="${position.positionName}">
+										</td>
+									</tr>
+								</c:forEach>								
+							</table>
+							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</div>
 				</div>
 			</div>
@@ -101,6 +104,70 @@
 	</div>
 
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var positionList = new Array();
+		var Listener = function() {
+			  alert('Hello!');
+			};
+		$(document).on("propertychange change keyup paste input","#textOnchange", function() {
+			
+			window.onbeforeunload = function(e) {
+				var dialogText = 'Dialog text here';
+				e.returnValue = dialogText;
+				return dialogText;
+			};	
+		});
+		
+		
+		function scanPositionValue() {			
+			window.onbeforeunload = null;
+			$(".position-box").each(function(idx) {
+				
+				// 해당 체크박스의 Value 가져오기
+				var positionId = $(this).children().eq("0").val();
+				var officeId = $(this).children().eq("1").val();
+				var positionLevel = $(this).children().eq("2").val();
+				var positionName = $(this).children().eq("3").val();
 
+				positionList.push({
+					"positionId" : positionId,
+					"officeId" : officeId,
+					"positionLevel" : positionLevel,
+					"positionName" : positionName,
+				});
+			});
+			console.log(positionList);
+		}
+		function modifiyPosition(positionList) {
+			if(confirm("정말 등록하시겠습니까 ?") == true){
+		    }
+		    else{
+		        return;
+		    }
+		  $.ajax({
+		      type: "post",
+		      url: "/office/position/modify",
+		      data: JSON.stringify(positionList),
+		      contentType: "application/json; charset=utf-8",
+		      beforeSend: function (xhr) {
+		        var $token = $("#token");
+		        xhr.setRequestHeader($token.data("token-name"), $token.val());
+		      },
+		      success: function (result, status, xhr) {
+		    	  alert("직위 정보 변경 성공!");
+		    	  location.href="/office/admin/officesetting/positionlist";
+		      },
+		      error: function (xhr, status, er) {
+		        alert("실패....");
+		      },
+		    });	  	
+		}
+		$(".easyway-btn").on("click", function(e) {
+		scanPositionValue();
+		modifiyPosition(positionList);
+		});
+	});
+</script>
 
 </html>

@@ -1,5 +1,6 @@
 package org.easyway.service.office;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.easyway.domain.office.WidgetCustom;
@@ -27,12 +28,19 @@ public class WidgetServiceImpl implements WidgetService {
 		// 1. 기존에 저장된 기본 불러오기 취소 
 		mapper.updateDefaultCancel();
 		
-		// 2. 새로 저장될 멤버와 오피스와 위젯 매핑
+		// 2. 기존 저장되어있는 위젯들 지우기
+		log.info("wsCustom : " + widgetCustom.getWsCustom());
+		mapper.deleteWidget(widgetCustom);
+		
+		// 3. 기존 저장되어있는 위젯들 지우기
+		mapper.deleteWidgetCustom(widgetCustom);
+		
+		// 4. 새로 저장될 멤버와 오피스와 위젯 매핑
 		mapper.insertWidgetCustom(widgetCustom);
 		Long wsId = widgetCustom.getWsId();
 		log.info("wsId------------------------------" + wsId);
 		
-		// 3. 위젯 정보 저장
+		// 5. 위젯 정보 저장
 		widgetList.forEach(widget -> {
 			log.info("widget---------------------------" + widget);
 			widget.setWsId(wsId);
@@ -44,17 +52,26 @@ public class WidgetServiceImpl implements WidgetService {
 
 	// 위젯 불러오기
 	@Override
-	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) {
+	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) throws Exception {
 		
 		WidgetGetMainDTO widgetGetMain = new WidgetGetMainDTO();
 		log.info("widgetCustom------------------------" + widgetCustom);
-		log.info("widgetGetMain---------------------" + widgetGetMain);
 		
 		// wsCustom : 불러온 커스텀넘버, widgetList : 저장된 위젯리스트
-		int wsCustom = mapper.readCustomNow();
 		List<WidgetVO> widgetList =  mapper.getListWidget(widgetCustom);
-		widgetGetMain.setWsCustom(wsCustom);
 		widgetGetMain.setWidgetList(widgetList);
+		log.info("widgetGetMain---------------------" + widgetGetMain);
+		
+		// 위젯을 아직 저장한 적 없을 때 null 처리
+		if( mapper.readCustomNow(widgetCustom) == "" ||
+				mapper.readCustomNow(widgetCustom) == null ) { // null이면 기본값 1로 불러오기
+			int setDefault = 1; 
+			widgetGetMain.setWsCustom(setDefault);
+		} else {																		// null이 아니면 저장된 값 불러오기
+			log.info("저장된 위젯 정보 있음");
+			int wsCustom =  Integer.parseInt(mapper.readCustomNow(widgetCustom));
+			widgetGetMain.setWsCustom(wsCustom);
+		}
 		
 		return widgetGetMain;
 	}
@@ -73,14 +90,13 @@ public class WidgetServiceImpl implements WidgetService {
 		return 1;
 	}
 
+	// 위젯 리셋(전체 삭제)하기
 	@Override
-	public int removeWidget(WidgetVO widget, WidgetCustom widgetCustom) {
+	public int removeWidget(WidgetCustom widgetCustom) {
 		
-		log.info("widget: " + widget);
-		log.info("widget: " + widgetCustom);
+		log.info("서비스 widgetCustom: " + widgetCustom);
 		
-		
-		return 1;
+		return mapper.deleteWidget(widgetCustom);
 	}
 
 }
