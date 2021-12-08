@@ -14,20 +14,24 @@ public interface ProjectService {
 	
 	public boolean modifyProject(Project project); // 프로젝트 수정
 	
-	public void registerProjectBoard(ProjectBoard projectBoard); // 프로젝트 게시판 등록
+	public void registerProjectBoard(ProjectBoard projectBoard); // 게시판 등록
 	
-	public List<ProjectBoard> getListProjectBoard(Long projectId); // 프로젝트 게시판 목록
+	public List<ProjectBoard> getListProjectBoard(Long projectId); // 게시판 목록
 	
-	public ProjectBoard getProjectBoard(Long projectId, Long projectBoardId); // 프로젝트 게시판 상세
+	public ProjectBoard getProjectBoard(Long projectId, Long projectBoardId); // 게시판 상세
 	
-	public void registerProjectPost(ProjectPost projectPost); // 프로젝트 게시물 등록
+	public boolean modifyProjectBoard(ProjectBoard projectBoard); // 게시판 수정
 	
-	public List<ProjectPost> getListProjectPost(Long projectBoardId); // 프로젝트 게시물 목록
+	public boolean removeProjectBoard(ProjectBoard projectBoard); // 게시판 삭제
 	
-	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId); // 프로젝트 게시물 상세
+	public void registerProjectPost(ProjectPost projectPost); // 게시물 등록
 	
-	public boolean modifyProjectPost(ProjectPost projectPost); // 프로젝트 게시물 수정
+	public List<ProjectPost> getListProjectPost(Long projectBoardId); // 게시물 목록
 	
-	public boolean removeProjectPost(Long projectBoardId, Long projectPostId); // 프로젝트 게시물 삭제
+	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId); // 게시물 상세
+	
+	public boolean modifyProjectPost(ProjectPost projectPost); // 게시물 수정
+	
+	public boolean removeProjectPost(Long projectBoardId, Long projectPostId); // 게시물 삭제
 	
 }

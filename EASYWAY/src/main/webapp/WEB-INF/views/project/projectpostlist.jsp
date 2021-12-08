@@ -132,7 +132,7 @@
 
 				<div class="easyway-board-item">
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
-					<div class="easyway-title1">게시판 이름 들어갈 자리</div>
+					<div class="easyway-title1">${pbn}</div>
 				</div>
 				<div class="easyway-board-item">
 					<!-- 2번째 easyway-board-item : 필터 들어갈 자리 1 -->
@@ -168,7 +168,7 @@
 						<c:forEach var="projectPost" items="${projectPost}">
 							<tr>
 								<td><c:out value="${projectPost.projectPostId }"/></td>
-								<td>사원이름</td>
+								<td><c:out value="${sessionScope.nowEmployeeInfo.employeeName}"/></td>
 								<td><a href="projectpostdetail?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}">${projectPost.projectPostTitle}</a></td>
 								<td><c:out value="${projectPost.projectPostDate }"/></td>
 								<td><c:out value="${projectPost.projectPostViews }"/></td>

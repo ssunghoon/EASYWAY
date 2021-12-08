@@ -56,9 +56,22 @@
 			P_BOARD WHERE PROJECT_ID = #{projectId} AND PB_ID = #{projectBoardId}
 	</select>
 	
+	<update id="updateProjectBoard">
+		UPDATE
+			P_BOARD
+		SET
+			PB_NAME = #{projectBoardName}
+		WHERE 
+			PB_ID = #{projectBoardId} AND PROJECT_ID = #{projectId}
+	</update>
+	
+	<delete id="deleteProjectBoard">
+		DELETE FROM P_BOARD WHERE PB_ID = #{projectBoardId} AND PROJECT_ID = #{projectId}
+	</delete>
+	
 	
 	<insert id="insertProjectPost">
-		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, #{projectId}, 1, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
+		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, #{projectId}, #{employeeId}, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
 	</insert>
 
 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost">
