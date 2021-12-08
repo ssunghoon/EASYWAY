@@ -1,5 +1,6 @@
 package org.easyway.service.office;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.easyway.domain.office.WidgetCustom;
@@ -44,17 +45,26 @@ public class WidgetServiceImpl implements WidgetService {
 
 	// 위젯 불러오기
 	@Override
-	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) {
+	public WidgetGetMainDTO getListWidget(WidgetCustom widgetCustom) throws Exception {
 		
 		WidgetGetMainDTO widgetGetMain = new WidgetGetMainDTO();
 		log.info("widgetCustom------------------------" + widgetCustom);
-		log.info("widgetGetMain---------------------" + widgetGetMain);
 		
 		// wsCustom : 불러온 커스텀넘버, widgetList : 저장된 위젯리스트
-		int wsCustom = mapper.readCustomNow();
 		List<WidgetVO> widgetList =  mapper.getListWidget(widgetCustom);
-		widgetGetMain.setWsCustom(wsCustom);
 		widgetGetMain.setWidgetList(widgetList);
+		log.info("widgetGetMain---------------------" + widgetGetMain);
+		
+		// 위젯을 아직 저장한 적 없을 때 null 처리
+		if( mapper.readCustomNow(widgetCustom) == "" ||
+				mapper.readCustomNow(widgetCustom) == null ) { // null이면 기본값 1로 불러오기
+			int setDefault = 1; 
+			widgetGetMain.setWsCustom(setDefault);
+		} else {																		// null이 아니면 저장된 값 불러오기
+			log.info("저장된 위젯 정보 있음");
+			int wsCustom =  Integer.parseInt(mapper.readCustomNow(widgetCustom));
+			widgetGetMain.setWsCustom(wsCustom);
+		}
 		
 		return widgetGetMain;
 	}
@@ -73,14 +83,14 @@ public class WidgetServiceImpl implements WidgetService {
 		return 1;
 	}
 
+	// 위젯 삭제하기
 	@Override
-	public int removeWidget(WidgetVO widget, WidgetCustom widgetCustom) {
+	public int removeWidget(int widgetName, WidgetCustom widgetCustom) {
 		
-		log.info("widget: " + widget);
-		log.info("widget: " + widgetCustom);
+		log.info("서비스 widgetName: " + widgetName);
+		log.info("서비스 widgetCustom: " + widgetCustom);
 		
-		
-		return 1;
+		return mapper.deleteWidget(widgetName, widgetCustom);
 	}
 
 }

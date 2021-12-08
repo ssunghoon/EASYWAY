@@ -9,18 +9,13 @@ import org.easyway.service.employee.EmployeeService;
 import org.easyway.service.office.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.easyway.domain.office.WidgetCustom;
 import org.easyway.domain.office.WidgetVO;
 import org.easyway.service.office.WidgetService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +23,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonParser;
-
 import lombok.extern.log4j.Log4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Log4j
@@ -72,7 +65,7 @@ public class MainController {
 	
 	// 위젯 메인 불러오기
 	@GetMapping("/main")
-	public void main(HttpSession session, Model model){
+	public void main(HttpSession session, Model model) throws Exception {
 		
 		log.info("메인에 오신 것을 환영합니다!");
 		
@@ -84,7 +77,8 @@ public class MainController {
 		widgetCustom.setMemberId(employeeVO.getMemberId());
 		
 		log.info("List<WidgetVO>-----------" + service.getListWidget(widgetCustom));
-		model.addAttribute("widgetList", service.getListWidget(widgetCustom));
+		model.addAttribute("widgetList", service.getListWidget(widgetCustom).getWidgetList());
+		model.addAttribute("customNow", service.getListWidget(widgetCustom).getWsCustom());
 	}
 	
 	// 위젯 저장 요청
@@ -92,8 +86,7 @@ public class MainController {
 	@ResponseBody
 	public String saveOffset(@RequestPart("customNumber") Map<String, Integer> data,
 										@RequestPart("WidgetVO") List<WidgetVO> widgetList,
-										HttpSession session,
-										RedirectAttributes rttr){
+										HttpSession session){
 		
 		log.info("MIME TYPE: " + MediaType.TEXT_PLAIN_VALUE);
 		log.info("widgetList!!!!!!!!!!!!!!!!!!!!---------------------------" + widgetList);
@@ -123,6 +116,22 @@ public class MainController {
 		int wsCustom = data.get("customNumber");
 		log.info("customNumber : " + wsCustom);
 		service.modifyDefault(wsCustom);
+		
+		return "redirect:/office/main";
+	}
+	
+	@GetMapping("/removewidget")
+	public String removeWidget(@RequestParam("widgetName") int widgetName, @RequestParam("customNumber") int customNumber,
+											HttpSession session) throws Exception{
+		
+		log.info("지우자 위젯! --------------");
+		WidgetCustom widgetCustom = new WidgetCustom();
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		widgetCustom.setOfficeId(officeVO.getOfficeId());
+		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeVO.getMemberId());
+		
+		service.removeWidget(widgetName, widgetCustom);
 		
 		return "redirect:/office/main";
 	}
