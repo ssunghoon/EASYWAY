@@ -5,7 +5,7 @@ import org.easyway.domain.project.ProjectPost;
 
 import javax.servlet.http.HttpSession;
 
-import org.easyway.domain.employee.EmployeeVO;
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.project.Project;
 import org.easyway.service.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +87,12 @@ public class ProjectController {
 	// 게시물 생성
 	@PostMapping("/projectpostregister")
 	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, HttpSession session) {
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		projectPost.setEmployeeId(employeeVO.getMemberId());
+		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		projectPost.setEmployeeId(EmployeeDTO.getMemberId());
 		rttr.addAttribute("projectId", projectPost.getProjectId());
 		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
 		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
-		log.info("111111"+employeeVO.getMemberId());
+		log.info("111111"+EmployeeDTO.getMemberId());
 		log.info("222222"+projectPost);
 		service.registerProjectPost(projectPost);
 		return "redirect:/project/projectpostlist";
@@ -101,7 +101,7 @@ public class ProjectController {
 	// 게시물 목록 페이지
 	@GetMapping("/projectpostlist")
 	public void projectPostList(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, Model model, HttpSession session) {
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
 		model.addAttribute("projectBoardId", projectBoardId);
@@ -112,7 +112,7 @@ public class ProjectController {
 	// 게시물 상세 페이지
 	@GetMapping("/projectpostdetail")
 	public void projectPostDetail(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, @RequestParam("projectPostId") Long projectPostId, Model model, HttpSession session) {
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
+		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoardId", projectBoardId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
