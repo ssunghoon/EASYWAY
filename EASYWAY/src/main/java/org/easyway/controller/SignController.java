@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.sign.BasicSignVO;
 import org.easyway.domain.sign.Criteria;
@@ -78,8 +79,8 @@ public class SignController {
 		log.info(spend);
 		log.info(sign);
 		log.info(list);
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		sign.setEmployeeId(employeeVO.getEmployeeId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		sign.setEmployeeId(employeeDTO.getEmployeeId());
 		
 		
 		rttr.addFlashAttribute("spendSign", spend);
@@ -113,8 +114,8 @@ public class SignController {
 		log.info(sign);
 		log.info(list);
 		// session
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		sign.setEmployeeId(employeeVO.getEmployeeId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		sign.setEmployeeId(employeeDTO.getEmployeeId());
 		
 		rttr.addFlashAttribute("basicSign", basic);
 		rttr.addFlashAttribute("sign", sign);
@@ -149,8 +150,8 @@ public class SignController {
 		log.info(sign);
 		log.info(list);
 		
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		sign.setEmployeeId(employeeVO.getEmployeeId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		sign.setEmployeeId(employeeDTO.getEmployeeId());
 		
 		rttr.addFlashAttribute("vacationSign", vacation);
 		rttr.addFlashAttribute("sign", sign);
@@ -187,8 +188,8 @@ public class SignController {
 	@GetMapping("/draftlist")
 	public void draftList(Criteria cri, Model model, HttpSession session){
 		log.info("draftList : " + cri);
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		Long employeeId = employeeVO.getEmployeeId();
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		cri.setEmployeeId(employeeId);
 		model.addAttribute("draftList", service.getListDraft(cri));
 		int total = service.getTotalDraft(cri);
@@ -226,8 +227,8 @@ public class SignController {
 			log.info("getpayment : ");
 			log.info("signFormId = " + signFormId);
 			log.info("signId : " + signId);
-			EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-			Long employeeId = employeeVO.getEmployeeId();
+			EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+			Long employeeId = employeeDTO.getEmployeeId();
 			if(signFormId == 1){
 				model.addAttribute("basicSign", service.getPaymentBasic(signId, signFormId, employeeId));
 			}else if(signFormId == 2) {
@@ -243,8 +244,8 @@ public class SignController {
 		
 		log.info("paymentlist : " + cri);
 		
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		Long employeeId = employeeVO.getEmployeeId();
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		cri.setEmployeeId(employeeId);
 		model.addAttribute("paymentList", service.getListPayment(cri));
 		int total = service.getTotalPayment(cri);
@@ -260,8 +261,8 @@ public class SignController {
 	public String modify(SignListVO list, SignVO sign, RedirectAttributes rttr, HttpSession session){
 		log.info("modifyPayment: " + list);
 		
-		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		Long employeeId = employeeVO.getEmployeeId();
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		list.setEmployeeId(employeeId);
 		if(service.modify(list) && service.modifySignCheck(sign)){
 			rttr.addFlashAttribute("result", "success");
@@ -276,8 +277,8 @@ public class SignController {
 		
 		String enteredName = data.get("enteredName");
 		System.out.println("이름 : " + enteredName);
-	/*	EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-		Long employeeId = employeeVO.getEmployeeId();
+	/*	EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		System.out.println("로그인한 아이디 : " + employeeId);*/
 		EmployeeVO selectEmployee = service.get(enteredName);
 		
