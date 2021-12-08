@@ -116,6 +116,12 @@
 		vacations = #{vacations}
 		where av_id = #{annualVacationId}
 	</update>
+	<update id="updatePosition" parameterType="org.easyway.domain.office.PositionVO">
+		update
+		position set
+		position_name = #{positionName}
+		where position_id = #{positionId}
+	</update>
 </mapper>
 
 
