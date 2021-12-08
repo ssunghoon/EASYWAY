@@ -28,6 +28,10 @@ public interface NoticeService {
 	//부서 공지사항 서비스 메서드
 	
 	//부서별 리스트 출력
-	public List<DepartmentDTO> getListDepartment(Long departmentId);
+	public List<DepartmentDTO> getListDepartment();
+	
+	//페이징 추가한 부서별 리스트 출력
+	public List<DepartmentDTO> getDepartmentListPaging(NoticeCriteria cri);
+	
 	
 }
