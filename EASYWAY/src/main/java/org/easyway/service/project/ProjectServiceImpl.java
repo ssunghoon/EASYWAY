@@ -34,44 +34,57 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
-	public void registerProjectBoard(ProjectBoard projectBoard) { // 프로젝트 게시판 등록
+	public void registerProjectBoard(ProjectBoard projectBoard) { // 게시판 등록
 		mapper.insertProjectBoard(projectBoard);
 	}
 
 	@Override
-	public List<ProjectBoard> getListProjectBoard(Long projectId) { // 프로젝트 게시판 목록
+	public List<ProjectBoard> getListProjectBoard(Long projectId) { // 게시판 목록
 		return mapper.getListProjectBoard(projectId);
 	}
 	
 	@Override
-	public ProjectBoard getProjectBoard(Long projectId, Long projectBoardId) { // 프로젝트 게시판 상세
+	public ProjectBoard getProjectBoard(Long projectId, Long projectBoardId) { // 게시판 상세
 		return mapper.readProjectBoard(projectId, projectBoardId);
+	}
+	
+	@Override
+	public boolean modifyProjectBoard(ProjectBoard projectBoard) { // 게시판 수정
+		return mapper.updateProjectBoard(projectBoard) == 1;
 	}
 
 	@Override
-	public void registerProjectPost(ProjectPost projectPost) { // 프로젝트 게시물 등록
+	public boolean removeProjectBoard(ProjectBoard projectBoard) { // 게시판 삭제
+		return mapper.deleteProjectBoard(projectBoard) == 1;
+	}
+	
+	@Override
+	public void registerProjectPost(ProjectPost projectPost) { // 게시물 등록
 		mapper.insertProjectPost(projectPost);
 	}
 	
 	@Override
-	public List<ProjectPost> getListProjectPost(Long projectBoardId) { // 프로젝트 게시물 목록
+	public List<ProjectPost> getListProjectPost(Long projectBoardId) { // 게시물 목록
 		return mapper.getListProjectPost(projectBoardId);
 	}
 
 	@Override
-	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId) { // 프로젝트 게시물 상세
+	public ProjectPost getProjectPost(Long projectBoardId, Long projectPostId) { // 게시물 상세
 		return mapper.readProjectPost(projectBoardId, projectPostId);
 	}
 
 	@Override
-	public boolean modifyProjectPost(ProjectPost projectPost) { // 프로젝트 게시물 수정
-		return mapper.updateProjectPost(projectPost)==1;
+	public boolean modifyProjectPost(ProjectPost projectPost) { // 게시물 수정
+		return mapper.updateProjectPost(projectPost) == 1;
 	}
 	
 	@Override
-	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) { // 프로젝트 게시물 삭제
+	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) { // 게시물 삭제
 		return mapper.deleteProjectPost(projectBoardId, projectPostId) == 1;
 	}
+
+
+
 
 
 
