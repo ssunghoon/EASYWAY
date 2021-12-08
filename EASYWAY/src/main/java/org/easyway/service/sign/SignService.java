@@ -16,13 +16,14 @@ public interface SignService {
 //	public void add(SignVO sign);
 	
 	// 지출결의서 등록
-	public void applySpend(SpendSignVO spend, SignVO sign);
+	public void applySpend(SpendSignVO spend, SignVO sign, SignListVO list);
+
 	
 	// 기본기안서 등록
-	public void applyBasic(BasicSignVO basic, SignVO sign);
+	public void applyBasic(BasicSignVO basic, SignVO sign, SignListVO list);
 	
 	// 휴가신청서 등록
-	public void applyVacation(VacationSignVO vacation,SignVO sign);
+	public void applyVacation(VacationSignVO vacation,SignVO sign, SignListVO list);
 
 //	public List<SignVO> getListDraft();
 	
@@ -34,23 +35,18 @@ public interface SignService {
 	public SpendSignVO getDraftSpend(Long signId,Long signFormId);
 	public VacationSignVO getDraftVacation(Long signId,Long signFormId);
 	// 기안함 상세
-	public BasicSignVO getPaymentBasic(Long signId,Long signFormId);
-	public SpendSignVO getPaymentSpend(Long signId,Long signFormId);
-	public VacationSignVO getPaymentVacation(Long signId,Long signFormId);
+	public BasicSignVO getPaymentBasic(Long signId,Long signFormId, Long employeeId);
+	public SpendSignVO getPaymentSpend(Long signId,Long signFormId, Long employeeId);
+	public VacationSignVO getPaymentVacation(Long signId,Long signFormId, Long employeeId);
 	// 기안 갯수
 	public int getTotalDraft(Criteria cri);
 	
 	// 직원 목록
 	//public List<EmployeeVO> getListEmployee();
 	
-	// 결재선 등록(1,2,3,4 번째)
-	public void applyLine(Long employeeId, Long slOrder, SignVO sign, SignListVO list);
-//	public void applyLineSecond(SignListVO list, SignVO sign);
-//	public void applyLineThird(SignListVO list, SignVO sign);
-//	public void applyLineFourth(SignListVO list, SignVO sign);
-	
 	// 결재함 목록
 	//public List<SignListVO> getListPayment();
+	
 	// 결재함 페이징
 	public List<SignVO> getListPayment(Criteria cri);
 	
@@ -64,8 +60,7 @@ public interface SignService {
 	public boolean modifySignCheck(SignVO sign);
 	
 	// 직원 검색
-	EmployeeVO get(String enterdeName);
 
-
+	EmployeeVO get(String enteredName);
 
 }

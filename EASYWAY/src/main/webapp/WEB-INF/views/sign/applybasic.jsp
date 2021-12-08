@@ -72,8 +72,8 @@
 	            	<!-- 여백 -->
 	            </div>
 	            <div class="easyway-boardapply-save">
-	                <!-- 임시저장 버튼 -->
-	                <button id="signLine" class="easyway-btn ls-modal" data-toggle="modal" data-target="#modal">결재선</button>
+	                <!-- 결재선 버튼 -->
+	                <button id="signLine" class="easyway-btn ls-modal sign-line" data-toggle="modal" data-target="#modal">결재선</button>
 	            </div>
 	            
 	            <div class="easyway-boardapply-form">
@@ -164,7 +164,13 @@
 			            	<!-- 등록 버튼 -->
 							<!--  기안 양식번호 -->
 							<input type="hidden" name="signFormId" value="1">
-							<input type="submit" class="easyway-btn save-btn" value="등록">
+							<input type="submit" class="easyway-btn" value="등록">
+			            </div>
+			            <div class="hidden-box">
+				            <div id="firstEmployee"></div>
+				            <div id="secondEmployee"></div>
+				            <div id="thirdEmployee"></div>
+				            <div id="fourthEmployee"></div>
 			            </div>
 			            <input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			    	</form>
@@ -188,16 +194,8 @@
 										<button type="button" id="search-name" class="btn easyway-btn">검색</button>
 									</div>
 									<div id="search-name-list" class="mb-3">
-										<!-- <label for="recipient-name" class="col-form-label"></label>
-										<div id="seach-output"></div> -->
+									
 									</div>
-									<%-- <c:forEach var="employee" items="${employeeList }">
-										<input type="radio" value="${employee.employeeId }" name="employeeId" id="${employee.employeeId }">
-										<label for="${employee.employeeId }">
-											<c:out value="${employee.employeeName}" />
-										</label><br>
-										<input type="hidden" value="${employee.employeeName }" id="employeeId">
-									</c:forEach> --%>
 								</div>
 								<div class="col-lg-1">
 									<div class="in-out-box">
@@ -233,9 +231,9 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-gray"
-									data-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-primary save-btn">저장</button>
+								<button type="button" class="btn btn-gray btn-clear"
+									data-dismiss="modal">초기화</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">저장</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->

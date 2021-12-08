@@ -2,7 +2,6 @@ package org.easyway.service.schedule;
 
 import java.util.List;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.easyway.domain.schedule.ScheduleVO;
 
 public interface ScheduleService {
