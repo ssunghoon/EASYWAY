@@ -56,17 +56,17 @@
 	        center: 'title',
 	        right: 'dayGridMonth,dayGridWeek,dayGridDay'
 	      },
-	      initialDate: '2020-09-12',
+	      initialDate: '2021-12-22',
 	      navLinks: true, // can click day/week names to navigate views
 	      editable: true,
 	      dayMaxEvents: true, // allow "more" link when too many events
 	      events: [
 	          {
 		          title:'test',
-		          start:'2020-09-30',
+		          start:'2021-12-22',
 //	 	     	  2020-09-13T07:00:00
 // 		          url: 'http://google.com/',
-		          end: '2020-09-30',
+		          end: '2021-12-22',
 // 		          allDay  : true
 		        },
 	        /* {
@@ -188,141 +188,7 @@
 	
 	
 <style>
-/* body {
-	margin-top: 40px;
-	margin: 0px;
-	padding: 0;
-	/*  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-	position: relative;
-}
- */
- /* <id 영역 #> */
-#calendar {
-	max-width: 1100px;
-/* 	margin: 100px, auto; */
-}
-
-#title { /*캘린더제목수정하기*/
-	margin: 0px 0px 50px 0px;
-	font-size: 40px;
-	text-align: center;
-	color: #0D6EFD;
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 20px;
-	padding-top: 20px;
-}
-
-#modalwrapper {
-	position: absolute;
-	top: 100px;
-	right: 50px;
-	font-size: 14px;
-}
-#modalwrapperdetail {
-	position: absolute;
-	top: 80px;
-	right: 10px;
-	font-size: 14px;
-}
-/*-----*/
-#external-events {
-	position: fixed;
-	left: 20px;
-	top: 20px;
-	width: 150px;
-	padding: 0 10px;
-	border: 1px solid #ccc;
-	background: #eee;
-	text-align: left;
-}
-
-#external-events h4 {
-	font-size: 16px;
-	margin-top: 0;
-	padding-top: 1em;
-}
-
-#external-events .fc-event {
-	margin: 3px 0;
-	cursor: move;
-}
-
-#external-events p {
-	margin: 1.5em 0;
-	font-size: 11px;
-	color: #666;
-}
-
-#external-events p input {
-	margin: 0;
-	vertical-align: middle;
-}
-
-#calendar-wrap {
-	/* margin-left: 300px; */
-	font-size: 14px;
-}
-
-#calendar {
-	max-width: 1100px;
-	margin: 0 auto;
-}
-
-.save-btn:hover{
-	color: #0397ed;
-	cursor: pointer;
-}
-/* <클래스 영역> */
-.container {
-	margin-top: 50px;
-	margin-bottom: 100px;
-	padding-bottom: 100px;
-}
-
-.table-container {
-	margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-/*일정 목록*/
-.easyway-title1 {
-    margin-bottom: 20px;
-    font-size: 20pt;
-    margin-top: 20px;
-}
-
-/*일정추가버튼*/
-.btn-primary {
-	color: #fff;
-    background-color: #0397ed;
-}
-
-/*일정조회 버튼 전체 적용스타일 */
-.schedule-btn {
-	background: none;
-	border: none;
-	width: 60px;
-	height: 40px;
-	color: white;
-	border-radius: 5px;
-	font-size: 15px;
-}
-
-/* 저장버튼 */
-.schedule-btn-save {
-	background: #0397ed;
-}
-
-/* 일정수정버튼 */
-.schedule-btn-modify {
-	background: #74DF00;
-}
-
-/* 일정삭제버튼 */
-.schedule-btn-delete {
-	background: #f75834;
-}
+<!--schedule.css로 옮김 -->
 
 </style>
 </head>
@@ -428,8 +294,7 @@
 					</div>
 					<div class="modal-body">
 		
-					<form role="" method="post" action="/schedule/schedulemodify">
-<%-- 					<form role="" method="post" action="/schedule/schedulemodify?scheduleId=${schedule.scheduleId}"> --%>
+					<form role="form" method="post" action="/schedule/schedulemodify">
 					<input type="hidden" id="token" name="${_csrf.parameterName}"
                   data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 	                     <div id="scheduleInfo">
@@ -442,13 +307,13 @@
 	                        <label>제목:</label>
 	                        <input type="text" class="form-control" name="scheduleTitle"
 	                            	value='scheduleData.scheduleTitle'>
+	                            	
 	                        <label>시작시간</label>
 	                        <!--기간 형식 바꾸기 -->
-<!-- 	                     <input type="date" class="form-control" name="scheduleStart" -->
-<!-- 	                        value='scheduleData.scheduleStart' readonly="readonly"> -->
 							 <input id="detail-start" type="text" class="form-control" name="scheduleStart"
-							 	value='scheduleData.scheduleStart'>
+							 	value="scheduleData.scheduleStart"/>
 <%--  value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
+
 	                        <label>종료시간</label>
 	                        <input id="detail-end" type="text" class="form-control" name="scheduleEnd"
 	                            value='scheduleData.scheduleEnd'>
@@ -476,8 +341,9 @@
 	                     <div class="modal-footer">
 	                  	<!-- 책254p에는 버튼형식으로 되어있음 확인해보기 기존 버튼코드는 노션 kosta 최종프로젝트에있음-->
 	                    <input type="button" class="schedule-btn schedule-btn-save" value="확인">
-						<input type="submit" id="modify-btn" class="schedule-btn schedule-btn-modify" value="수정"> 
-						<input type="submit" class="schedule-btn schedule-btn-delete" value="삭제">
+						<input type="submit" class="schedule-btn schedule-btn-modify" value="수정"> 
+						<input type="submit" class="schedule-btn schedule-btn-delete"
+						onclick="javascript: form.action='/schedule/scheduleremove/';"value="삭제">
 	                     </div>
 <%--                  	data-scheduleId="${schedule.scheduleId}" --%>
                    	</form><!--end modify -->
@@ -522,8 +388,12 @@
 								<td><a class="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
  								data-bs-toggle="modal" data-bs-target="#modal-detail">
  								${schedule.scheduleTitle}</a></td>
-								<td>${schedule.scheduleStart}</td>
+ 								
+ 								<td>${schedule.scheduleStart}.substr(0,10)</td>
 								<td>${schedule.scheduleEnd}</td>
+									
+<%-- 								<td><fmt:formatDate pattern="yyyy-MM-dd" --%>
+<%-- 									value="${schedule.scheduleEnd}"/> </td><!-- Date타입으로변경했을경우 --> --%>
 						
 								<td>${schedule.scheduleContent}</td>
 								<td>${schedule.scheduleImportance}</td>
@@ -536,17 +406,17 @@
 	    
     </div> <!-- end page-divider -->
 </body>
-<script type="text/javascript"> 
+<script type="text/javascript">
 <!--제목클릭시처리하는부분-->
 var scheduleData;
-var scheduleMFData;
 $(document)
 	.on(
 			"click",".save-btn",
 			function(e) {
 				var id = $(this).data("scheduleid");
-				console.log(id);
 				
+				console.log(id);
+				 
 				$.ajax({
 				      type: "get",
 				      url: "/schedule/scheduledetail/" +id,
@@ -558,18 +428,17 @@ $(document)
 				      success: function (result, status, xhr) {
 				        console.log(result);
 				        console.log(result.scheduleTitle);
+				      
 				        scheduleData = result;
 				      //조회모달창에 넘어가기
-				     // DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				      
 						$('input[name=scheduleId]').attr('value',scheduleData.scheduleId);
 						$('input[name=employeeId]').attr('value',scheduleData.employeeId);
 						$('input[name=scheduleTitle]').attr('value',scheduleData.scheduleTitle);
 						
-						$('input[name=scheduleStart]').attr('value',scheduleData.scheduleStart);
-						$('input[name=scheduleEnd]').attr('value',scheduleData.scheduleEnd);
+						$('input[name=scheduleStart]').attr('value',(scheduleData.scheduleStart).substr(0,10));
+						$('input[name=scheduleEnd]').attr('value',(scheduleData.scheduleEnd).substr(0,10));
 // 						Date startdate = sdFormat.parse("2014-12-22");
-
 						$('input[name=scheduleContent]').attr('value',scheduleData.scheduleContent);
 						$('input[name=scheduleImportance]').attr('value',scheduleData.scheduleImportance);
 						$('input[name=schedulePrivate]').attr('value',scheduleData.schedulePrivate);
@@ -579,7 +448,7 @@ $(document)
 				      },
 				    });
 				});
-
+	
 </script>
 
 </html>
