@@ -1,10 +1,17 @@
 package org.easyway.controller;
 
 import org.easyway.domain.project.ProjectBoard;
+import org.easyway.domain.project.ProjectCriteria;
 import org.easyway.domain.project.ProjectPost;
+import org.easyway.domain.project.ProjectPostPageDTO;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.project.Project;
 import org.easyway.service.project.ProjectService;
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -86,27 +94,49 @@ public class ProjectController {
 	
 	// 게시물 생성
 	@PostMapping("/projectpostregister")
-	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, HttpSession session) {
+	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, HttpSession session) throws IOException {
 		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
-		projectPost.setEmployeeId(EmployeeDTO.getMemberId());
+		projectPost.setEmployeeId(EmployeeDTO.getEmployeeId());
 		rttr.addAttribute("projectId", projectPost.getProjectId());
 		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
 		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
-		log.info("111111"+EmployeeDTO.getMemberId());
-		log.info("222222"+projectPost);
+		
+		// 파일처리 begin
+		log.info("파일 이름 : " + projectPost.getProjectPostFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = projectPost.getProjectPostFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@"+uploadFile);
+		}else {
+			projectPost.setProjectPostFileName("null");
+		}
+		projectPost.setProjectPostFileName(fileName);
+		
 		service.registerProjectPost(projectPost);
 		return "redirect:/project/projectpostlist";
 	}
 	
 	// 게시물 목록 페이지
 	@GetMapping("/projectpostlist")
-	public void projectPostList(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, Model model, HttpSession session) {
+	public void projectPostList(@RequestParam("projectId") Long projectId, @RequestParam("projectBoardId") Long projectBoardId, Model model, HttpSession session, ProjectCriteria cri) {
 		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		
+//		int total = service.getTotalCount(projectId, projectBoardId);
+//		log.info(total);
+		
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
 		model.addAttribute("projectBoardId", projectBoardId);
-		model.addAttribute("projectPost", service.getListProjectPost(projectBoardId));
+		model.addAttribute("projectPostDTO", service.getListProjectPostDTO(projectId, projectBoardId));
 		model.addAttribute("pbn", service.getProjectBoard(projectId, projectBoardId).getProjectBoardName());
+//		model.addAttribute("pageMaker", new ProjectPostPageDTO(cri, total));
 	}
 	
 	// 게시물 상세 페이지
@@ -117,7 +147,7 @@ public class ProjectController {
 		model.addAttribute("projectBoardId", projectBoardId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
 		model.addAttribute("pb", service.getProjectBoard(projectId, projectBoardId));
-		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
+		model.addAttribute("projectPost", service.getProjectPostDTO(projectBoardId, projectPostId));
 	}
 	
 	// 게시물 수정 페이지
@@ -148,6 +178,7 @@ public class ProjectController {
 		service.removeProjectPost(projectPost.getProjectBoardId(), projectPost.getProjectPostId());
 		return "redirect:/project/projectpostlist";
 	}
+	
 	
 	
 	

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <nav>
 
@@ -48,28 +51,29 @@
 			</li>
 		</ul> <!-- end all-member-menu -->
 		
-		<!-- 관리자 전용 메뉴 -->
-		<ul class="nav nav-manager nav-pills flex-column mb-auto">
-			<li>
-				<a href="/office/admin/officesetting/vacationsetting" class="nav-link link-dark"> 
-					<i class="nav-element fas fa-id-card"></i>
-					<span class="nav-element">오피스 설정</span>
-				</a>
-			</li>
-			<li>
-				<a href="/office/admin/management/employeemanagement" class="nav-link link-dark">
-					<i class="nav-element fas fa-users-cog"></i>
-					<span class="nav-element">임직원 관리</span>
-				</a>
-			</li>
-			<li>
-				<a href="" class="nav-link link-dark">
-					<i class="nav-element fas fa-chart-pie"></i>
-					<span class="nav-element">근무 통계 및 관리</span>
-				</a>
-			</li>
-		</ul> <!-- end manager-menu -->
-		
+	<sec:authentication property="principal" var="principal" />
+	<sec:authorize access="isAuthenticated()">
+		<c:set var="auth" value="ROLE_ADMIN" />
+		<c:choose>
+			<c:when test="${principal.member.memberAuth == auth}">
+			<!-- 관리자 전용 메뉴 -->
+			<ul class="nav nav-manager nav-pills flex-column mb-auto">
+				<li>
+					<a href="/office/admin/officesetting/vacationsetting" class="nav-link link-dark"> 
+						<i class="nav-element fas fa-id-card"></i>
+						<span class="nav-element">오피스 설정</span>
+					</a>
+				</li>
+				<li>
+					<a href="/office/admin/management/employeemanagement" class="nav-link link-dark">
+						<i class="nav-element fas fa-users-cog"></i>
+						<span class="nav-element">임직원 관리</span>
+					</a>
+				</li>
+			</ul> <!-- end manager-menu -->
+			</c:when>
+		</c:choose>
+	</sec:authorize>		
 		<!-- 사이드바 하단 : 오피스로 돌아가기,  -->
 		<ul class="nav nav-footer nav-pills flex-column mb-auto">
 			<li>

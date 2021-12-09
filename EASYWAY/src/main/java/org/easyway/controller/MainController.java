@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.easyway.domain.attendance.AttendanceVO;
 import org.easyway.domain.employee.EmployeeDTO;
+import org.easyway.domain.notice.NoticeVO;
 import org.easyway.domain.office.OfficeVO;
 import org.easyway.security.domain.CustomUser;
 import org.easyway.service.attendance.AttendanceService;
@@ -19,8 +20,7 @@ import org.easyway.domain.office.WidgetCustom;
 import org.easyway.domain.office.WidgetVO;
 import org.easyway.domain.project.Project;
 import org.easyway.domain.schedule.ScheduleVO;
-import org.easyway.domain.sign.Criteria;
-import org.easyway.domain.sign.SignVO;
+import org.easyway.domain.sign.SignListVO;
 import org.easyway.service.office.WidgetService;
 import org.easyway.service.project.ProjectService;
 import org.easyway.service.schedule.ScheduleService;
@@ -136,12 +136,20 @@ public class MainController {
 	// 위젯 불러오기(기본값 변경) 요청
 	@PostMapping("/modifyDefault")
 	@ResponseBody
-	public String modifyDefault(@RequestBody Map<String, Integer> data){
+	public String modifyDefault(@RequestBody Map<String, Integer> data, HttpSession session){
 		
-		log.info("기본값 변경 요청 들어갑니다--------");
+		log.info("기본값 변경 요청 --------------------");
+		WidgetCustom widgetCustom = new WidgetCustom();
+
+		
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		widgetCustom.setOfficeId(officeVO.getOfficeId());
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		widgetCustom.setMemberId(employeeDTO.getMemberId());
 		int wsCustom = data.get("customNumber");
 		log.info("customNumber : " + wsCustom);
-		service.modifyDefault(wsCustom);
+		widgetCustom.setWsCustom(wsCustom);
+		service.modifyDefault(widgetCustom);
 		
 		return "redirect:/office/main";
 	}
@@ -162,6 +170,8 @@ public class MainController {
 		return "redirect:/office/main";
 	}
 	
+	// -----------------------------------------------------------------------------------
+	// 위젯 세부 기능-----------------------------------------------------------------------
 	// 위젯 경로 - 프로젝트
 	@GetMapping("/widget/projectlist")
 	@ResponseBody
@@ -171,14 +181,12 @@ public class MainController {
 		return new ResponseEntity<>(projectList, HttpStatus.OK);
 	}
 	
-	
 	// 위젯 경로 - 결재함 목록
 	@GetMapping("/widget/paymentlist")
 	@ResponseBody
-	public ResponseEntity<List<SignVO>> widgetpaymentlist(Model model) {
-		Criteria cri = new Criteria();
-		//getSignList();
-		List<SignVO> paymentlist = signService.getListPayment(cri);
+	public ResponseEntity<List<SignListVO>> widgetpaymentlist(HttpSession session, Model model) {
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		List<SignListVO> paymentlist = signService.getSignList(employeeDTO.getEmployeeId());
 		model.addAttribute("paymentList", paymentlist);
 		return new ResponseEntity<>(paymentlist, HttpStatus.OK);
 	}
@@ -186,8 +194,9 @@ public class MainController {
 	// 위젯 경로 - 캘린더 일정 목록
 	@GetMapping("/widget/schedulemain")
 	@ResponseBody
-	public ResponseEntity<List<ScheduleVO>> widgetschedulemain(Model model) {
-		List<ScheduleVO> scheduletlist = scheduletService.getListDo();
+	public ResponseEntity<List<ScheduleVO>> widgetschedulemain(HttpSession session, Model model) {
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		List<ScheduleVO> scheduletlist = scheduletService.getListDo(employeeDTO.getEmployeeId());
 		model.addAttribute("scheduletlist", scheduletlist);
 		return new ResponseEntity<>(scheduletlist, HttpStatus.OK);
 	}
@@ -195,10 +204,10 @@ public class MainController {
 	// 위젯 경로 - 공지사항 목록
 	@GetMapping("/widget/noticelist")
 	@ResponseBody
-	public ResponseEntity<List<ScheduleVO>> widgetnoticelist(Model model) {
-		List<ScheduleVO> scheduletlist = scheduletService.getListDo();
-		model.addAttribute("scheduletlist", scheduletlist);
-		return new ResponseEntity<>(scheduletlist, HttpStatus.OK);
+	public ResponseEntity<List<NoticeVO>> widgetnoticelist(Model model) {
+		List<NoticeVO> noticelist = noticeService.getListAll();
+		model.addAttribute("noticelist", noticelist);
+		return new ResponseEntity<>(noticelist, HttpStatus.OK);
 	}
 	
 	// 위젯 경로 - 출퇴근 체크

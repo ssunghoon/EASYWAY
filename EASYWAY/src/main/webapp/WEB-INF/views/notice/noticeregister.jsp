@@ -101,7 +101,7 @@
 	         
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="/notice/noticeregister" method="post">
+		            <form class="form-container" action="/notice/noticeregister" method="post" enctype="multipart/form-data">
 		           		 <input type="hidden" id="token" name="${_csrf.parameterName}"
                  		 data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			        	<div class="form-title">
@@ -162,7 +162,7 @@
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
-			            	<input type="text" class="form-control" placeholder="파일첨부" name="obFilePath">
+			            	<input type="file" name="obFilePath">
 			            </div>
 			            
 			            <div class="form-content">

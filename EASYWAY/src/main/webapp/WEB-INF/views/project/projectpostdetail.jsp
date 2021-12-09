@@ -47,6 +47,13 @@
 		padding: 15px;
 		flex-direction: column;
 		}
+		.buttons {
+		    display: flex;
+		}
+		.buttons>form{
+			margin: 0 10px;
+		}
+		
 	</style>
 </head>
 
@@ -130,10 +137,10 @@
 	            	<div class="writer-info">
 		            	<div class="writer-name">
 		            		<i class="writer-icon fas fa-user-circle"></i>
-		            		${sessionScope.nowEmployeeInfo.employeeName}
+		            		${projectPost.employeeName}
 		            	</div>
 		            	<div class="writer-department">
-		            		개발팀
+<!-- 		            		개발팀 -->
 		            	</div>
 	            	</div>
 
@@ -141,20 +148,20 @@
 	            	<!-- 수정 / 삭제 / 돌아가기 버튼 -->
 	            	<div class="buttons">
 		            	<button type="button" class="modify-btn easyway-btn" onclick="location.href='projectpostmodify?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}'">
-		            		수정하기
+		            		수정
 		            	</button>
-		            	<form action="projectpostremove" method="post">
+		            	<form action="projectpostremove" method="post" onsubmit="return delbtn()">
 		            		<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            		<input type="hidden" name="projectId" value="${projectId} "/>
 		            		<input type="hidden" name="projectBoardId" value="${projectBoardId}"/>
 		            		<input type="hidden" name="projectPostId" value="${projectPost.projectPostId}"/>
-		            		<input type="submit" class="delete-btn easyway-btn" value="삭제"/>	
+		            		<input type="submit" id="delete-btn" class="delete-btn easyway-btn" value="삭제"/>
 		            	</form>
 <!-- 		            	<button type="button" class="delete-btn easyway-btn"> -->
 <!-- 		            		삭제하기 -->
 <!-- 		            	</button> -->
 		            	<button type="button" class="list-btn easyway-btn" onclick="location.href='projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoardId}'">
-		            		돌아가기
+		            		목록
 		            	</button>
 	            	</div>
 	            </div>
@@ -162,22 +169,35 @@
 	            	<!-- 게시물 세부 정보 : 작성 시간, 날짜 / 조회수 등 -->
 	            	<div class="info-time">
 	            		<i class="time-icon far fa-clock"></i>
-	            		2021-10-30
+	            		${projectPost.projectPostDate}
 	            	</div>
 	            	<div class="info-view">
-	            		<span class="info-view-label">조회수</span>
-	            		<span class="info-view-count">17</span>
+<!-- 	            		<span class="info-view-label">조회수</span> -->
+<!-- 	            		<span class="info-view-count">17</span> -->
 	            	</div>
 	            </div>
 	            <div class="easyway-boarddetail-content">
 	            	<!-- 게시물 내용 -->
 	            	${projectPost.projectPostContent }
 	            </div>
+	           <div>
+	           		<c:if test="${projectPost.projectPostFileName ne null}">
+						파일
+						<a href="/filedownload?fileName=${projectPost.projectPostFileName}">${projectPost.projectPostFileName}</a>
+					</c:if>
+	           </div>
 	        </div>
 	
 	    </div>
     </div>
-	
+	<script type="text/javascript">
+		function delbtn(){
+			if(!confirm('선택한 글을 삭제하시겠습니까?')){
+				return false
+			}
+		}
+		
+	</script>
 </body>
 
 
