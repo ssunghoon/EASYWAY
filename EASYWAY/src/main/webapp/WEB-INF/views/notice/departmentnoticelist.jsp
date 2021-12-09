@@ -130,8 +130,7 @@
 								<td><c:out value="${dto.obId }" /></td>
 								<td><c:out value="${dto.employeeName} "/></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
-								<td>
-<%-- 								<a class="move" href='<c:out value="${dto.obId}"/>'> --%>
+								<td><a href='/notice/noticedetail?obId=<c:out value="${dto.obId }"/>'>
 										<c:out value="${dto.obTitle}" /> 
 										<c:if test="${dto.obFixedCheck == 'Y' }">
 											<img src="//t1.daumcdn.net/editor/deco/contents/emoticon/things_14.gif?v=2" 
