@@ -10,9 +10,9 @@
 			schedule_id AS scheduleId , employee_id AS employeeId, schedule_title AS scheduleTitle,
 			schedule_start AS scheduleStart, schedule_end AS scheduleEnd,
 			schedule_content AS scheduleContent, schedule_importance AS scheduleImportance, schedule_private AS schedulePrivate
-			FROM schedule ORDER BY schedule_id
+			FROM schedule ORDER BY schedule_id 
 	</select>
-<!-- 	WHERE employee_id =#{employeeId} ORDER by schedule_id -->
+<!-- 	FROM schedule where employee_id = #{employeeId} ORDER BY schedule_id session처리 -->
 	<!--일정등록 schedule_seq.nextval 자동으로 1씩증가-->
 	<insert id="insert">
 		INSERT INTO schedule(
