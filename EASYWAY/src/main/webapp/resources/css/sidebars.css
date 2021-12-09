@@ -67,6 +67,11 @@ nav {
 	
 }
 
+.active {
+	background: #0397ed !important;
+	color: white;
+}
+
 .nav-link {
 	border-radius: 0;
 	align-items: center;
