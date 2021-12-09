@@ -101,19 +101,14 @@ $(document).ready(function () {
 	 $(this).parent().remove();
   });
   
-/*  $(document).on("click", ".all-clear-btn", function (e) {
-	    $(".search-member-info").remove();
-	    count = 0;
-	    memberList = {};
-	  });*/
-//닫기 누르면 list다 날리는건데 이건 안할라고
   
   addEmployee.on("click", function (e) {
 	    var space = document.getElementById("employee-list");
 	    console.log(space);
+	    let count = 0;
 	    for ( var key in memberList) {
 	    	var receivedBox = document.createElement("tr");
-	    	receivedBox.className = "new-employees";
+	    	receivedBox.className = "new-employees" + count++;
 	    	
 	    	var employee = memberList[key];
 	    	var optionPosition;
@@ -138,13 +133,16 @@ $(document).ready(function () {
 				<td><input style="width: 40%; text-" type="text" value="계약직"></td>				
 				<td>${employee["memberPhone"]}</td>`;
 	    	space.append(receivedBox);
-		}	    
+	    	optionPosition="";
+	    	optionDepartment=""; //중복 입력 방지를 위한 삭제
+		}
   });
   
   $(document).on("click", "#save-btn", function (e) {
 	   	var saveEmployees = [];
 	   	
 	   	// json 키값 변경을 위해 새로 만듬
+	   	let count = 0;
 	   	for (var key in memberList) {
 	   		var json = memberList[key];
 	   		var tmp = {};
@@ -158,16 +156,17 @@ $(document).ready(function () {
 	   		      break;
 	   		   }
 	   		}
-	   		var $selectPosition =  $(".new-employees").children().eq("2").children().val();
-	   		var $selectDepartment =  $(".new-employees").children().eq("3").children().val();
-	   		var $inputHireDate =  $(".new-employees").children().eq("4").children().val();
-	   		var $inputWorkType =  $(".new-employees").children().eq("5").children().val();
+	   		var $selectPosition =  $(".new-employees"+count).children().eq("2").children().val();
+	   		var $selectDepartment =  $(".new-employees" + count).children().eq("3").children().val();
+	   		var $inputHireDate =  $(".new-employees" + count).children().eq("4").children().val();
+	   		var $inputWorkType =  $(".new-employees"+count).children().eq("5").children().val();
 	   		tmp.employeePosition = $selectPosition;
 	   		tmp.employeeDepartment = $selectDepartment;
 	   		tmp.employeeHireDate = $inputHireDate;
 	   		tmp.employeeWorkType = $inputWorkType;
 	   		console.log(tmp);
 	   		saveEmployees.push(tmp);
+	   		count++;
 		}
 	   	
 	   	$.ajax({

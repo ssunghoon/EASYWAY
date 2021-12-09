@@ -12,15 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SpendSignVO implements Serializable{
 	
-	private long singSpendId; //SS_ID
-	private long signFormId; // SF_ID
+	private Long singSpendId; //SS_ID
+	private Long signFormId; // SF_ID
 	private String signSpendRange; // SS_RANGE
 
-	private long signId; // SIGN_ID
+	private Long signId; // SIGN_ID
 	private String signTitle; // SIGN_TITLE
 	private String signContent; // SIGN_CONTENT
 	private String signImportance; // SIGN_IMPORTANCE
 	private String signListCheck; // SL_CHECK
 	
 	private String fileName; // FILE_NAME
+	private String employeeName; // EMPLOYEE_NAME
 }

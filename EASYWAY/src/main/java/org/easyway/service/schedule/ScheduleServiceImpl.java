@@ -19,9 +19,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleMapper mapper;
 
 	@Override//목록보기
-	public List<ScheduleVO> getListDo() {
+	public List<ScheduleVO> getListDo(Long employeeId) {
 		log.info("list......");
-		return mapper.getList();
+		
+		return mapper.getList(employeeId);
 	}
 
 	@Override//일정생성

@@ -64,13 +64,13 @@
 		                <!-- 2번째 easyway-attendance-item : 근태 현황 내용 -->
 						<ul class="attendance-status">
 							<li class="attendance-status-late">
-								<span>지각</span> <span>00	회</span>
+								<span>지각</span> <span>00 회</span>
 							</li>
 							<li class="attendance-status-leave">
 								<span>조기퇴근</span> <span>00 회</span>
 							</li>
 							<li class="attendance-status-absence">
-								<span>결근</span> <span>00	회</span>
+								<span>결근</span> <span>00 회</span>
 							</li>
 						</ul>
 		            </div> <!-- end 근태 현황 -->
@@ -85,22 +85,22 @@
 		                <!-- 4번째 easyway-attendance-item : 근무 체크 내용 -->
 		                <div class="work-check-clock"></div>
 						<ul class="work-check">
-							<li class="work-check-start">
-								<a class="" href="/attendance/registerAttendanceStart">
+							<li id="work-check-start" class="select-check">
+								<div>
 									<i class="far fa-play-circle"></i>
-								</a>
+								</div>
 								<span>출근하기</span>
 							</li>
-							<li class="work-check-out">
-								<a class="" href="/attendance/registerAttendanceOut">
+							<li id="work-check-out" class="select-check">
+								<div>
 									<i class="far fa-pause-circle"></i>
-								</a>
+								</div>
 								<span>외근하기</span>
 							</li>
-							<li class="work-check-end">
-								<a class="" href="/attendance/registerAttendanceEnd">
+							<li id="work-check-end" class="select-check">
+								<div>
 									<i class="far fa-stop-circle"></i>
-								</a>
+								</div>
 								<span>퇴근하기</span>
 							</li>
 						</ul>
@@ -143,12 +143,10 @@
 		                <!-- 8번째 easyway-attendance-item : 휴가 현황 내용 -->
 		                <ul class="vacation-status">
 							<li class="vacation-status-total">
-							<span>총 휴가</span> <span>00 일</span>
-							</li>
-							<li class="vacation-status-available"><span>잔여휴가</span> <span>00 일</span>
+							<span>총 휴가</span> <span>${employeeLeftDay} 일</span>
 							</li>
 							<li class="vacation-status-register">
-								<button type="button" class="easyway-btn">휴가신청</button>
+								<button type="button" class="easyway-btn" onclick="location.href='/sign/applyvacation'">휴가신청</button>
 							</li>
 						</ul>
 		            </div><!-- end 휴가 현황 -->

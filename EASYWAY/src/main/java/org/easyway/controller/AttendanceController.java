@@ -1,12 +1,17 @@
 package org.easyway.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.easyway.domain.attendance.AttendanceVO;
+import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.service.attendance.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,73 +24,53 @@ public class AttendanceController {
 	private AttendanceService service;
 	
 	@GetMapping("/attendancemain")
-	public void getList(Model model){
+	public void getList(HttpSession session, Model model){
 		  
 		log.info("controller/attendancemain--------------------------------");
+
+		// 로그인된 사원의 잔여 휴가 일수
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		int employeeLeftDay = employeeDTO.getEmployeeLeftDay();
+		log.info("employeeDTO : " + employeeDTO);
+		log.info("employeeLeftDay : " + employeeLeftDay);
+		model.addAttribute("employeeLeftDay", employeeLeftDay);
 		
-		AttendanceVO attendance = service.getList();
-		
-		System.out.println(attendance);
-		
+		AttendanceVO attendance = service.getList(employeeDTO.getEmployeeId());
 		model.addAttribute("attendance", attendance);
-		
 	}
 	
 	@GetMapping("/registerAttendanceStart")
-	public String registerAttendanceStart(){
+	public String registerAttendanceStart(HttpSession session, Model model){
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		
 		log.info("attendance : 출근 시간 체크!!!");
-		
-		service.registerAttendanceStart();
+		service.registerAttendanceStart(employeeId);
 		
 		return "redirect:/attendance/attendancemain";
 	}
 	
 	@GetMapping("/registerAttendanceOut")
-	public String registerAttendanceOut(){
+	public String registerAttendanceOut(HttpSession session){
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		
 		log.info("attendance : 외근 시간 체크!!!");
-		
-		service.registerAttendanceOut();
+		service.registerAttendanceOut(employeeId);
 		
 		return "redirect:/attendance/attendancemain";
 	}
 	
 	@GetMapping("/registerAttendanceEnd")
-	public String registerAttendanceEnd(){
-		
+	public String registerAttendanceEnd(HttpSession session){
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		Long employeeId = employeeDTO.getEmployeeId();
 		log.info("attendance : 퇴근 시간 체크!!!");
-		
-		service.registerAttendanceEnd();
+		service.registerAttendanceEnd(employeeId);
 		
 		return "redirect:/attendance/attendancemain";
 	}
 	
-//	이거 테스트다 지워라!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	@GetMapping("/common_boardlist")
-	public void common_boardlist(){
-		  
-		log.info("controller/common_boardlist--------------------------------");
-		
-	}
 	
-	@GetMapping("/common_boardapply")
-	public void common_boardapply(){
-		  
-		log.info("controller/common_boardapply--------------------------------");
-		
-	}
-	
-	@GetMapping("/common_boarddetail")
-	public void common_boarddetail(){
-		  
-		log.info("controller/common_boarddetail--------------------------------");
-		
-	}
-	
-	@GetMapping("/test")
-	public void test(){
-		
-	}
 	
 }

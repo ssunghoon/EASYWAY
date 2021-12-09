@@ -6,7 +6,7 @@ import org.easyway.domain.schedule.ScheduleVO;
 
 public interface ScheduleMapper {
 	
-		public List<ScheduleVO> getList();//일정목록출력
+		public List<ScheduleVO> getList(Long employeeId);//일정목록출력
 		
 		public void insert(ScheduleVO schedule);//일정생성
 		

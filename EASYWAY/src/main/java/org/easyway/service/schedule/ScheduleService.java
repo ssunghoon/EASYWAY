@@ -6,7 +6,7 @@ import org.easyway.domain.schedule.ScheduleVO;
 
 public interface ScheduleService {
 
-		public List<ScheduleVO> getListDo();//생성한 일정목록(후에 완료된 일정목록과 비교하기)
+		public List<ScheduleVO> getListDo(Long employeeId);//생성한 일정목록(후에 완료된 일정목록과 비교하기)
 		
 		public void register(ScheduleVO schedule);//일정등록성하기
 		

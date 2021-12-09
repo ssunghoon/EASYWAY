@@ -35,6 +35,8 @@
 		<result property="employeeWorkType" column="employee_work_type" />
 		<result property="employeePhone" column="employee_phone" />
 		<result property="employeeHireDate" column="employee_hiredate" />		
+		<result property="employeeMaster" column="employee_master" />
+		<result property="employeeLeftDay" column="employee_left_day" />
 	</resultMap>
 
 	<insert id="insertEmployee">
@@ -54,7 +56,7 @@
 	<select id="getEmployeeByEmployeeId" resultMap="employeeDTOResultMap">
 		SELECT e.employee_id, m.member_id, e.office_id, e.department_id, e.position_id, e.employee_name,
 		 p.position_name, m.member_email, d.department_name,
-		e.employee_work_type, e.employee_phone, e.employee_hiredate
+		e.employee_work_type, e.employee_phone, e.employee_hiredate, e.employee_master, e.employee_left_day
 		FROM employee e, position p, department d, member m
 		WHERE e.position_id = p.position_id
 		AND e.department_id = d.department_id
@@ -65,7 +67,7 @@
 	<select id="getEmployeeByMemberId" resultMap="employeeDTOResultMap">
 		SELECT e.employee_id, m.member_id, e.office_id, e.department_id, e.position_id, e.employee_name,
 		 p.position_name, m.member_email, d.department_name,
-		e.employee_work_type, e.employee_phone, e.employee_hiredate
+		e.employee_work_type, e.employee_phone, e.employee_hiredate, e.employee_master, e.employee_left_day
 		FROM employee e, position p, department d, member m
 		WHERE e.position_id = p.position_id
 		AND e.department_id = d.department_id

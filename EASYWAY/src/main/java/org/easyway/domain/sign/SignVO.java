@@ -1,6 +1,5 @@
 package org.easyway.domain.sign;
 
-import java.io.File;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -14,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SignVO implements Serializable{
 	
-	private long signId; // SIGN_ID
-	private long signFormId; // SF_ID
-	private long employeeId; // EMPLOYEE_ID
+	private Long signId; // SIGN_ID
+	private Long signFormId; // SF_ID
+	private Long employeeId; // EMPLOYEE_ID
 	private Date signDate; // SIGN_DATE
-	private long rownum;
+	private Long rownum;
 	private String signTitle; // SIGN_TITLE
 	
 	private String signContent; // SIGN_CONTENT
