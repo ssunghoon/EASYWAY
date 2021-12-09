@@ -14,19 +14,20 @@
 		<result property="attendanceEnd" column="attendance_end" />
 	</resultMap>
 	
-<insert id="insert">
+	
+	<insert id="insert">
 		insert into attendance(
 			attendance_id, employee_id, attendance_start
 		)
 		values(
-			attendance_seq.nextval, '1', TO_DATE(#{attendanceStart},'yyyy/mm/dd hh24:mi:ss')
+			attendance_seq.nextval, #{employeeId}, TO_DATE(#{attendanceStart},'yyyy/mm/dd hh24:mi:ss')
 		)
 	</insert>
 	
  		
 	<update id="updateAttendanceOut">
 		UPDATE attendance SET attendance_out = TO_DATE(#{attendanceOut},'yyyy/mm/dd hh24:mi:ss')
-		WHERE employee_id = 1
+		WHERE employee_id = #{employeeId}
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</update>
@@ -34,7 +35,7 @@
 	
 	<update id="updateAttendanceEnd">
 		UPDATE attendance SET attendance_end = TO_DATE(#{attendanceEnd},'yyyy/mm/dd hh24:mi:ss')
-		WHERE employee_id = 1
+		WHERE employee_id = #{employeeId}
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</update>
@@ -43,10 +44,9 @@
 	<select id="getList" resultMap="attendanceVOResultMap">
 		SELECT *
 		FROM attendance
-		WHERE employee_id = 1
+		WHERE employee_id = #{employeeId}
 		AND TO_CHAR(attendance_start, 'yyyy/mm/dd')
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</select>
-	
 	
 </mapper>

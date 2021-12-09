@@ -15,3 +15,31 @@ function init(){
 }
 
 init();
+
+// 버튼 동작 (url 이동)
+$('.select-check').on('click', function(){
+	
+	var selected = $(this).children().last().text();
+	console.log(selected);
+	
+	switch (selected) {
+	case "출근하기":
+		location.href="/attendance/registerAttendanceStart";
+		
+		break;
+	case "외근하기":
+		location.href="/attendance/registerAttendanceOut";
+		
+		break;
+	case "퇴근하기":
+		location.href="/attendance/registerAttendanceEnd";
+	break;
+
+	default:
+		break;
+	}
+	
+});
+
+
+

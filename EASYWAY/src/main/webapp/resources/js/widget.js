@@ -4,8 +4,7 @@
 // 페이지 새로고침 혹은 브라우저 창 닫기 시도시 경고 문구 출력 ----------------------------------
 // ----------------------------------------------------------------------------------------
 
-/* 주의! 귀찮아서 주석!!!!
-
+/* 
 window.onbeforeunload = function() {
 
 	event.preventDefault();
@@ -25,18 +24,18 @@ window.onbeforeunload = function() {
 
 function widgetFunction(e) {
 	
-	// 테스트 : 썸네일 클릭하면 콘솔 창으로 뭔지 알랴줌 
+	// 테스트 : 클릭한 썸네일과 썸네일의 클릭 상태 보고
 	var selected = e.target.firstChild.nodeValue;
 	e.stopPropagation();
 	console.log(e.target.parentNode.classList.item(2));
 	
-	// 선택한 값이 null이면 빠이
+	// 썸네일이 아닌 요소를 클릭했을 경우
 	if ((selected == '') || (selected == null)) {
 		console.log("null이란다");
 		return;
 	}
 	
-	// 한 번 생성된 위젯은 삭제하기 전까지는 다시 생성할 수 없음
+	// 만들어진 위젯 썸네일을 클릭하면 회수됨. 썸네일이 여러개 생성되지 않도록 함. 
 	if (e.target.parentNode.classList.item(1) == "selected") {
 		console.log("이게뭘까 : " + selected);
 		
@@ -50,7 +49,7 @@ function widgetFunction(e) {
 	switch (selected) {
 	case "실시간 시계":
 		
-		console.log("우왕시계당");
+		console.log("시계 : 1초마다 시간 출력");
 		makeWidget("clock", 200, 400, setTime);
 		
 		// Class 변경 : unselected -> selected
@@ -59,8 +58,8 @@ function widgetFunction(e) {
 		break;
 	case "공지사항 목록":
 
-		console.log("공지사항 다혜꺼");
-		makeWidget("notice", 200, 400, getTest2);
+		console.log("공지사항 위젯 만들기");
+		makeWidget("notice", 200, 400, makeNoticeWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-notice').classList.replace('unselected', 'selected');
@@ -68,17 +67,17 @@ function widgetFunction(e) {
 		break;
 	case "출퇴근 체크":
 
-		console.log("출퇴근 언제하냐");
-		makeWidget("attendance", 200, 400, getTest3);
+		console.log("출퇴근 위젯 만들기");
+		makeWidget("attendance", 200, 400, makeAttendanceWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
 
 		break;
-	case "결재함 목록":
+	case "결재함 건수":
 
-		console.log("결재차려 김나현!");
-		makeWidget("sign", 200, 400, getTest4);
+		console.log("결재 위젯 만들기");
+		makeWidget("sign", 200, 400, makeSignWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-sign').classList.replace('unselected', 'selected');
@@ -86,8 +85,8 @@ function widgetFunction(e) {
 		break;
 	case "프로젝트 리스트":
 
-		console.log("프로젝트는 성훈이꺼");
-		makeWidget("project", 200, 400, getTest5);
+		console.log("프로젝트 위젯 만들기");
+		makeWidget("project", 200, 400, makeProjectWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-project').classList.replace('unselected', 'selected');
@@ -95,8 +94,8 @@ function widgetFunction(e) {
 		break;
 	case "캘린더 일정":
 
-		console.log("캘린더는 경안이꺼");
-		makeWidget("calendar", 200, 400, getTest6);
+		console.log("캘린더 위젯 만들기");
+		makeWidget("calendar", 200, 400, makeCalendarWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-calendar').classList.replace('unselected', 'selected');
@@ -156,22 +155,37 @@ function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 	}
 	
 	
-	// 주의! 우선 테스트로 넣어둔 위치값과 너비, 높이 부분임. js로 변경도 하고 싶음.
+	// 처음 생성할 때에는 X:200, Y:400 위치로 생성 (시계 250*60 사이즈, 나머지 400*280 사이즈)
+	// 저장된 값을 불러올 때는 저장된 변수 값대로 생성
 	var $widgetId = '#' + widgetId;
 	
-	console.log("widgetTop: " +widgetTop + "widgetLeft: " + widgetLeft);
+	console.log("widgetTop: " +widgetTop + " widgetLeft: " + widgetLeft);
 	
-	if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
-		$($widgetId).offset({
-			top: 200,
-			left: 400
-		}).width(250).height(150);
+	if(widgetId == "clock") {
+		if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
+			$($widgetId).offset({
+				top: 200,
+				left: 400
+			}).width(250).height(60);
+		}else{
+			$($widgetId).offset({
+				top: widgetTop,
+				left: widgetLeft
+			}).width(250).height(60);
+		}
+	}else{
+		if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
+			$($widgetId).offset({
+				top: 200,
+				left: 400
+			}).width(400).height(280);
+		}else{
+			$($widgetId).offset({
+				top: widgetTop,
+				left: widgetLeft
+			}).width(400).height(280);
+		}
 	}
-	
-	$($widgetId).offset({
-		top: widgetTop,
-		left: widgetLeft
-	}).width(250).height(150);
 	
 	func();
 	
@@ -216,10 +230,56 @@ function setTime(){
 // notice 위젯
 // ----------------------------------------------------------------------------------------
 
-function getTest2(){
+function makeNoticeWidget(){
 	const notice = document.getElementById('notice').firstChild;
+	var noticeList = new Array();
+	var count = 0;
 	
-	notice.innerHTML = '공지사항 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/noticelist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		공지사항 목록`;
+				str += `	</div>`;
+				str += `	<div id="notice-content" class="widget-content">`;
+				str += `		<table id="notice-table">`;
+				str += `			<tr>`;
+				str += `				<th>제목</th>`;
+				str += `				<th>내용</th>`;
+				str += `			</tr>`;
+				
+				data.forEach((noticeList) => {
+					
+					if(count <3) {
+						
+						str += `			<tr>`;
+						str += `				<td>${noticeList.obTitle}</td>`;
+						str += `				<td>${noticeList.obContent}</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				notice.innerHTML = str;
+				
+        }
+     });
 }
 
 
@@ -227,30 +287,40 @@ function getTest2(){
 // attendance 위젯
 // ----------------------------------------------------------------------------------------
 
-function getTest3(){
+function makeAttendanceWidget(){
 	const attendance = document.getElementById('attendance').firstChild;
 	
-	var str = "";
+	var str=``;
 	
-	str += "<div class='widget-title'>";
-	str += "출 / 퇴근 체크";
-	str += "</div>";
-	str += "<div class='widget-content'>";
-	str += "<div class='attendance-start'>";
-	str += "<div id='attendance-start-icon' class='attendance-icons'>";
-	str += "<i class='far fa-play-circle'></i>";
-	str += "</div>";
-	str += "<div id='attendance-start-time' class='attendance-time'>";
-	str += "</div>";
-	str += "</div>";
-	str += "<div class='attendance-end'>";
-	str += "<div id='attendance-end-icon' class='attendance-icons'>";
-	str += "<i class='far fa-stop-circle'></i>";
-	str += "</div>";
-	str += "<div id='attendance-end-time' class='attendance-time'>";
-	str += "</div>";
-	str += "</div>";
-	str += "</div>";
+	str += `<div class="widget-title">`;
+	str += `		출 / 퇴근 체크`;
+	str += `	</div>`;
+	str += `	<div id="attendance-content" class="widget-content">`;
+	str += `		<div id="attendance-start" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceStart">`;
+	str += `				<i class="far fa-play-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-start-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `		<div id="attendance-out" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceOut">`;
+	str += `				<i class="far fa-pause-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-pause-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `		<div id="attendance-end" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceEnd">`;
+	str += `				<i class="far fa-stop-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-end-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `</div>`;
 					
 		attendance.innerHTML = str;
 	
@@ -261,10 +331,59 @@ function getTest3(){
 // sign 위젯
 // ----------------------------------------------------------------------------------------
 
-function getTest4(){
+function makeSignWidget(){
 	const sign = document.getElementById('sign').firstChild;
+	var signList = new Array();
+	var count = 0;
 	
-	sign.innerHTML = '전자결재 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/paymentlist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+			 	str += `<div class="widget-title">`;
+				str += `		결재함 건수`;
+				str += `	</div>`;
+				str += `	<div id="sign-content" class="widget-content">`;
+				str += `		<table id="sign-table">`;
+				str += `			<tr>`;
+				str += `				<th>중요도</th>`;
+				str += `				<th>제목</th>`;
+				str += `				<th>완료여부</th>`;
+				str += `			</tr>`;
+				
+				data.forEach((signList) => {
+					
+					if(count <3) {
+						
+						str += `			<tr>`;
+						str += `				<td>${signList.signImportance}</td>`;
+						str += `				<td>${signList.signTitle}</td>`;
+						str += `				<td>${signList.signListCheck}</td>`;
+						str += `			</tr>`;
+					
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				sign.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
@@ -272,10 +391,68 @@ function getTest4(){
 // project 위젯
 // ----------------------------------------------------------------------------------------
 
-function getTest5(){
+function makeProjectWidget(){
 	const project = document.getElementById('project').firstChild;
+	var projectList = new Array();
+	var count = 0;
 	
-	project.innerHTML = '프로젝트 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/projectlist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		프로젝트 리스트`;
+				str += `	</div>`;
+				str += `	<div id="project-content" class="widget-content">`;
+				str += `	<table id="project-table">`;
+				str += `		<tr>`;
+				str += `			<th>프로젝트명</th>`;
+				str += `			<th>시작일</th>`;
+				str += `			<th>종료일</th>`;
+				str += `		</tr>`;
+				
+				data.forEach((projectList) => {
+					console.log("projects : " + projectList);
+					
+					if(count <3) {
+						
+						var projectStartLong = `${projectList.projectStart}`;
+						var projectStart = projectStartLong.substr(0, 10);
+					
+						var projectEndLong = `${projectList.projectEnd}`;
+						var projectEnd = projectEndLong.substr(0, 10);
+						
+						str += `			<tr>`;
+						str += `				<td>`;
+						str += `					<a href="projectboardlist?projectId=${projectList.projectId }">${projectList.projectName}</a>`;
+						str += `				</td>`;
+						str += `				<td>` + projectStart + `</td>`;
+						str += `				<td>` + projectEnd + `</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				project.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
@@ -283,18 +460,75 @@ function getTest5(){
 // calendar 위젯
 // ----------------------------------------------------------------------------------------
 
-function getTest6(){
+function makeCalendarWidget(){
 	const calendar = document.getElementById('calendar').firstChild;
+	var todoList = new Array();
+	var count = 0;
 	
-	calendar.innerHTML = '캘린더 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/schedulemain",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		캘린더 일정`;
+				str += `	</div>`;
+				str += `	<div id="calendar-content" class="widget-content">`;
+				str += `		<table id="calendar-table">`;
+				str += `			<tr>`;
+				str += `				<th>제목</th>`;
+				str += `				<th>시작시간</th>`;
+				str += `				<th>마감시간</th>`;
+				str += `			</tr>`;
+				
+				data.forEach((todoList) => {
+					console.log("todoList : " + todoList);
+					
+					if(count <3) {
+						
+						var todoStartLong = `${todoList.scheduleStart}`;
+						var todoStart = todoStartLong.substr(0, 10);
+					
+						var todoEndLong = `${todoList.scheduleEnd}`;
+						var todoEnd = todoEndLong.substr(0, 10);
+						
+						str += `			<tr>`;
+						str += `				<td>${todoList.scheduleTitle}</td>`;
+						str += `				<td>` + todoStart + `</td>`;
+						str += `				<td>` + todoEnd + `</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				calendar.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
 
 //----------------------------------------------------------------------------------------
-//위젯 처음화면 열 때 기본값으로 불러오기 ----------------------------------------------------
+// DB에서 기본으로 설정된 위젯 커스텀 불러오기 ----------------------------------------------
 //----------------------------------------------------------------------------------------
 
+// 컨트롤러에서 객체 리스트를 main.jsp로 받아와 이곳에서 분할 작업
 window.onload = function(){
 
 	// 배열 분할 작업
@@ -314,31 +548,26 @@ window.onload = function(){
 			// 위젯명 뽑기
 			if(index % 5 == 0) { // 0, 5, 10, 15, 20, 25
 				nameIdx = parseInt(item); // 1, 2, 3, 4, 5, 6
-				console.log("nameIdx: " + nameIdx);
-				console.log(typeof nameIdx);
 			}
 			// 위젯 Y축 위치 뽑기
 			if(index % 5 == 1) {
 				valTop = parseInt(item);
-				console.log("valTop: " + valTop);
 			}
 			// 위젯 X축 위치 뽑기
 			if(index % 5 == 2) {
 				valLeft = parseInt(item);
 				nameIdxCount++;
-				console.log("valLeft: " + valLeft);
 			}
 			// 한 바퀴 돌때마다 위젯 만들기 실행
 			if(nameIdxCount > 0){
 				nameIdxCount--;
 				widgetSwitch(nameIdx, valTop, valLeft);
-				console.log("왜이러지 : " + nameIdxCount);
 			}
 	});
 	
 }
 
-//기본 위젯 불러오기
+// 분할 작업을 토대로 저장했던 위젯 세팅 불러오기
 function widgetSwitch(valName, valTop, valLeft){
 	switch (valName) {
 	case 1:
@@ -353,7 +582,7 @@ function widgetSwitch(valName, valTop, valLeft){
 	case 2:
 
 		console.log("공지사항 다혜꺼");
-		makeWidget("notice", valTop, valLeft, getTest2);
+		makeWidget("notice", valTop, valLeft, makeNoticeWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-notice').classList.replace('unselected', 'selected');
@@ -362,7 +591,7 @@ function widgetSwitch(valName, valTop, valLeft){
 	case 3:
 
 		console.log("출퇴근 언제하냐");
-		makeWidget("attendance", valTop, valLeft, getTest3);
+		makeWidget("attendance", valTop, valLeft, makeAttendanceWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
@@ -371,7 +600,7 @@ function widgetSwitch(valName, valTop, valLeft){
 	case 4:
 
 		console.log("결재차려 김나현!");
-		makeWidget("sign", valTop, valLeft, getTest4);
+		makeWidget("sign", valTop, valLeft, makeSignWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-sign').classList.replace('unselected', 'selected');
@@ -380,7 +609,7 @@ function widgetSwitch(valName, valTop, valLeft){
 	case 5:
 
 		console.log("프로젝트는 성훈이꺼");
-		makeWidget("project", valTop, valLeft, getTest5);
+		makeWidget("project", valTop, valLeft, makeProjectWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-project').classList.replace('unselected', 'selected');
@@ -389,7 +618,7 @@ function widgetSwitch(valName, valTop, valLeft){
 	case 6:
 
 		console.log("캘린더는 경안이꺼");
-		makeWidget("calendar", valTop, valLeft, getTest6);
+		makeWidget("calendar", valTop, valLeft, makeCalendarWidget);
 		
 		// Class 변경 : unselected -> selected
 		document.getElementById('thumb-calendar').classList.replace('unselected', 'selected');
@@ -418,6 +647,8 @@ $('.custom-save').on('click', function(){
 	var customNumber = parseInt(str.substr(str.length-1, 1));
 	
 	saveOffset(customNumber);
+	alert("저장이 완료되었습니다.");
+	$('.custom-save').modal('hide');
 	
 })//end click custom-save
 
@@ -529,12 +760,15 @@ function saveOffset(customNumber){
 
 $('.custom-default-save').on('click', function(){
 	
-	// 저장버튼 태그의 "커스텀 1" 중 1만 숫자로 가져오기
-	var str = $(this).children().first().text();
-	var customNumber = parseInt(str.substr(str.length-1, 1));
-	customNow = customNumber;
-	
-	modifyDefault(customNumber);
+	if (confirm("저장된 위젯을 불러오시겠습니까?")) {
+		var str = $(this).children().first().text();
+		var customNumber = parseInt(str.substr(str.length-1, 1));
+		customNow = customNumber;
+		
+		modifyDefault(customNumber);
+		
+		$('.custom-default-save').modal('hide');
+	}
 	
 })//end click custom-default-save
 
@@ -598,7 +832,7 @@ function removeWidget(selected) {
 		document.getElementById('thumb-attendance').classList.replace('selected', 'unselected');
 
 		break;
-	case "결재함 목록":
+	case "결재함 건수":
 
 		var widget = document.getElementById('sign');
 		widget.remove();

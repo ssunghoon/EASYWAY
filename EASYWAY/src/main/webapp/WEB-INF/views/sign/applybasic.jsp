@@ -231,8 +231,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-gray btn-clear"
-									data-dismiss="modal">초기화</button>
+								<button type="button" class="btn btn-gray btn-clear">초기화</button>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">저장</button>
 							</div>
 						</div>
