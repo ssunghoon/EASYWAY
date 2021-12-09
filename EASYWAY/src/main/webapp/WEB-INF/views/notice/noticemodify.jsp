@@ -102,7 +102,7 @@
 	         
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="/notice/noticemodify" method="post">
+		            <form class="form-container" action="/notice/noticemodify" method="post" enctype="multipart/form-data">
 		            <input type="hidden" name="obId" value="${of_board.obId }">
 		           		 <input type="hidden" id="token" name="${_csrf.parameterName}"
                  		 data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
@@ -156,14 +156,14 @@
 					            <input type="radio" name="obAccess" id="ch4" value="N" checked="checked">&nbsp;<label for="ch4">전체글 이동</label>
 				            </div>
 			            </div>
-			            <div class="form-file">
+			            
+			             <div class="form-file">
 			            	<!-- 첨부 파일 -->
 			            	<div class="option-name">첨부 파일</div>
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
-			            	<input type="text" class="form-control" name="obFilePath"
-			            	  value='<c:out value="${of_board.obFilePath }"/>' placeholder="첨부파일을 넣어주세요">
+			            	<input type="file" name="obFilePath">
 			            </div>
 			            
 			            <div class="form-content">

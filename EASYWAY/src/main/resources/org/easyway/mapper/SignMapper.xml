@@ -115,9 +115,10 @@
 	    	<include refid="search1"></include>
 			<include refid="search2"></include> 
 			<![CDATA[
+	    	order by sign_id desc
 	    	)
 	    	where rn > (#{pageNum} -1) * #{amount}
-	    	order by rownum desc
+	    	
 	    	]]>
 	</select>
 	
@@ -163,16 +164,21 @@
 	<!-- 결재함 상세 (기본기안서) -->
 	<select id="getPaymentBasic" resultType="org.easyway.domain.sign.BasicSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			B.SB_RANGE AS signBasicRange,B.SB_START AS signBasicStart ,B.SB_END AS signBasicEnd, B.SF_ID AS signFormId,
-	        E.SL_CHECK AS signListCheck
+      		E.SL_CHECK AS signListCheck,
+      		Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId
 		FROM SIGN A
 		JOIN SI_BASIC B
 		ON 
 			A.SIGN_ID = B.SIGN_ID
-	    JOIN SI_LIST E
+    	JOIN SI_LIST E
         ON 
-            A.SIGN_ID = E.SIGN_ID
+      		A.SIGN_ID = E.SIGN_ID
+    	JOIN
+     		EMPLOYEE Z
+    	ON
+     	A.EMPLOYEE_ID = Z.EMPLOYEE_ID
 		WHERE 
 			A.SIGN_ID = #{signId}
 			AND
@@ -182,9 +188,10 @@
 	<!-- 결재함 상세 (지출결의서) -->
 	<select id="getPaymentSpend" resultType="org.easyway.domain.sign.SpendSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			C.SS_RANGE AS signSpendRange,C.SF_ID AS signFormId,
-	        E.SL_CHECK AS signListCheck
+	        E.SL_CHECK AS signListCheck,
+	        Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId
 		FROM SIGN A
 		JOIN SI_SPEND C
 		ON 
@@ -192,6 +199,10 @@
 	    JOIN SI_LIST E
            ON 
            A.SIGN_ID = E.SIGN_ID
+        JOIN
+     		EMPLOYEE Z
+    	ON
+     	A.EMPLOYEE_ID = Z.EMPLOYEE_ID
 		WHERE 
 			A.SIGN_ID = #{signId}
 			AND 
@@ -201,9 +212,10 @@
 	<!-- 결재함 상세 (휴가신청서) -->
 	<select id="getPaymentVacation" resultType="org.easyway.domain.sign.VacationSignVO">
       	SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			D.SV_TYPE AS signVacationType, D.SV_START AS signVacationStart ,D.SV_END AS signVacationEnd ,D.SF_ID AS signFormId,
-	        E.SL_CHECK AS signListCheck
+	        E.SL_CHECK AS signListCheck,
+	        Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId
 	    FROM SIGN A
 		JOIN SI_VACATION D
 		ON 
@@ -211,6 +223,10 @@
        	JOIN SI_LIST E
            ON 
        		A.SIGN_ID = E.SIGN_ID
+       	JOIN
+     		EMPLOYEE Z
+    	ON
+     	A.EMPLOYEE_ID = Z.EMPLOYEE_ID
 		WHERE 
 			A.SIGN_ID = #{signId}
         	AND 
@@ -290,7 +306,26 @@
 		ON
 		  A.SIGN_ID = C.SIGN_ID
 		  WHERE A.SIGN_ID IN
-		<include refid="searchBeforeEmp" />
+		(SELECT SIGN_ID FROM (SELECT 
+		 A.SIGN_ID,
+		 A.EMPLOYEE_ID,
+		 A.SL_ORDER,
+		 A.SL_CHECK
+		FROM
+	  	 	SI_LIST A
+		JOIN
+	 	 	EMPLOYEE B
+		ON 
+		  	A.EMPLOYEE_ID = B.EMPLOYEE_ID
+		JOIN 
+		  	SIGN C
+		ON
+		  	A.SIGN_ID = C.SIGN_ID
+		  	WHERE 
+		  		A.SL_ORDER IN (select (SL_ORDER - 1) FROM SI_LIST) 
+	 			AND SL_CHECK = 'Y' ))
+	        	AND A.EMPLOYEE_ID = #{employeeId}
+	        	OR (A.SL_ORDER = 1 AND A.SL_CHECK = 'N' AND A.EMPLOYEE_ID = #{employeeId} )
 	    ORDER BY CASE
 			WHEN SL_CHECK = '상' THEN 1
 			WHEN SL_CHECK = '중' THEN 2
@@ -388,7 +423,7 @@
 	 </update>
 	 
 	 <!-- 결재 갯수  -->
-	<select id="getTotalCountPayment"  resultType="int">
+	<select id="getTotalCountPayment" resultType="int">
 	SELECT 
  		count(*)
 		FROM
@@ -405,6 +440,7 @@
 		<include refid="searchBeforeEmp"></include>
 	</select>
 	
+	<!-- 모든 결재완료시 상신여부  변경 -->
 	<update id="updateSignCheck">
 	update sign set
 	sign_check = 'Y' 
@@ -414,4 +450,21 @@
 	    and 
 	    sl_check = 'Y' and sign_id = ${signId})
 	</update>
+	
+	<select id="getSignListBySignId" resultType="org.easyway.domain.sign.SignListVO">
+		select 
+			a.sl_order AS signListOrder, 
+			a.sign_id AS signId, 
+			a.employee_id AS employeeId,
+			a.sl_check AS signListCheck,
+			b.employee_name AS employeeName
+			from si_list a
+			join 
+			employee b
+		on 
+			a.employee_id = b.employee_id
+		where 
+			sign_id = #{signId}
+		order by sl_order
+	</select>
 </mapper>

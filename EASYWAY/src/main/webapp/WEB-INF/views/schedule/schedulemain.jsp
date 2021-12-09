@@ -302,11 +302,11 @@
 							 	value="scheduleData.scheduleStart"/>
 	                        <label>종료시간</label>
 	                        <input id="detail-end" type="text" class="form-control" name="scheduleEnd"
-	                            value='scheduleData.scheduleEnd'>
+	                            value="scheduleData.scheduleEnd">
 	                            
 	                        <label>내용</label>
 	                        <input type="text" class="form-control" name="scheduleContent"
-	                            value='scheduleData.scheduleContent'>
+	                            value="scheduleData.scheduleContent">
 	                       	<label>중요도 </label>
 <!-- 	                       	<form> -->
 <!-- 								<select autofocus name="scheduleImportance" value ='scheduleData.scheduleImportance' > -->
@@ -316,11 +316,11 @@
 <!-- 								</select> -->
 <!-- 							</form> -->
 	                       	<input type="text"class="form-control"  name="scheduleImportance"  
-	                            value='scheduleData.scheduleImportance'>
+	                            value="scheduleData.scheduleImportance">
 	                            
 	                        <label>공사구분</label>
 	                        <input type="text" class="form-control" name="schedulePrivate"
-	                            value='scheduleData.schedulePrivate'>
+	                            value="scheduleData.schedulePrivate" placeholder="Y or N">
 <!-- 								<input type="radio" name="schedulePrivate" value="Y" id="yes">&nbsp;<label for="yes">Y</label> -->
 <!-- 			                    <input type="radio" name="schedulePrivate" value="N" id="no">&nbsp;<label for="no">N</label> -->
 	                     </div>

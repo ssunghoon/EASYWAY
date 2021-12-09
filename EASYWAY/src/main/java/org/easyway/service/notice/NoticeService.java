@@ -11,7 +11,7 @@ public interface NoticeService {
 	public void register(NoticeVO notice);
 	
 	//페이징 처리 구현으로 기존 리스트 교체
-	//public List<NoticeVO> getListAll();
+	public List<NoticeVO> getListAll();
 	
 	public NoticeVO detail(Long obId);
 	
@@ -28,7 +28,7 @@ public interface NoticeService {
 	//부서 공지사항 서비스 메서드
 	
 	//부서별 리스트 출력
-	public List<DepartmentDTO> getListDepartment();
+	public List<DepartmentDTO> getListDepartment(Long departmentId);
 	
 	//페이징 추가한 부서별 리스트 출력
 	public List<DepartmentDTO> getDepartmentListPaging(NoticeCriteria cri);

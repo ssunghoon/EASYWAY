@@ -45,7 +45,7 @@ public interface SignService {
 	//public List<EmployeeVO> getListEmployee();
 	
 	// 결재함 목록
-	//public List<SignListVO> getListPayment();
+	public List<SignListVO> getSignList(Long employeeId);
 	
 	// 결재함 페이징
 	public List<SignVO> getListPayment(Criteria cri);
@@ -60,7 +60,9 @@ public interface SignService {
 	public boolean modifySignCheck(SignVO sign);
 	
 	// 직원 검색
-
 	EmployeeVO get(String enteredName);
+	
+	// (기안함 상세) 결재직원 목록
+	public List<SignListVO> getSignListBySignId(Long signId);
 
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectCreate { // 프로젝트 생성
 	
-	private long projectCreateId; //프로젝트 생성 번호
-	private long employeeId; // 사원 번호
-	private long projectId; // 프로젝트 번호
+	private Long projectCreateId; //프로젝트 생성 번호
+	private Long employeeId; // 사원 번호
+	private Long projectId; // 프로젝트 번호
 	private String projectCreateRole; // 프로젝트 권한
 
 }

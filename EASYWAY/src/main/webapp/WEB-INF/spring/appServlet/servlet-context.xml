@@ -27,15 +27,9 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="org.easyway.controller" />
+	<context:component-scan base-package="org.easyway.config" />
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-	</beans:bean>	
+	</beans:bean>
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
-	
-	   <!-- 웹 소켓 핸들러 -->
-    <websocket:handlers>
-        <websocket:mapping path="/websocket/echo.do" handler="myHandler"/>
-    </websocket:handlers>
- 
-    <beans:bean id="myHandler" class="org.easyway.handler.WebSocketHandler"/>
 </beans:beans>

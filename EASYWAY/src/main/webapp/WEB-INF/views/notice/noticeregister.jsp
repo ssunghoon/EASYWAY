@@ -101,7 +101,7 @@
 	         
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="/notice/noticeregister" method="post">
+		            <form class="form-container" action="/notice/noticeregister" method="post" enctype="multipart/form-data">
 		           		 <input type="hidden" id="token" name="${_csrf.parameterName}"
                  		 data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 			        	<div class="form-title">
@@ -119,11 +119,14 @@
 						<div class="form-writer-input">
 							<!-- 작성자 : 작성칸 -->
 							<!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
-							<input type="hidden" class="form-writer-name" placeholder="" name="employeeId" value="2">
+							<input type="hidden" class="form-writer-name" name="employeeId"
+							value="${sessionScope.nowEmployeeInfo.employeeId}">
+							<c:out value="${sessionScope.nowEmployeeInfo.employeeName}"/>
 							 </div>
 						<div class="form-dep-input">
 							<!-- 제목 : 작성칸 -->
-							<input type="hidden" class="form-control" placeholder="" name="departmentId" value="2">
+							<input type="hidden" class="form-control" name="departmentId" 
+							value="${sessionScope.nowEmployeeInfo.departmentId}">
 						</div>
 			            
 			            <!-- 이하 옵션 필요한만큼 가져다 쓰고 안 쓰면 지우세요 ----------------------------------->
@@ -159,7 +162,7 @@
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
-			            	<input type="text" class="form-control" placeholder="파일첨부" name="obFilePath">
+			            	<input type="file" name="obFilePath">
 			            </div>
 			            
 			            <div class="form-content">

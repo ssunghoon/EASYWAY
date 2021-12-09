@@ -2,8 +2,13 @@ package org.easyway.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.notice.DepartmentDTO;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -44,14 +50,34 @@ public class NoticeController {
 
 	// 입력 기능을 실행한다
 	@PostMapping("/noticeregister")
-	public String noticeRegister(NoticeVO notice, RedirectAttributes rttr) {
+	public String noticeRegister(NoticeVO notice, RedirectAttributes rttr, HttpSession session) throws IOException{
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		notice.setEmployeeId(employeeDTO.getEmployeeId());
+		
+		log.info("파일 이름 : " + notice.getObFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = notice.getObFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+		}else {
+			notice.setFileName("null");
+		}
+		notice.setFileName(fileName);
+		// 파일처리 end
 		service.register(notice);
 		rttr.addFlashAttribute("result", notice.getObId());
+		
 		return "redirect:/notice/noticelist";
 	}
 
 	// 목록을 가져온다
-	//페이징 처리 리스트로 변경
+	//페이징 처리 리스트로 변경되서 사라짐
 //	@GetMapping("/noticelist")
 //	public String noticeList(Model model) {
 //		log.info("listttttttttttttttttt");
@@ -73,7 +99,9 @@ public class NoticeController {
 	}
 
 	@GetMapping({ "/noticedetail", "/noticemodify" })
-	public void noticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
+	public void noticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model, HttpSession session) {
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		model.addAttribute("nowEmployeeInfo", employeeDTO.getEmployeeId());
 		log.info("/noticedetail or noticemodify");
 		model.addAttribute("of_board", service.detail(obId));
 		log.info("조회폼 잘 떴나요");
@@ -82,7 +110,7 @@ public class NoticeController {
 	}
 
 	@PostMapping("/noticemodify")
-	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") Long obId) {
+	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") Long obId, HttpSession session)  throws IOException{
 		//데이터가 잘 전달됐는지 확인하기위한 로그
 		System.out.println("title: " + notice.getObTitle()); 
 		System.out.println("Id: " + notice.getObId());
@@ -92,6 +120,22 @@ public class NoticeController {
 //		if (service.modify(notice)) {
 //			rttr.addFlashAttribute("result" + "success");
 //		}
+		log.info("파일 이름 : " + notice.getObFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = notice.getObFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+		}else {
+			notice.setFileName("null");
+		}
+		notice.setFileName(fileName);
+		// 파일처리 end
 		service.modify(notice);
 		//리퀘스트 파람으로 번호를 받아와 출력
 		return "redirect:/notice/noticedetail?obId="+ notice.getObId();
@@ -99,7 +143,7 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/noticeremove")
-	public String remove(@RequestParam("obId") Long obId, RedirectAttributes rttr){
+	public String remove(@RequestParam("obId") Long obId, RedirectAttributes rttr, HttpSession session){
 //		System.out.println("Id: " + obId);
 //		System.out.println("title:" + obTitle);
 		if(service.remove(obId)){
@@ -118,50 +162,31 @@ public class NoticeController {
 //	
 	//부서 공지 리스트
 	@GetMapping("/departmentnoticelist")
-	public String departmentnoticelist(NoticeVO notice, Model model, HttpSession session) {
+	public String departmentnoticelist(DepartmentDTO dto, Model model, HttpSession session, 
+			@RequestParam("departmentId") Long departmentId) {
 		
 		log.info("부서 게시판 띄웁니다");
 		
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
-		notice.setEmployeeId(employeeDTO.getEmployeeId());
-		notice.setDepartmentId(employeeDTO.getDepartmentId());
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		dto.setOfficeId(officeVO.getOfficeId());
+		dto.setEmployeeId(employeeDTO.getEmployeeId());
+		dto.setDepartmentId(employeeDTO.getDepartmentId());
+		dto.setDepartmentName(employeeDTO.getEmployeeDepartment());
+		dto.setOfficeId(employeeDTO.getOfficeId());
 		log.info("뭔가 나오나요");
-//		dto.setDepartmentId(EmployeeDTO.getDepartmentId());
-		model.addAttribute("departmentnoticelist", service.getListDepartment());
-//		return "/notice/noticelist";
-//		log.info("부서번호" + employeeVO.getDepartmentId());
-//		departmentDTO.setDepartmentId(employeeVO.getDepartmentId());
-//		log.info("번호뜨나요"+ employeeVO.getDepartmentId());
-//		model.addAttribute("department", service.getListDepartment(employeeVO.getDepartmentId()));
-//		log.info("부서번호22" + employeeVO.getDepartmentId());
+		model.addAttribute("departmentnoticelist", service.getListDepartment(departmentId));
+		log.info("부서번호" + employeeDTO.getDepartmentId());
 		return "/notice/departmentnoticelist";
 	}
+
 	
-//	@GetMapping("/departmentnoticelist")
-//	public void departmentnoticelist(NoticeCriteria cri, Model model, HttpSession session){
-//		log.info("departmentnoticelist" + cri);
-//		
-//		EmployeeVO employeeVO = (EmployeeVO)session.getAttribute("nowEmployeeInfo");
-////		mosel.addAttribute("nowEmployeeInfo", employeeVO.getEmployeeId());
-//		log.info("뭔가 나오나요");
-////		dto.setDepartmentId(employeeVO.getDepartmentId());
-//		
-////		DepartmentVO departmentVO = (DepartmentVO)session.getAttribute("nowDepartmentInfo");
-//		model.addAttribute("departmentnoticelist", service.getDepartmentListPaging(cri));
-//		
-//		int total = service.getTotal(cri);
-//		
-//		log.info("총게시글갯수" + total);
-////		model.addAttribute("pageMaker", new NoticePageDTO(cri, 123)); //예전코드
-//		model.addAttribute("pageMaker", new NoticePageDTO(cri, total));
-//	}
-	
-//	@GetMapping({ "/departmentnoticedetail", "/noticemodify" })
-//	public void departmentnoticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model) {
-//		log.info("/noticedetail or noticemodify");
-//		model.addAttribute("dto", service.detail(obId));
-//		log.info("조회폼 잘 떴나요");
-//		service.modifyViewCount(obId);
-//		log.info("조회수 증가");
-//}
+	@GetMapping({ "/departmentnoticedetail"})
+	public void departmentnoticedetail(@RequestParam("obId") Long obId, @ModelAttribute("cri") NoticeCriteria cri, Model model, HttpSession session) {
+		log.info("/noticedetail or noticemodify");
+		model.addAttribute("dto", service.detail(obId));
+		log.info("조회폼 잘 떴나요");
+		service.modifyViewCount(obId);
+		log.info("조회수 증가");
+}
 }
