@@ -110,6 +110,36 @@ $(document).ready(function () {
     onClickPurchase(values);
     $(".text-message1").val("");
   });
+  
+  $(".text-message1").keydown(function(key) {
+      if (key.keyCode == 13) {
+    	  var message = $(".text-message1").val();
+    	    console.log(message);
+    	    var values = {
+    	      departmentId: departmentId,
+    	      employeeId: employeeId,
+    	      employeeName: employeeName,
+    	      message: message,
+    	    };
+    	    onClickPurchase(values);
+    	    $(".text-message1").val("");
+      }
+  });
+  
+  $(".text-message2").keydown(function(key) {
+      if (key.keyCode == 13) {
+    	  var message = $(".text-message2").val();
+    	    console.log(message);
+    	    var values = {
+    	      departmentId: departmentId,
+    	      employeeId: employeeId,
+    	      employeeName: employeeName,
+    	      message: message,
+    	    };
+    	    onClickPurchase(values);
+    	    $(".text-message1").val("");
+      }
+  });
 
   $.ajax({
     type: "get",
