@@ -32,7 +32,35 @@
 <script src="/resources/js/menu.js"></script>
 
 </head>
+<style>
+.submenuLink { /* 하위 메뉴의 a 태그 스타일 설정 */
+/* 	color: #2d2d2d; /* 글씨 색을 RGB(2D2D2D)로 설정 */ */
+	background-color: white; /* 배경색을 흰색으로 설정 */
+/* 	border: solid 1px black; /* 테두리를 설정 */ */
+	margin-top: -1px; /* 위 칸의 하단 테두리와 아래칸의 상단 테두리가 겹쳐지도록 설덩 */
+	padding-left: 20px;
+}
 
+.submenu { /* 하위 메뉴 스타일 설정 */
+	position: absolute; /* html의 flow에 영향을 미치지 않게 absolute 설정 */
+	height: 0px; /* 초기 높이는 0px로 설정 */
+	overflow: hidden; /* 실 내용이 높이보다 커지면 해당 내용 감춤 */
+	transition: height .2s; /* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(기본) */
+	-webkit-transition: height .2s;
+	/* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(구버전 크롬/사파라ㅣ) */
+	-moz-transition: height .2s;
+	/* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(구버전 파폭) */
+	-o-transition: height .2s;
+	/* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(구버전 오페라) */
+}
+
+.topMenuLi:hover .submenu { /* 상위 메뉴에 마우스 모버한 경우 그 안의 하위 메뉴 스타일 설정 */
+	height: 93px;
+} /* 높이를 93px로 설정 */
+.longLink { /* 좀 더 긴 메뉴 스타일 설정 */
+	width: 190px; /* 넓이는 190px로 설정 */
+}
+</style>
 <body>
 
 	<!-- sidebar ------------------------------------------------------------------------------->
@@ -49,9 +77,19 @@
 
 				<div class="easyway-board-item">
 					<!-- 1번째 easyway-board-item : 게시판 이름 들어갈 자리 -->
+
+						<ul>
+							<li class="topMenuLi">
 					<div class="easyway-title1">
-<%-- 					<c:out value="${sessionScope.nowEmployeeInfo.employeeName} "/>  --%>
-					<c:out value="${sessionScope.nowEmployeeInfo.employeeDepartment}"/> 게시판</div>
+									<a class="menuLink"> 
+									<c:out value="${sessionScope.nowEmployeeInfo.employeeDepartment}" /> 부서 게시판
+									</a>
+								</div>
+								<ul class="submenu">
+									<li><a href="noticelist" class="submenuLink longLink">전체 공지사항으로 돌아가기</a></li>
+								</ul>
+							</li>
+						</ul>
 
 				</div>
 				<div class="easyway-board-item">
@@ -84,7 +122,6 @@
 							<th>작성자</th>
 							<th>글제목</th>
 							<th>날짜</th>
-							<th>부서</th>
 							<th>조회수</th>
 						</tr>
 						<c:forEach var="dto" items="${departmentnoticelist }">
@@ -93,7 +130,8 @@
 								<td><c:out value="${dto.obId }" /></td>
 								<td><c:out value="${dto.employeeName} "/></td>
 								<!-- 중요한 공지 연필 모양 표시 -->
-								<td><a class="move" href='<c:out value="${dto.obId}"/>'>
+								<td>
+<%-- 								<a class="move" href='<c:out value="${dto.obId}"/>'> --%>
 										<c:out value="${dto.obTitle}" /> 
 										<c:if test="${dto.obFixedCheck == 'Y' }">
 											<img src="//t1.daumcdn.net/editor/deco/contents/emoticon/things_14.gif?v=2" 
@@ -103,7 +141,6 @@
 								<td><fmt:formatDate var="setobDate"
 										value="${dto.obDate }" pattern="yyyy-MM-dd" />${setobDate }
 								</td>
-								<td>${dto.departmentName }</td>
 								<td><c:out value="${dto.obView }" /></td>
 							</tr>
 						</c:forEach>
@@ -257,7 +294,7 @@
 															"href")
 													+ "'>");
 									actionForm.attr("action",
-											"/notice/noticedetail");
+											"/notice/departmentnoticedetail");
 									actionForm.submit();
 	});
 								});

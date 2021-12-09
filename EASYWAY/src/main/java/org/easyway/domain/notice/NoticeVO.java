@@ -26,5 +26,6 @@ public class NoticeVO {
 	
 	//추가한 컬럼
 	private String employeeName;
+	private Long officeId;
 //	private List<DepartmentDTO> departmentDto;
 }
