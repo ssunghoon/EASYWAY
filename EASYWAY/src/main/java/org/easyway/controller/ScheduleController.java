@@ -42,24 +42,22 @@ public class ScheduleController {
 	@GetMapping("/schedulemain")
 	public void getList(Model model, ScheduleVO schedule,HttpSession session){
 		
-		//맴버id와 office id를 이용해 사원 정보 조회
-		log.info("사원 정보 불러오기");
+		//session객체를 통해 employeeid사용
 		//사원번호넘겨주기
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
-		log.info("getList..........");
-		model.addAttribute("list", service.getListDo());
-		schedule.setEmployeeId(employeeDTO.getEmployeeId());
-		//사원번호넘겨주기
-		model.addAttribute("nowEmployeeInfo", session.getAttribute("nowEmployeeInfo"));
 		
-		log.info(employeeDTO.getEmployeeId());
-		log.info(session.getAttribute("nowEmployeeInfo"));
+		Long employeeId = employeeDTO.getEmployeeId();
+		service.getListDo(employeeId);
+		log.info("getList..........");
+		log.info("불러온 employeeId....."+employeeId);
+		//사원번호넘겨주기
+//		schedule.setEmployeeId(employeeDTO.getEmployeeId());
+		
+		//사원번호넘겨주기
+	//model.addAttribute("nowEmployeeInfo", session.getAttribute("nowEmployeeInfo"));
+		model.addAttribute("list", service.getListDo(employeeId));
+		
 	}
-//	@GetMapping({"/schedulemain","/schedulemodify"})
-//	public void get(@RequestParam("schedule_id") Long scheduleId,Model model){
-//		log.info("getMain or modify");
-//		model.addAttribute("list", service.getListDo(scheduleId));
-//	}
 	
 	//일정등록
 	@PostMapping("/scheduleregister")
