@@ -94,7 +94,7 @@
 								 </a>
 							</div>
 							<ul class="submenu">
-								<li><a href="noticelist" class="submenuLink longLink">전체
+								<li><a href="noticelist?officeId=${sessionScope.nowOfficeInfo.officeId}" class="submenuLink longLink">전체
 										공지사항</a></li>
 								<li><a href="departmentnoticelist?departmentId=${sessionScope.nowEmployeeInfo.departmentId}&officeId=${sessionScope.nowOfficeInfo.officeId}
 								" class="submenuLink longLink">부서
@@ -224,7 +224,7 @@
 
 				<div class="easyway-board-item">
 					<!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
-					<form class="search-form" action="/notice/noticelist" method="get">
+					<form class="search-form" action="/notice/noticelist?officeId=${sessionScope.nowOfficeInfo.officeId}" method="get">
 						<input type="hidden" id="token" name="${_csrf.parameterName}"
                			   data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 						<select name="type" class="dropdown-toggle" data-toggle="dropdown">
