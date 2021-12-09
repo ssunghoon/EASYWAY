@@ -117,6 +117,36 @@
 		DELETE FROM P_POST WHERE PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
 	</delete>
 	
+	<select id="getListProjectPostDTO" resultType="org.easyway.domain.project.ProjectPostDTO">
+ 		SELECT
+			pp.pp_id AS projectPostId,
+			pp.pb_id AS projectBoardId,
+			pp.project_id AS projectId,
+			e.employee_name AS employeeName,
+			pp.pp_title AS projectPostTitle,
+			pp.pp_content AS projectPostContent,
+			pp.pp_file_path AS projectPostFilePath,
+			pp.pp_date AS projectPostDate,
+			pp.pp_views AS projectPostViews
+		FROM
+			P_POST pp, EMPLOYEE e WHERE pp.EMPLOYEE_ID = e.EMPLOYEE_ID AND PB_ID = #{projectBoardId} AND PROJECT_ID = #{projectId}
+	</select>
+	
+	<select id="readProjectPostDTO" resultType="org.easyway.domain.project.ProjectPostDTO">
+		SELECT
+			pp.pp_id AS projectPostId,
+			pp.pb_id AS projectBoardId,
+			pp.project_id AS projectId,
+			e.employee_name AS employeeName,
+			pp.pp_title AS projectPostTitle,
+			pp.pp_content AS projectPostContent,
+			pp.pp_file_path AS projectPostFilePath,
+			pp.pp_date AS projectPostDate,
+			pp.pp_views AS projectPostViews
+		FROM
+			P_POST pp, EMPLOYEE e WHERE pp.EMPLOYEE_ID = e.EMPLOYEE_ID AND PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
+	</select>
+	
 </mapper>
 
 

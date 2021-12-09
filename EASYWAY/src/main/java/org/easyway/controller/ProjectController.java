@@ -88,12 +88,10 @@ public class ProjectController {
 	@PostMapping("/projectpostregister")
 	public String projectPostPostRegister(ProjectPost projectPost, RedirectAttributes rttr, HttpSession session) {
 		EmployeeDTO EmployeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
-		projectPost.setEmployeeId(EmployeeDTO.getMemberId());
+		projectPost.setEmployeeId(EmployeeDTO.getEmployeeId());
 		rttr.addAttribute("projectId", projectPost.getProjectId());
 		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
 		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
-		log.info("111111"+EmployeeDTO.getMemberId());
-		log.info("222222"+projectPost);
 		service.registerProjectPost(projectPost);
 		return "redirect:/project/projectpostlist";
 	}
@@ -105,7 +103,7 @@ public class ProjectController {
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
 		model.addAttribute("projectBoardId", projectBoardId);
-		model.addAttribute("projectPost", service.getListProjectPost(projectBoardId));
+		model.addAttribute("projectPostDTO", service.getListProjectPostDTO(projectId, projectBoardId));
 		model.addAttribute("pbn", service.getProjectBoard(projectId, projectBoardId).getProjectBoardName());
 	}
 	
@@ -117,7 +115,7 @@ public class ProjectController {
 		model.addAttribute("projectBoardId", projectBoardId);
 		model.addAttribute("projectBoard", service.getListProjectBoard(projectId));
 		model.addAttribute("pb", service.getProjectBoard(projectId, projectBoardId));
-		model.addAttribute("projectPost", service.getProjectPost(projectBoardId, projectPostId));
+		model.addAttribute("projectPost", service.getProjectPostDTO(projectBoardId, projectPostId));
 	}
 	
 	// 게시물 수정 페이지
@@ -148,6 +146,7 @@ public class ProjectController {
 		service.removeProjectPost(projectPost.getProjectBoardId(), projectPost.getProjectPostId());
 		return "redirect:/project/projectpostlist";
 	}
+	
 	
 	
 	

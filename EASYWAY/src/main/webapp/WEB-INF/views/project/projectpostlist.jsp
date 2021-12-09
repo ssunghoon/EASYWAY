@@ -53,6 +53,16 @@
 	padding: 15px;
 	flex-direction: column;
 }
+
+.btn-group{
+	width: 15px;
+}
+
+.project-board-td{
+	display: flex;
+	justify-content: space-between;
+}
+
 </style>
 
 </head>
@@ -115,8 +125,20 @@
 				<!-- 게시판 목록 -->
 				<c:forEach var="projectBoard" items="${projectBoard}">
 					<tr>
-						<td><a
-							href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a></td>
+						<td class="project-board-td">
+							<a href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a>
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-info dropdown-toggle dropdown-toggle-split"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<span class="visually-hidden">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">수정</a></li>
+									<li><a class="dropdown-item" href="" id="project-board-del">삭제</a></li>
+								</ul>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -165,13 +187,13 @@
 							<th>작성일</th>
 							<th>조회수</th>
 						</tr>
-						<c:forEach var="projectPost" items="${projectPost}">
+						<c:forEach var="postDTO" items="${projectPostDTO}">
 							<tr>
-								<td><c:out value="${projectPost.projectPostId }"/></td>
-								<td><c:out value="${sessionScope.nowEmployeeInfo.employeeName}"/></td>
-								<td><a href="projectpostdetail?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}">${projectPost.projectPostTitle}</a></td>
-								<td><c:out value="${projectPost.projectPostDate }"/></td>
-								<td><c:out value="${projectPost.projectPostViews }"/></td>
+								<td><c:out value="${postDTO.projectPostId }"/></td>
+								<td><c:out value="${postDTO.employeeName}"/></td>
+								<td><a href="projectpostdetail?projectId=${postDTO.projectId}&&projectBoardId=${postDTO.projectBoardId}&&projectPostId=${postDTO.projectPostId}">${postDTO.projectPostTitle}</a></td>
+								<td><c:out value="${postDTO.projectPostDate }"/></td>
+								<td><c:out value="${postDTO.projectPostViews }"/></td>
 							</tr>
 						</c:forEach>
 					</table>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.easyway.domain.project.ProjectBoard;
 import org.easyway.domain.project.ProjectPost;
+import org.easyway.domain.project.ProjectPostDTO;
 import org.apache.ibatis.annotations.Param;
 import org.easyway.domain.project.Project;
 
@@ -34,5 +35,9 @@ public interface ProjectMapper {
 	public int updateProjectPost(ProjectPost projectPost); // 게시물 수정
 	
 	public int deleteProjectPost(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 게시물 삭제
+	
+	public List<ProjectPostDTO> getListProjectPostDTO(@Param("projectId") Long projectId, @Param("projectBoardId") Long projectBoardId); // 게시물DTO 목록 
+	
+	public ProjectPostDTO readProjectPostDTO(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 게시물DTO 상세
 	
 }

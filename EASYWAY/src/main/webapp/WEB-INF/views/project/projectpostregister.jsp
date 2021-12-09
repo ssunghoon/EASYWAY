@@ -164,7 +164,7 @@ input.easy-btn {
 			            	<!-- 등록 버튼 -->
 			            	<div class="buttons">
 			            		<input type="submit" class="easyway-btn" value="등록">
-			            		<input type="reset" class="easyway-btn" value="취소">
+			            		<input type="button" class="easyway-btn" value="취소">
 			            	</div>
 			            	
 			            </div>

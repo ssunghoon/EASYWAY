@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.easyway.domain.project.ProjectBoard;
 import org.easyway.domain.project.ProjectPost;
+import org.easyway.domain.project.ProjectPostDTO;
 import org.easyway.domain.project.Project;
 import org.easyway.mapper.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,16 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public boolean removeProjectPost(Long projectBoardId, Long projectPostId) { // 게시물 삭제
 		return mapper.deleteProjectPost(projectBoardId, projectPostId) == 1;
+	}
+
+	@Override
+	public List<ProjectPostDTO> getListProjectPostDTO(Long projectId, Long projectBoardId) { // 게시물DTO 목록
+		return mapper.getListProjectPostDTO(projectId, projectBoardId);
+	}
+
+	@Override
+	public ProjectPostDTO getProjectPostDTO(Long projectBoardId, Long projectPostId) { // 게시물DTO 상세
+		return mapper.readProjectPostDTO(projectBoardId, projectPostId);
 	}
 
 
