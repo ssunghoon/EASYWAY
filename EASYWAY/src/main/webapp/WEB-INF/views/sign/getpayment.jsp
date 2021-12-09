@@ -77,6 +77,10 @@
 							<td><c:out value="${basicSign.signContent }" escapeXml="false" /></td>
 						</tr>
 						<tr>
+							<th class="sign-th">작성자</th>
+							<td>${basicSign.employeeName }</td>
+						</tr>
+						<tr>
 							<th class="sign-th">공개범위</th>
 							<c:choose>
 								<c:when test="${basicSign.signBasicRange == '1'}">
@@ -121,6 +125,10 @@
 						<tr>
 							<th class="col-lg-3 sign-th">제목</th>
 							<td>${spendSign.signTitle }</td>
+						</tr>
+						<tr>
+							<th class="sign-th">작성자</th>
+							<td>${spendSign.employeeName }</td>
 						</tr>
 						<tr class="sign-content">
 							<th class="sign-th">내용</th>
@@ -168,6 +176,10 @@
 							<tr class="sign-content">
 								<th class="sign-th">내용</th>
 								<td><c:out value="${vacationSign.signContent }" escapeXml="false" /></td>
+							</tr>
+							<tr>
+								<th class="sign-th">작성자</th>
+								<td>${vacationSign.employeeName }</td>
 							</tr>
 							<tr>
 								<th class="sign-th">종류</th>

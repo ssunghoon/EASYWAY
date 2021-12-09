@@ -36,7 +36,7 @@ public interface NoticeMapper {
 	//부서 공지사항 메서드
 	
 	//부서별 리스트 출력(페이징 전)
-	public List<DepartmentDTO> getListDepartment();
+	public List<DepartmentDTO> getListDepartment(Long departmentId);
 	
 	//페이징 추가한 부서공지사항
 	public List<DepartmentDTO> getDepartmentListPaging(NoticeCriteria cri);

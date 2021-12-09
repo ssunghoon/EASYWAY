@@ -63,7 +63,7 @@
 	            <div class="easyway-boarddetail-title">
 	            	<!-- 게시물 타이틀 -->
 	            	<div class="post-title">
-	                   NO:<c:out value="${of_board.obId }"/>
+	                   no<c:out value="${of_board.obId }"/>
 	                   <c:out value="${of_board.obTitle}"/>
 	                </div>
 	            </div>
@@ -74,13 +74,14 @@
 	            	<div class="writer-info">
 		            	<div class="writer-name">
 		            		<i class="writer-icon fas fa-user-circle"></i>
-							홍길동
+							${of_board.employeeName }
 		            	</div>
 						<div class="writer-department">
-						개발부<c:out value="${of_board.departmentId }"/>
+<%-- 						개발부<c:out value="${of_board.departmentName }"/> --%>
 						</div>
 					</div>
 	            	
+<%-- 	            	<c:if test="${sessionScope.nowEmployeeInfo.employeeId} == ${of_board.employeeId }"> --%>
 	            	<form action="/notice/noticeremove" method="post">
 	            	<input type="hidden" id="token" name="${_csrf.parameterName}"
               		    data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
@@ -92,10 +93,14 @@
 						<!-- form태그에서 경로 넣고포스트로 삭제 실행하고 리스트로 돌아감(컨트롤러) -->
 						<input type="submit" value="삭제" class="delete-btn easyway-btn">
 						<!-- 리스트로 이동 -->
+						 
+<%-- 						 </c:if> --%>
 						<a href="/notice/noticelist"> <input type="button"
 							value="목록" class="list-btn easyway-btn"></a>
+						 </div>
+						 </form>
 					</div>
-	            </form>
+	            	
 	            </div>
 	            	
 	            	
