@@ -49,5 +49,4 @@
 			= TO_CHAR(SYSDATE, 'yyyy/mm/dd')
 	</select>
 	
-	
 </mapper>

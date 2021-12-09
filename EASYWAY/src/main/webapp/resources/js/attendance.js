@@ -16,6 +16,7 @@ function init(){
 
 init();
 
+// 버튼 동작 (url 이동)
 $('.select-check').on('click', function(){
 	
 	var selected = $(this).children().last().text();
@@ -23,17 +24,14 @@ $('.select-check').on('click', function(){
 	
 	switch (selected) {
 	case "출근하기":
-		console.log("일단 여기는 왔고");
 		location.href="/attendance/registerAttendanceStart";
 		
 		break;
 	case "외근하기":
-		console.log("일단 여기는 왔고");
 		location.href="/attendance/registerAttendanceOut";
 		
 		break;
 	case "퇴근하기":
-		console.log("일단 여기는 왔고");
 		location.href="/attendance/registerAttendanceEnd";
 	break;
 
@@ -42,3 +40,6 @@ $('.select-check').on('click', function(){
 	}
 	
 });
+
+
+

@@ -59,7 +59,7 @@ public interface SignMapper {
 	public void insertLine4(SignListVO list);
 	
 	// 결재함 목록
-	public List<SignListVO> getListPayment();
+	public List<SignListVO> getListPayment(Long employeeId);
 
 	// 결재함 페이징 
 	public List<SignVO> getListPaymentWithPaging(Criteria cri);

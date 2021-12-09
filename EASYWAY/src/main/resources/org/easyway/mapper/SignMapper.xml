@@ -306,7 +306,26 @@
 		ON
 		  A.SIGN_ID = C.SIGN_ID
 		  WHERE A.SIGN_ID IN
-		<include refid="searchBeforeEmp" />
+		(SELECT SIGN_ID FROM (SELECT 
+		 A.SIGN_ID,
+		 A.EMPLOYEE_ID,
+		 A.SL_ORDER,
+		 A.SL_CHECK
+		FROM
+	  	 	SI_LIST A
+		JOIN
+	 	 	EMPLOYEE B
+		ON 
+		  	A.EMPLOYEE_ID = B.EMPLOYEE_ID
+		JOIN 
+		  	SIGN C
+		ON
+		  	A.SIGN_ID = C.SIGN_ID
+		  	WHERE 
+		  		A.SL_ORDER IN (select (SL_ORDER - 1) FROM SI_LIST) 
+	 			AND SL_CHECK = 'Y' ))
+	        	AND A.EMPLOYEE_ID = #{employeeId}
+	        	OR (A.SL_ORDER = 1 AND A.SL_CHECK = 'N' AND A.EMPLOYEE_ID = #{employeeId} )
 	    ORDER BY CASE
 			WHEN SL_CHECK = '상' THEN 1
 			WHEN SL_CHECK = '중' THEN 2

@@ -27,14 +27,20 @@ public class AttendanceController {
 	public void getList(HttpSession session, Model model){
 		  
 		log.info("controller/attendancemain--------------------------------");
+
+		// 로그인된 사원의 잔여 휴가 일수
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
-		AttendanceVO attendance = service.getList(employeeDTO.getEmployeeId());
+		int employeeLeftDay = employeeDTO.getEmployeeLeftDay();
+		log.info("employeeDTO : " + employeeDTO);
+		log.info("employeeLeftDay : " + employeeLeftDay);
+		model.addAttribute("employeeLeftDay", employeeLeftDay);
 		
+		AttendanceVO attendance = service.getList(employeeDTO.getEmployeeId());
 		model.addAttribute("attendance", attendance);
 	}
 	
 	@GetMapping("/registerAttendanceStart")
-	public String registerAttendanceStart(HttpSession session){
+	public String registerAttendanceStart(HttpSession session, Model model){
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
 		Long employeeId = employeeDTO.getEmployeeId();
 		
@@ -64,5 +70,7 @@ public class AttendanceController {
 		
 		return "redirect:/attendance/attendancemain";
 	}
+	
+	
 	
 }

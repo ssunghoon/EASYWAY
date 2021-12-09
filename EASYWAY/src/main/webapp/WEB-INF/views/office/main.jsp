@@ -79,8 +79,8 @@
 			 	 	<span>저장하기</span>
 				</div>
 				<div id="import-btn" class="custom-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-default">
-			 	 	<i id="import-btn-icon" class="fas fa-cog"></i>
-			 	 	<span>기본설정</span>
+			 	 	<i id="import-btn-icon" class="fas fa-file-import"></i>
+			 	 	<span>불러오기</span>
 				</div>
 			</div>
 			<input type="hidden" id="token" name="${_csrf.parameterName}"
@@ -96,15 +96,15 @@
 			      </div>
 			      <div class="modal-body">
 			        <div class ="custom-save">
-			        	<div id="custom-save1">커스텀 1</div>
+			        	<div id="custom-save1" data-bs-dismiss="modal" aria-label="Close">커스텀 1</div>
 			        	<div class ="custom-unselected"></div>
 			        </div>
 			        <div class ="custom-save">
-			        	<div id="custom-save2">커스텀 2</div>
+			        	<div id="custom-save2" data-bs-dismiss="modal" aria-label="Close">커스텀 2</div>
 			        	<div class ="custom-unselected"></div>
 			        </div>
 			        <div class ="custom-save">
-			        	<div id="custom-save3">커스텀 3</div>
+			        	<div id="custom-save3" data-bs-dismiss="modal" aria-label="Close">커스텀 3</div>
 			        	<div class ="custom-unselected"></div>
 			        </div>
 			      </div>
@@ -112,7 +112,7 @@
 			  </div>
 			</div>
 			
-			<!-- 기본 커스텀 설정 모달창 -->
+			<!-- 저장한 커스텀 불러오기 모달창 -->
 			<div class="modal fade" id="staticBackdrop-default" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
