@@ -86,7 +86,7 @@
 									</a>
 								</div>
 								<ul class="submenu">
-									<li><a href="noticelist" class="submenuLink longLink">전체 공지사항으로 돌아가기</a></li>
+									<li><a href="noticelist?officeId=${sessionScope.nowOfficeInfo.officeId}" class="submenuLink longLink">전체 공지사항으로 돌아가기</a></li>
 								</ul>
 							</li>
 						</ul>

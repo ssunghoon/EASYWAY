@@ -1,5 +1,5 @@
 $(document).ready(function(){ 
-   $(".chatbox-open").click(() =>
+	$(".chatbox-open").click(() =>
     $(".chatbox-popup, .chatbox-close").fadeIn()
   );
 

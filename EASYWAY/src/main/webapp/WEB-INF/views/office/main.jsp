@@ -17,47 +17,45 @@
 <meta name="generator" content="Hugo 0.84.0">
 <title>편하게 오피스 작업을! EasyWay!</title>
 
-<!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
-<!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<!-- 위와 버전만 다른가 -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/resources/js/jquery-ui-1.10.3.custom.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>	
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>	
+	<!--jQuery, Bootstrap, fontawesome 등 참고사항 -->
+	<!-- 주의! jQuery가 Bootstrap보다 위에 있어야 합니다.  -->
+	<!-- jQuery -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript"	src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="/resources/js/jquery-ui-1.10.3.custom.min.js"></script>
+	
+	<!-- Bootstrap -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		crossorigin="anonymous">
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 
-<!-- EASYWAY CSS, JS -->
-<link rel="stylesheet" href="/resources/css/chat.css">
-<link href="/resources/css/reset.css" rel="stylesheet">
-<link href="/resources/css/sidebars.css" rel="stylesheet">
-<link href="/resources/css/common.css" rel="stylesheet">
-<link href="/resources/css/widget.css" rel="stylesheet" />
-<link href="/resources/css/chat.css" rel="stylesheet">
-<script src="/resources/js/menu.js"></script>
+	<!-- Chat -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>	
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	
+	<!-- 기타 -->	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+	<link rel="canonical"	href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+	
+	<!-- EASYWAY CSS, JS -->
+	<link href="/resources/css/reset.css" rel="stylesheet" />
+	<link href="/resources/css/sidebars.css" rel="stylesheet" />
+	<link href="/resources/css/common.css" rel="stylesheet" />
+	<link href="/resources/css/widget.css" rel="stylesheet" />
+	<link href="/resources/css/chat.css" rel="stylesheet" />
+	<script src="/resources/js/menu.js"></script>
 
 
 </head>
@@ -140,13 +138,13 @@
 			      </div>
 			      <div class="modal-body">
 			        <div class ="custom-default-save">
-			        	<div id="custom-saved1">커스텀 1</div>
+			        	<div id="custom-saved1" data-bs-dismiss="modal" aria-label="Close">커스텀 1</div>
 			        </div>
 			        <div class ="custom-default-save">
-			        	<div id="custom-saved2">커스텀 2</div>
+			        	<div id="custom-saved2" data-bs-dismiss="modal" aria-label="Close">커스텀 2</div>
 			        </div>
 			        <div class ="custom-default-save">
-			        	<div id="custom-saved3">커스텀 3</div>
+			        	<div id="custom-saved3" data-bs-dismiss="modal" aria-label="Close">커스텀 3</div>
 			        </div>
 			      </div>
 			    </div>
