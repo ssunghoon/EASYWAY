@@ -248,4 +248,13 @@ public class OfficeServiceImpl implements OfficeService {
 		}
 		return count;
 	}
+
+	@Override
+	public int modifyDepartment(List<DepartmentVO> departmentInfos) {
+		int count = 0;
+		for (DepartmentVO department : departmentInfos) {
+			count += officeMapper.updateDepartment(department);
+		}
+		return count;
+	}
 }
