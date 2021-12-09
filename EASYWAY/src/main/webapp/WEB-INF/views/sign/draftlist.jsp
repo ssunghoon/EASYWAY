@@ -93,7 +93,7 @@
 						<c:forEach var="sign" items="${draftList }">
 						
 							<tr>
-								<td>${sign.rownum }</td>
+								<td>${sign.signId }</td>
 								<c:set var="sf" value="1" />
 								<c:choose>
 									<c:when test="${sign.signFormId == sf}">

@@ -53,6 +53,14 @@
 	padding: 15px;
 	flex-direction: column;
 }
+.btn-group{
+	width: 15px;
+}
+
+.project-board-td{
+	display: flex;
+	justify-content: space-between;
+}
 </style>
 
 </head>
@@ -73,10 +81,10 @@
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form action="projectboardregister"
-							method="post">
-							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-							<input type="hidden" name="projectId" value="${projectId}"/>
+						<form action="projectboardregister" method="post">
+							<input type="hidden" id="token" name="${_csrf.parameterName}"
+								data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+							<input type="hidden" name="projectId" value="${projectId}" />
 							<div class="modal-header">
 								<h5 class="modal-title" id="staticBackdropLabel">게시판 생성</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -98,13 +106,30 @@
 			</div>
 			<br>
 
+			<!-- Example split danger button -->
 
 			<table>
 				<!-- 게시판 목록 -->
 				<c:forEach var="projectBoard" items="${projectBoard}">
 					<tr>
-						<td><a
-							href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a></td>
+						<td class="project-board-td" class="project-board${projectId}">
+							<a class="projectBoard" href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}
+								<input type="hidden" class="projectid" value="${projectId}" >
+								<input type="hidden" class="projectboard" value="${projectBoard.projectBoardId}" >
+							</a>
+
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-info dropdown-toggle dropdown-toggle-split"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<span class="visually-hidden">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="" class="project-board-modify">수정</a></li>
+									<li><a class="dropdown-item" href="" class="project-board-del">삭제</a></li>
+								</ul>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -113,11 +138,41 @@
 		</div>
 
 		<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@게시물 목록@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  -->
-		<%-- <button class="easyway-btn"
-			onclick="location.href='projectpostregister?projectId=${projectId }'">글쓰기</button> --%>
 
 	</div>
-
+	<script type="text/javascript">
+	$(document).ready(function () {
+// 	  $('.project-board-del').on("click",function() {
+// 		  var aProjectBoard = $(this);
+// 		  console.log(aProjectBoard);
+// 		  console.log('asdfasfasfasf');
+		  
+// 		  $.ajax({
+// 			  type: "post",
+// 			  url: "/project/projectpostremove",
+// 			  data: JSON.stringify(data),
+// 		      contentType: "application/json; charset=utf-8",
+// 		      beforeSend: function (xhr) {
+// 		        var $token = $("#token");
+// 		        xhr.setRequestHeader($token.data("token-name"), $token.val());
+// 		      },
+// 		      success: function (result, status, xhr) {
+// // 		          console.log(result);
+// 		      },
+// 		      error: function (xhr, status, er) {
+// 		    	  alert("해당 이름을 가진 게시판이 존재하지 않습니다.");
+// 		      },
+// 		  });
+// 	  })
+	  $(document).on("click", ".project-board-del", function (e) {
+		  
+		  var aProjectBoard = $(this);
+		  console.log(aProjectBoard);
+		  console.log('asdfasfasfasf');
+// 	  }
+	})
+  });
+	</script>
 </body>
 
 </html>

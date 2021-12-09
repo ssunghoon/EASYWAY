@@ -25,12 +25,12 @@ public class NoticeServicelmpl implements NoticeService {
 
 	}
 
-	//페이징 처리 구현으로 기존 getlist 교체
-//	@Override
-//	public List<NoticeVO> getListAll() {
-//		log.info("getList!!!!!!!!!!!!!!!!!!!!!All!!!!!!!!!!!");
-//		return mapper.getListAll();
-//	}
+//	페이징 처리 구현으로 기존 getlist 교체
+	@Override
+	public List<NoticeVO> getListAll() {
+		log.info("getList!!!!!!!!!!!!!!!!!!!!!All!!!!!!!!!!!");
+		return mapper.getListAll();
+	}
 
 	@Override
 	public NoticeVO detail(Long obId) {
@@ -66,8 +66,8 @@ public class NoticeServicelmpl implements NoticeService {
 	}
 
 	@Override
-	public List<DepartmentDTO> getListDepartment() {
-		return mapper.getListDepartment();
+	public List<DepartmentDTO> getListDepartment(Long departmentId) {
+		return mapper.getListDepartment(departmentId);
 	}
 
 	@Override

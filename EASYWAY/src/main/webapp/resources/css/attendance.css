@@ -117,14 +117,15 @@ ul.work-check {
     flex-grow: 1;
 }
 
-.work-check li a {
+.work-check li div {
 	display: block;
     text-align: center;
     font-size: 3em;
     color: #0397ed;
+    cursor: pointer;
 }
 
-.work-check li a:HOVER {
+.work-check li div:HOVER {
 	color: #aaa;
 }
 

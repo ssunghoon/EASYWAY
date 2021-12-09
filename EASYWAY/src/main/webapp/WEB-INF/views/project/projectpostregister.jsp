@@ -117,7 +117,7 @@ input.easy-btn {
 	            <!-- form -->
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="projectpostregister" method="post">
+		            <form class="form-container" action="projectpostregister" method="post" enctype="multipart/form-data">
 		            	<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            	<input type="hidden" name="projectId" value="${projectId}">
 		            	<input type="hidden" name="projectBoardId" value="${projectBoardId }">
@@ -136,7 +136,7 @@ input.easy-btn {
 			            <div class="form-writer-input">
 			                <!-- 작성자 : 작성칸 -->
 			                <!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
-			                <div class="form-writer-name">전나은</div>
+			                <div class="form-writer-name">${sessionScope.nowEmployeeInfo.employeeName}</div>
 			            </div>
 			            
      
@@ -146,7 +146,7 @@ input.easy-btn {
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
-			            	<input type="text" name="projectPostFilePath">
+			            	<input type="file" name="projectPostFilePath">
 			            </div>
 			            
 			            <div class="form-content">
@@ -164,7 +164,7 @@ input.easy-btn {
 			            	<!-- 등록 버튼 -->
 			            	<div class="buttons">
 			            		<input type="submit" class="easyway-btn" value="등록">
-			            		<input type="reset" class="easyway-btn" value="취소">
+			            		<input type="button" class="easyway-btn" value="취소">
 			            	</div>
 			            	
 			            </div>

@@ -25,6 +25,7 @@ public class DepartmentDTO {
 	private Date obDate;
 	private String obFixedCheck;
 	private String obAccess;
+	private Long officeId;
 	
 	private List<NoticeVO> noticeVO;
 	}

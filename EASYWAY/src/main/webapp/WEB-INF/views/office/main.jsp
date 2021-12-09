@@ -96,68 +96,61 @@
 					data-bs-target="#staticBackdrop-save">
 					<i id="save-btn-icon" class="fas fa-save"></i> <span>저장하기</span>
 				</div>
-				<div id="import-btn" class="custom-btn" data-bs-toggle="modal"
-					data-bs-target="#staticBackdrop-default">
-					<i id="import-btn-icon" class="fas fa-cog"></i> <span>기본설정</span>
+				<div id="import-btn" class="custom-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-default">
+			 	 	<i id="import-btn-icon" class="fas fa-file-import"></i>
+			 	 	<span>불러오기</span>
 				</div>
 			</div>
 			<input type="hidden" id="token" name="${_csrf.parameterName}"
 				data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 
 			<!-- 커스텀 저장 모달창 -->
-			<div class="modal fade" id="staticBackdrop-save"
-				data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-				aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdropLabel">위젯 상태 저장하기</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="custom-save">
-								<div id="custom-save1">커스텀 1</div>
-								<div class="custom-unselected"></div>
-							</div>
-							<div class="custom-save">
-								<div id="custom-save2">커스텀 2</div>
-								<div class="custom-unselected"></div>
-							</div>
-							<div class="custom-save">
-								<div id="custom-save3">커스텀 3</div>
-								<div class="custom-unselected"></div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="modal fade" id="staticBackdrop-save" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="staticBackdropLabel">위젯 상태 저장하기</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <div class ="custom-save">
+			        	<div id="custom-save1" data-bs-dismiss="modal" aria-label="Close">커스텀 1</div>
+			        	<div class ="custom-unselected"></div>
+			        </div>
+			        <div class ="custom-save">
+			        	<div id="custom-save2" data-bs-dismiss="modal" aria-label="Close">커스텀 2</div>
+			        	<div class ="custom-unselected"></div>
+			        </div>
+			        <div class ="custom-save">
+			        	<div id="custom-save3" data-bs-dismiss="modal" aria-label="Close">커스텀 3</div>
+			        	<div class ="custom-unselected"></div>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
 			</div>
-
-			<!-- 기본 커스텀 설정 모달창 -->
-			<div class="modal fade" id="staticBackdrop-default"
-				data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-				aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdrop2Label">해당 오피스의 기본
-								커스텀을 변경하고 새로고침해주세요</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="custom-default-save">
-								<div id="custom-saved1">커스텀 1</div>
-							</div>
-							<div class="custom-default-save">
-								<div id="custom-saved2">커스텀 2</div>
-							</div>
-							<div class="custom-default-save">
-								<div id="custom-saved3">커스텀 3</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			
+			<!-- 저장한 커스텀 불러오기 모달창 -->
+			<div class="modal fade" id="staticBackdrop-default" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="staticBackdrop2Label">해당 오피스의 기본 커스텀을 변경하고 새로고침해주세요</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <div class ="custom-default-save">
+			        	<div id="custom-saved1">커스텀 1</div>
+			        </div>
+			        <div class ="custom-default-save">
+			        	<div id="custom-saved2">커스텀 2</div>
+			        </div>
+			        <div class ="custom-default-save">
+			        	<div id="custom-saved3">커스텀 3</div>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 
 			<!-- 썸네일 컨테이너 (draggable) -->
@@ -204,8 +197,10 @@
 
 <script type="text/javascript">
 
+/* 현재 기본으로 저장된 커스텀 번호 */
 var customNow = ${customNow};
 
+/* 위젯 리스트 */
 var widgetArr = new Array();
 
 <c:forEach var="widgetList" items="${widgetList}">
@@ -217,7 +212,7 @@ var widgetArr = new Array();
 	widgetArr.push("${widgetList.widgetHeight}");
 
 </c:forEach>
-	
+
 </script>
 <script src="/resources/js/chat.js"></script>
 </html>

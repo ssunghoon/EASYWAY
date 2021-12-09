@@ -98,6 +98,19 @@
 						<td><a href="/filedownload?fileName=${basicSign.fileName}">${basicSign.fileName}</a></td>
 					</tr>
 					</c:if>
+					<tr>
+						<th class="sign-th">결재순서</th>
+						<td>
+							<c:forEach var="list" items="${signList}">
+								${list.signListOrder }번째&nbsp;${list.employeeName }&nbsp;
+								<c:choose>
+									<c:when test="${list.signListCheck == 'Y'}">O</c:when>
+									<c:when test="${list.signListCheck == 'N'}">X</c:when>
+								</c:choose>
+								&nbsp;&nbsp;
+							</c:forEach>
+						</td>
+					</tr>
 					</table>
 					</c:when>
 					<c:when test="${spendSign.signFormId == '2'}">
@@ -140,6 +153,19 @@
 						<td><a href="/filedownload?fileName=${spendSign.fileName}">${spendSign.fileName}</a></td>
 					</tr>
 					</c:if>
+					<tr>
+						<th class="sign-th">결재순서</th>
+						<td>
+							<c:forEach var="list" items="${signList}">
+								${list.signListOrder }번째&nbsp;${list.employeeName }&nbsp;
+								<c:choose>
+									<c:when test="${list.signListCheck == 'Y'}">O</c:when>
+									<c:when test="${list.signListCheck == 'N'}">X</c:when>
+								</c:choose>
+								&nbsp;&nbsp;
+							</c:forEach>
+						</td>
+					</tr>
 					</table>
 					</c:when>
 					<c:when test="${vacationSign.signFormId == '3'}">
@@ -180,6 +206,19 @@
 						<td><a href="/filedownload?fileName=${vacationSign.fileName}">${vacationSign.fileName}</a></td>
 					</tr>
 					</c:if>
+					<tr>
+						<th class="sign-th">결재순서</th>
+						<td>
+							<c:forEach var="list" items="${signList}">
+								${list.signListOrder }번째&nbsp;${list.employeeName }&nbsp;
+								<c:choose>
+									<c:when test="${list.signListCheck == 'Y'}">O</c:when>
+									<c:when test="${list.signListCheck == 'N'}">X</c:when>
+								</c:choose>
+								&nbsp;&nbsp;
+							</c:forEach>
+						</td>
+					</tr>
 					</table>
 					</c:when>
 				</c:choose>

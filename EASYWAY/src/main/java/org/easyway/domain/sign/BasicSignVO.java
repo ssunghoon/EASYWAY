@@ -27,6 +27,7 @@ public class BasicSignVO implements Serializable{
 	private String signListCheck; // SL_CHECK
 	
 	private String fileName; // FILE_NAME
+	private String employeeName; // EMPLOYEE_NAME
 	
 	
 }
