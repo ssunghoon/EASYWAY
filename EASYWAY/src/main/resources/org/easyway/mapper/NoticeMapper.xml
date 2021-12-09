@@ -4,14 +4,6 @@
 
 <mapper namespace="org.easyway.mapper.NoticeMapper">
 
-<!-- <resultMap type="DepartmentDTO" id="DepartmentDTO">
-<result column="DEPARTMENT_ID" property="departmentId"/>
-<result column="EMPLOYEE_ID" property="employeeId"/>
-</resultMap>
-
-<resultMap type="NoticeVO" id="NoticeVO">
-<result column=""/>
-</resultMap> -->
 <!-- sql문을 저장했다 필요할때 불러올수있다(include) -->
 
 	<sql id="criteria">
@@ -37,27 +29,7 @@
 		VALUES(ob_seq.nextval,#{employeeId},#{departmentId},#{obFilePath},#{obTitle},#{obContent},0,SYSDATE,#{obFixedCheck}, #{obAccess})
 	</insert>
 
-<!-- 	<select id="getListAll" resultType="org.easyway.domain.notice.NoticeVO"> -->
-<!-- 		SELECT -->
-<!-- 		OB_ID AS obId, -->
-<!-- 		EMPLOYEE_ID AS employeeId, -->
-<!-- 		DEPARTMENT_ID AS departmentId, -->
-<!-- 		OB_FILE_PATH AS obFilePath, -->
-<!-- 		OB_TITLE AS obTitle, -->
-<!-- 		OB_CONTENT AS obContent, -->
-<!-- 		OB_VIEW AS obView, -->
-<!-- 		OB_DATE AS obDate, -->
-<!-- 		OB_FIXED_CHECK AS obFixedCheck, -->
-<!-- 		OB_ACCESS AS obAccess -->
-<!-- 		FROM OF_BOARD -->
-<!-- 		WHERE -->
-<!-- 		OB_ACCESS = 'N'  -->
-<!-- 		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC -->
-
-<!-- 	</select> -->
-
-
-	<select id="read" resultType="org.easyway.domain.notice.NoticeVO">
+	<select id="getListAll" resultType="org.easyway.domain.notice.NoticeVO">
 		SELECT
 		OB_ID AS obId,
 		EMPLOYEE_ID AS employeeId,
@@ -67,8 +39,35 @@
 		OB_CONTENT AS obContent,
 		OB_VIEW AS obView,
 		OB_DATE AS obDate,
-		OB_FIXED_CHECK AS obFixedCheck
+		OB_FIXED_CHECK AS obFixedCheck,
+		OB_ACCESS AS obAccess
 		FROM OF_BOARD
+		WHERE
+		OB_ACCESS = 'N' 
+		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
+
+	</select>
+
+
+	<select id="read" resultType="org.easyway.domain.notice.NoticeVO">
+		SELECT
+			O.OB_ID AS obId,
+			E.EMPLOYEE_NAME AS employeeName,
+			O.DEPARTMENT_ID AS departmentId,
+			O.EMPLOYEE_ID AS employeeId,
+			E.OFFICE_ID AS officeId,
+			O.OB_TITLE AS obTitle,
+			O.OB_CONTENT AS obContent,
+			O.OB_FILE_PATH AS obFilePath,
+			O.OB_DATE AS obDate,
+			O.OB_VIEW AS obView,
+			O.OB_FIXED_CHECK AS obFixedCheck,
+			O.OB_ACCESS AS obAccess
+		FROM OF_BOARD O
+		JOIN
+		EMPLOYEE E
+		ON
+		O.EMPLOYEE_ID = E.EMPLOYEE_ID
 		WHERE
 		OB_ID = #{obId}
 	</select>
@@ -81,7 +80,8 @@
 		#{obTitle},
 		OB_CONTENT = #{obContent},
 		OB_FILE_PATH = #{obFilePath},
-		OB_FIXED_CHECK = #{obFixedCheck}
+		OB_FIXED_CHECK = #{obFixedCheck},
+		OB_ACCESS = #{obAccess}
 		WHERE OB_ID = #{obId}
 	</update>
 
@@ -124,8 +124,6 @@
 				OB_ACCESS = 'N'
 				)
 				O JOIN EMPLOYEE E ON O.EMPLOYEE_ID = E.EMPLOYEE_ID
-				AND
-				E.OFFICE_ID = 1
 				WHERE RN > (#{pageNum} -1) * #{amount}
 			]]>
 				ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
@@ -180,7 +178,7 @@
 		ON
 			O.DEPARTMENT_ID = D.DEPARTMENT_ID
 		WHERE
-			D.DEPARTMENT_ID = #{departmentId}
+			O.DEPARTMENT_ID = #{departmentId}
 			AND
 			O.OB_ACCESS = 'Y'
 		ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC
@@ -223,8 +221,7 @@
 		        JOIN DEPARTMENT D
 		        ON 
 		        O.DEPARTMENT_ID = D.DEPARTMENT_ID
-		        AND
-		        D.DEPARTMENT_ID = #{departmentId} 
+
 				WHERE RN > (#{pageNum} -1) * #{amount}
 			]]>
 				ORDER BY OB_FIXED_CHECK DESC, OB_ID DESC

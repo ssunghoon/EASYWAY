@@ -157,7 +157,7 @@
 				<li id="thumb-sign" class="widget-thumb unselected">
 					<div class="custom-delete">
 					</div>
-					<div class="widget-thumb-label">결재함 목록</div>
+					<div class="widget-thumb-label">결재함 건수</div>
 				</li>
 				<li id="thumb-project" class="widget-thumb unselected">
 					<div class="custom-delete">
@@ -180,8 +180,10 @@
 
 <script type="text/javascript">
 
+/* 현재 기본으로 저장된 커스텀 번호 */
 var customNow = ${customNow};
 
+/* 위젯 리스트 */
 var widgetArr = new Array();
 
 <c:forEach var="widgetList" items="${widgetList}">
@@ -193,7 +195,7 @@ var widgetArr = new Array();
 	widgetArr.push("${widgetList.widgetHeight}");
 
 </c:forEach>
-	
+
 </script>
 
 </html>

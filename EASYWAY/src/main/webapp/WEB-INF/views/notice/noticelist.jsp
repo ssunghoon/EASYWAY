@@ -89,14 +89,14 @@
 					<ul>
 						<li class="topMenuLi">
 							<div class="easyway-title1">
-								<a class="menuLink" href="noticelist"> 
+								<a class="menuLink"> 
 								전체 공지사항
 								 </a>
 							</div>
 							<ul class="submenu">
 								<li><a href="noticelist" class="submenuLink longLink">전체
 										공지사항</a></li>
-								<li><a href="departmentnoticelist" class="submenuLink longLink">부서
+								<li><a href="departmentnoticelist?departmentId=${sessionScope.nowEmployeeInfo.departmentId}" class="submenuLink longLink">부서
 										공지사항</a></li>
 							</ul>
 						</li>

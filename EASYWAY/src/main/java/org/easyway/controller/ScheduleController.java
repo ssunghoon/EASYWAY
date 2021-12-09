@@ -87,9 +87,9 @@ public class ScheduleController {
 		return new ResponseEntity<ScheduleVO>(service.detail(scheduleId), HttpStatus.OK);
 	}
 	
-	//일정수정 구현중
+	//일정수정기간 포맷 시분초지우기
 	@PostMapping("/schedulemodify")
-	public String modify(ScheduleVO schedule, RedirectAttributes rttr){
+	public String modify(ScheduleVO schedule, RedirectAttributes rttr, HttpSession session){
 		log.info("modify:"+schedule);
 		
 		if(service.modify(schedule)){
@@ -106,6 +106,7 @@ public class ScheduleController {
 		if(service.remove(scheduleId)){
 			rttr.addFlashAttribute("result", "success");
 		}
+		
 		return "redirect:/schedule/schedulemain";
 	}
 	

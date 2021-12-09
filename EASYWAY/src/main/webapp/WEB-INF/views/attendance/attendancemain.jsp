@@ -85,22 +85,22 @@
 		                <!-- 4번째 easyway-attendance-item : 근무 체크 내용 -->
 		                <div class="work-check-clock"></div>
 						<ul class="work-check">
-							<li class="work-check-start">
-								<a class="" href="/attendance/registerAttendanceStart">
+							<li id="work-check-start" class="select-check">
+								<div>
 									<i class="far fa-play-circle"></i>
-								</a>
+								</div>
 								<span>출근하기</span>
 							</li>
-							<li class="work-check-out">
-								<a class="" href="/attendance/registerAttendanceOut">
+							<li id="work-check-out" class="select-check">
+								<div>
 									<i class="far fa-pause-circle"></i>
-								</a>
+								</div>
 								<span>외근하기</span>
 							</li>
-							<li class="work-check-end">
-								<a class="" href="/attendance/registerAttendanceEnd">
+							<li id="work-check-end" class="select-check">
+								<div>
 									<i class="far fa-stop-circle"></i>
-								</a>
+								</div>
 								<span>퇴근하기</span>
 							</li>
 						</ul>
