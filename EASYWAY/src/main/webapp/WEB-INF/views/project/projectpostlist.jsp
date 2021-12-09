@@ -53,6 +53,16 @@
 	padding: 15px;
 	flex-direction: column;
 }
+
+.btn-group{
+	width: 15px;
+}
+
+.project-board-td{
+	display: flex;
+	justify-content: space-between;
+}
+
 </style>
 
 </head>
@@ -115,8 +125,20 @@
 				<!-- 게시판 목록 -->
 				<c:forEach var="projectBoard" items="${projectBoard}">
 					<tr>
-						<td><a
-							href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a></td>
+						<td class="project-board-td">
+							<a href="projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoard.projectBoardId}">${projectBoard.projectBoardName}</a>
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-info dropdown-toggle dropdown-toggle-split"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<span class="visually-hidden">Toggle Dropdown</span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">수정</a></li>
+									<li><a class="dropdown-item" href="" id="project-board-del">삭제</a></li>
+								</ul>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -165,45 +187,82 @@
 							<th>작성일</th>
 							<th>조회수</th>
 						</tr>
-						<c:forEach var="projectPost" items="${projectPost}">
+						<c:forEach var="postDTO" items="${projectPostDTO}">
 							<tr>
-								<td><c:out value="${projectPost.projectPostId }"/></td>
-								<td><c:out value="${sessionScope.nowEmployeeInfo.employeeName}"/></td>
-								<td><a href="projectpostdetail?projectId=${projectId}&&projectBoardId=${projectBoardId}&&projectPostId=${projectPost.projectPostId}">${projectPost.projectPostTitle}</a></td>
-								<td><c:out value="${projectPost.projectPostDate }"/></td>
-								<td><c:out value="${projectPost.projectPostViews }"/></td>
+								<td><c:out value="${postDTO.projectPostId }"/></td>
+								<td><c:out value="${postDTO.employeeName}"/></td>
+								<td><a href="projectpostdetail?projectId=${postDTO.projectId}&&projectBoardId=${postDTO.projectBoardId}&&projectPostId=${postDTO.projectPostId}">${postDTO.projectPostTitle}</a></td>
+								<td><c:out value="${postDTO.projectPostDate }"/></td>
+								<td><c:out value="${postDTO.projectPostViews }"/></td>
 							</tr>
 						</c:forEach>
 					</table>
 
 				</div>
-				<div class="easyway-board-item">
-					<!-- 9번째 easyway-board-item : 페이징 들어갈 자리 -->
-					<ul class="pagination pagination-sm">
-						<!-- 페이징 임시 데이터 -->
-						<!-- 이전 버튼은 page-prev, 이후 버튼은 page-next, 번호는 page-num 클래스를 넣어주면 됩니다 -->
-						<li class="page-prev"><a class="page-click" href="#">Prev</a></li>
-						<li class="page-num"><a class="page-click" href="#">1</a></li>
-						<li class="page-num active"><a class="page-click" href="#">2</a></li>
-						<li class="page-num"><a class="page-click" href="#">3</a></li>
-						<li class="page-num"><a class="page-click" href="#">4</a></li>
-						<li class="page-num"><a class="page-click" href="#">5</a></li>
-						<li class="page-next"><a class="page-click" href="#">Next</a></li>
-					</ul>
+	            <div class="easyway-board-item">
+	                <!-- 9번째 easyway-board-item : 페이징 들어갈 자리 -->
+	                <ul class="pagination pagination-sm">
+	                    <!-- 페이징 임시 데이터 -->
+	                    <!-- 이전 버튼은 page-prev, 이후 버튼은 page-next, 번호는 page-num 클래스를 넣어주면 됩니다 -->
+	                    <li class="page-prev"><a class="page-click" href="#">Prev</a></li>
+	                    <li class="page-num"><a class="page-click" href="#">1</a></li>
+	                    <li class="page-num active"><a class="page-click" href="#">2</a></li>
+	                    <li class="page-num"><a class="page-click" href="#">3</a></li>
+	                    <li class="page-num"><a class="page-click" href="#">4</a></li>
+	                    <li class="page-num"><a class="page-click" href="#">5</a></li>
+	                    <li class="page-next"><a class="page-click" href="#">Next</a></li>
+	                  </ul>
+	            </div>
+	            <div class="easyway-board-item">
+	                <!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
+	                <form class="search-form" action="" method="get">
+	                	<input type="hidden" id="token" name="${_csrf.parameterName}"
+                  		data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+	                    <select name="type" class="dropdown-toggle" data-toggle="dropdown">
+	                        <option value="" class="dropdown-menu">검색 옵션</option>
+	                            <option value="title" class="dropdown-item">제목</option>
+	                            <option value="writer" class="dropdown-item">작성자</option>
+	                            <option value="content" class="dropdown-item">내용</option>
+	                    </select>
+	                    <input type="search" class="search-keyword" name="keyword">
+	                    <input type="submit" class="easyway-btn" value="검색">
+	                </form>
+					
 				</div>
 				<div class="easyway-board-item">
 					<!-- 10번째 easyway-board-item : 검색 들어갈 자리 -->
-					<form class="search-form" action="" method="get">
-						<input type="hidden" id="token" name="${_csrf.parameterName}"
-							data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-						<select name="type" class="dropdown-toggle" data-toggle="dropdown">
-							<option value="" class="dropdown-menu">검색 옵션</option>
-							<option value="title" class="dropdown-item">제목</option>
-							<option value="writer" class="dropdown-item">작성자</option>
-							<option value="content" class="dropdown-item">내용</option>
-						</select> <input type="search" class="search-keyword" name="keyword">
-						<input type="submit" class="easyway-btn" value="검색">
-					</form>
+<!-- 					<form class="search-form" action="/project/projectpostlist" method="get"> -->
+<%-- 						<input type="hidden" id="token" name="${_csrf.parameterName}" --%>
+<%--                			   data-token-name="${_csrf.headerName}" value="${_csrf.token}" /> --%>
+<!-- 						<select name="type" class="dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 							<option class="dropdown-menu" value=""  -->
+<%-- 							<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>검색 옵션 --%>
+<!-- 							</option> -->
+<!-- 							<option class="dropdown-item" value="TCN"  -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'TCN' ? 'selected':''}"/>>전체 --%>
+<!-- 							</option>							 -->
+<!-- 							<option class="dropdown-item" value="T"  -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'T' ? 'selected':''}"/>>제목 --%>
+<!-- 							</option> -->
+<!-- 							<option class="dropdown-item" value="C"  -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'C' ? 'selected':''}"/>>내용 --%>
+<!-- 							</option> -->
+<!-- 							<option class="dropdown-item" value="TC"  -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected':''}"/>>제목+내용 --%>
+<!-- 							</option> -->
+<!-- 							<option class="dropdown-item" value="N"   -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>작성자 --%>
+<!-- 							</option> -->
+<!-- 						</select>  -->
+<!-- 						<input type='text' class="search-keyword" name='keyword' -->
+<%-- 							value='<c:out value="${pageMaker.cri.keyword}"/>' />  --%>
+<!-- 							<input type='hidden' name='pageNum' -->
+<%-- 							value='<c:out value="${pageMaker.cri.pageNum}"/>' />  --%>
+<!-- 							<input type='hidden' name='amount' -->
+<%-- 							value='<c:out value="${pageMaker.cri.amount}"/>' />  --%>
+							
+<!-- 							<button class="easyway-btn" value="검색">검색</button> -->
+<!-- 					</form> -->
 
 				</div>
 

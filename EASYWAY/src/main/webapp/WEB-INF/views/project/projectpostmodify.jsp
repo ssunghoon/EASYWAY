@@ -139,7 +139,7 @@ input.easy-btn {
 			            <div class="form-writer-input">
 			                <!-- 작성자 : 작성칸 -->
 			                <!-- class는 input이라고 이름붙였지만, read-only로 해주세요 -->
-			                <div class="form-writer-name">전나은</div>
+			                <div class="form-writer-name">${sessionScope.nowEmployeeInfo.employeeName}</div>
 			            </div>
 			            
      
