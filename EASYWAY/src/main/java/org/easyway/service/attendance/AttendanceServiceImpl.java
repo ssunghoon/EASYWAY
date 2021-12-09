@@ -39,7 +39,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 		String startTime = sdf.format(timestamp);
 		//지각 계산하기
 		String onlyTime = startTime.substring(startTime.length()-8, startTime.length());
+		onlyTime.split(":");
+		
 		log.info("stratTime : " + onlyTime);
+		
 
 		attendance.setAttendanceStart(startTime);
 		attendance.setEmployeeId(employeeId);
