@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SignListVO implements Serializable{
-	private long signListId; // SL_ID
-	private long employeeId; //EMPLOYEE_ID
-	private long employeeId1; //EMPLOYEE_ID
-	private long employeeId2; //EMPLOYEE_ID
-	private long employeeId3; //EMPLOYEE_ID
-	private long employeeId4; //EMPLOYEE_ID
-	private long signId; // SIGN_ID
-	private int signListOrder; // SL_ORDER
+	private Long signListId; // SL_ID
+	private Long employeeId; //EMPLOYEE_ID
+	private Long employeeId1; //EMPLOYEE_ID
+	private Long employeeId2; //EMPLOYEE_ID
+	private Long employeeId3; //EMPLOYEE_ID
+	private Long employeeId4; //EMPLOYEE_ID
+	private Long signId; // SIGN_ID
+	private Long signListOrder; // SL_ORDER
 	private String signListCheck; // SL_CHECK
 	
 	

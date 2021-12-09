@@ -209,7 +209,7 @@ public class SignController {
 		log.info("getDraft");
 		log.info("signFormId = " + signFormId);
 		log.info("signId : " + signId);
-		
+		model.addAttribute("signList", service.getSignListBySignId(signId));
 		if(signFormId == 1){
 			model.addAttribute("basicSign", service.getDraftBasic(signId, signFormId));
 		}else if(signFormId == 2) {
@@ -237,7 +237,7 @@ public class SignController {
 				model.addAttribute("vacationSign", service.getPaymentVacation(signId, signFormId, employeeId));
 			}
 		}
-	
+		
 	// 결재함 목록
 	@GetMapping("/paymentlist")
 	public void getPayment(Criteria cri, Model model, HttpSession session){
