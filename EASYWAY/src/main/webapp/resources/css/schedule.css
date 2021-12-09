@@ -187,6 +187,9 @@
 	color: #0397ed;
 	cursor: pointer;
 }
+.save-btn{
+	font-weight: 900;
+}
 /* <클래스 영역> */
 .container {
 	margin-top: 50px;
