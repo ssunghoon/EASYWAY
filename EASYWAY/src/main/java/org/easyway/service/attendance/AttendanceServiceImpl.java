@@ -36,11 +36,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String startTime = sdf.format(timestamp);
+		//지각 계산하기
+		String onlyTime = startTime.substring(startTime.length()-8, startTime.length());
+		log.info("stratTime : " + onlyTime);
 
-		attendance.setAttendanceStart(sdf.format(timestamp));
+		attendance.setAttendanceStart(startTime);
 		attendance.setEmployeeId(employeeId);
 		mapper.insert(attendance);
-		
 	}
 
 	@Override

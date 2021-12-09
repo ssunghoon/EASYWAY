@@ -26,7 +26,7 @@ public class WidgetServiceImpl implements WidgetService {
 	public int save(List<WidgetVO> widgetList, WidgetCustom widgetCustom) {
 		// 처리 순서
 		// 1. 기존에 저장된 기본 불러오기 취소 
-		mapper.updateDefaultCancel();
+		mapper.updateDefaultCancel(widgetCustom);
 		
 		// 2. 기존 저장되어있는 위젯들 지우기
 		log.info("wsCustom : " + widgetCustom.getWsCustom());
@@ -40,6 +40,7 @@ public class WidgetServiceImpl implements WidgetService {
 		Long wsId = widgetCustom.getWsId();
 		log.info("wsId------------------------------" + wsId);
 		
+		int result;
 		// 5. 위젯 정보 저장
 		widgetList.forEach(widget -> {
 			log.info("widget---------------------------" + widget);
@@ -77,15 +78,13 @@ public class WidgetServiceImpl implements WidgetService {
 	}
 
 	// 위젯 기본값 변경하기
-	//@Transactional
+	@Transactional
 	@Override
-	public int modifyDefault(int wsCustom) {
+	public int modifyDefault(WidgetCustom wsCustom) {
 		
 		log.info("wsCustom : " + wsCustom);
-		mapper.updateDefaultCancel();
+		mapper.updateDefaultCancel(wsCustom);
 		mapper.updateDefault(wsCustom);
-		//log.info("cancel : " + cancel);
-		//log.info("modifyDefault : " + modifyDefault);
 		
 		return 1;
 	}

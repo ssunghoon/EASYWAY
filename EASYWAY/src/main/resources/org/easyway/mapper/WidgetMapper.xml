@@ -68,13 +68,17 @@
 	<update id="updateDefaultCancel">
 		UPDATE widget_save SET ws_import = 'N'
 			WHERE ws_custom = ( SELECT ws_custom FROM widget_save
-			WHERE ws_import = 'Y')
+			WHERE ws_import = 'Y'
+			AND member_id = #{memberId}
+			AND office_id = #{officeId})
 	</update>
 
 	<!-- 위젯 기본값 변경하기 : 새로 기본값 설정 -->
 	<update id="updateDefault">
 	  	UPDATE widget_save	SET ws_import = 'Y'
 	  		WHERE ws_custom = #{wsCustom}
+	  		AND member_id = #{memberId}
+			AND office_id = #{officeId}
 	</update>
 	
 	<!-- 위젯 리셋을 위한 삭제 구현 : 해당 커스텀 번호의 위젯 테이블 삭제 -->

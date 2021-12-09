@@ -246,9 +246,9 @@ public class SignServiceImpl implements SignService {
 	
 	// 결재함 목록
 	@Override
-	public List<SignListVO> getSignList() {
+	public List<SignListVO> getSignList(Long employeeId) {
 		log.info("getDraftList..............페이징 없는 version");
 				
-		return mapper.getListPayment();
+		return mapper.getListPayment(employeeId);
 	}
 }
