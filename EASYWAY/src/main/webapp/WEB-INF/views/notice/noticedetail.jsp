@@ -50,90 +50,86 @@
 	
 	
 		<!-- 페이지 표현 부분 -------------------------------------------------------------------------->
-	    <div class="easyway-wrapper">
-	
-	        <div class="easyway-container">
-	
-	            <div class="easyway-boarddetail-pagetitle">
-	                 <!-- 게시물 작성 타이틀 -->
-	                <div class="easyway-title1">
-	                    자세히 보기
-	                </div>
-	            </div>
-	            <div class="easyway-boarddetail-title">
-	            	<!-- 게시물 타이틀 -->
-	            	<div class="post-title">
-	                   no<c:out value="${of_board.obId }"/>
-	                   <c:out value="${of_board.obTitle}"/>
-	                </div>
-	            </div>
-	            <div class="easyway-boarddetail-writer">
-	            	<!-- 게시물 작성자 / 소속부서 / 수정 / 삭제 / 리스트로 돌아가기 -->
-	            	
-	            	<!-- 작성자 정보 -->
-	            	<div class="writer-info">
-		            	<div class="writer-name">
-		            		<i class="writer-icon fas fa-user-circle"></i>
-							${of_board.employeeName }
-		            	</div>
+		<div class="easyway-wrapper">
+
+			<div class="easyway-container">
+
+				<div class="easyway-boarddetail-pagetitle">
+					<!-- 게시물 작성 타이틀 -->
+					<div class="easyway-title1">자세히 보기</div>
+				</div>
+				<div class="easyway-boarddetail-title">
+					<!-- 게시물 타이틀 -->
+					<div class="post-title">
+						no
+						<c:out value="${of_board.obId }" />
+						<c:out value="${of_board.obTitle}" />
+					</div>
+				</div>
+				<div class="easyway-boarddetail-writer">
+					<!-- 게시물 작성자 / 소속부서 / 수정 / 삭제 / 리스트로 돌아가기 -->
+
+					<!-- 작성자 정보 -->
+					<div class="writer-info">
+						<div class="writer-name">
+							<i class="writer-icon fas fa-user-circle"></i> ${of_board.employeeName }
+						</div>
 						<div class="writer-department">
-<%-- 						개발부<c:out value="${of_board.departmentName }"/> --%>
+							<%-- 						개발부<c:out value="${of_board.departmentName }"/> --%>
 						</div>
 					</div>
-	            	
-<%-- 	            	<c:if test="${sessionScope.nowEmployeeInfo.employeeId} == ${of_board.employeeId }"> --%>
-	            	<form action="/notice/noticeremove" method="post">
-	            	<input type="hidden" id="token" name="${_csrf.parameterName}"
-              		    data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-	            	<div class="buttons">
-	            	<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>' >
-						<!--수정페이지로 이동 버튼 -->
-						<a href="/notice/noticemodify?obId=${of_board.obId }"> <input
-							type="button" value="수정" class="modify-btn easyway-btn"></a>
-						<!-- form태그에서 경로 넣고포스트로 삭제 실행하고 리스트로 돌아감(컨트롤러) -->
-						<input type="submit" value="삭제" class="delete-btn easyway-btn">
-						<!-- 리스트로 이동 -->
-						 
-<%-- 						 </c:if> --%>
-						<a href="/notice/noticelist"> <input type="button"
-							value="목록" class="list-btn easyway-btn"></a>
-						 </div>
-						 </form>
-					</div>
-	            	
-	            </div>
-	            	
-	            	
-	            <div class="easyway-boarddetail-info">
-	            	<!-- 게시물 세부 정보 : 작성 시간, 날짜 / 조회수 등 -->
-	            	
-						<div class="info-time">
-	            		<i class="time-icon far fa-clock"></i>
-						<fmt:formatDate var="setObDate" 
-						value="${of_board.obDate }" pattern="yyyy-MM-dd HH:mm:ss" />
-						${setObDate }
-	            	</div>
-	
-					<form id='operForm' action="/notice/noticedetail" method="get">
-						<input type="hidden" id="token" name="${_csrf.parameterName}"
-                 		 data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
-						<input type="hidden" id='obId' name="obId" value='<c:out value="${of_board.obId}"/>'> 
-							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> 
-							<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'> 
-							<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
-							<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 
+
+					<form action="/notice/noticeremove" method="post">
+						<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
+						<div class="buttons">
+							<input type="hidden" name="obId" value='<c:out value="${of_board.obId}"/>'>
+							<c:if test="${sessionScope.nowEmployeeInfo.employeeId == of_board.employeeId }">
+								<!--수정페이지로 이동 버튼 -->
+								<a href="/notice/noticemodify?obId=${of_board.obId }"> <input type="button" value="수정" class="modify-btn easyway-btn"></a>
+								<!-- form태그에서 경로 넣고포스트로 삭제 실행하고 리스트로 돌아감(컨트롤러) -->
+								<input type="submit" value="삭제" class="delete-btn easyway-btn">
+							</c:if>
+							<!-- 리스트로 이동 -->
+
+
+							<a href="/notice/noticelist"> <input type="button" value="목록" class="list-btn easyway-btn"></a>
+						</div>
 					</form>
+				</div>
 
+			</div>
+
+
+			<div class="easyway-boarddetail-info">
+				<!-- 게시물 세부 정보 : 작성 시간, 날짜 / 조회수 등 -->
+
+				<div class="info-time">
+					<i class="time-icon far fa-clock"></i>
+					<fmt:formatDate var="setObDate" value="${of_board.obDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+					${setObDate }
 				</div>
-				
-				<div class="easyway-boarddetail-content">
-						 ${of_board.obContent}
-				</div>
-	        </div>
-	
-	    </div>
-    </div>
+
+				<form id='operForm' action="/notice/noticedetail" method="get">
+					<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" /> <input type="hidden" id='obId' name="obId"
+						value='<c:out value="${of_board.obId}"/>'> <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> <input type='hidden' name='amount'
+						value='<c:out value="${cri.amount}"/>'> <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> <input type='hidden' name='type'
+						value='<c:out value="${cri.type}"/>'>
+
+				</form>
+
+			</div>
+
+			<div class="easyway-boarddetail-content">${of_board.obContent}</div>
+			<div class="form-file-input">
+				<c:if test="${of_board.fileName ne null}">
+						첨부파일 <a href="/filedownload?fileName=${of_board.fileName}">${of_board.fileName}</a>
+				</c:if>
+			</div>
+		</div>
+
+	</div>
+  
 
 
 </body>
