@@ -194,8 +194,9 @@ public class MainController {
 	// 위젯 경로 - 캘린더 일정 목록
 	@GetMapping("/widget/schedulemain")
 	@ResponseBody
-	public ResponseEntity<List<ScheduleVO>> widgetschedulemain(Model model) {
-		List<ScheduleVO> scheduletlist = scheduletService.getListDo();
+	public ResponseEntity<List<ScheduleVO>> widgetschedulemain(HttpSession session, Model model) {
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		List<ScheduleVO> scheduletlist = scheduletService.getListDo(employeeDTO.getEmployeeId());
 		model.addAttribute("scheduletlist", scheduletlist);
 		return new ResponseEntity<>(scheduletlist, HttpStatus.OK);
 	}

@@ -2,8 +2,13 @@ package org.easyway.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.employee.EmployeeVO;
 import org.easyway.domain.notice.DepartmentDTO;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -44,11 +50,29 @@ public class NoticeController {
 
 	// 입력 기능을 실행한다
 	@PostMapping("/noticeregister")
-	public String noticeRegister(NoticeVO notice, RedirectAttributes rttr, HttpSession session) {
+	public String noticeRegister(NoticeVO notice, RedirectAttributes rttr, HttpSession session) throws IOException{
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
 		notice.setEmployeeId(employeeDTO.getEmployeeId());
+		
+		log.info("파일 이름 : " + notice.getObFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = notice.getObFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+		}else {
+			notice.setFileName("null");
+		}
+		notice.setFileName(fileName);
+		// 파일처리 end
 		service.register(notice);
 		rttr.addFlashAttribute("result", notice.getObId());
+		
 		return "redirect:/notice/noticelist";
 	}
 
@@ -86,7 +110,7 @@ public class NoticeController {
 	}
 
 	@PostMapping("/noticemodify")
-	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") Long obId, HttpSession session) {
+	public String noticemodify(NoticeVO notice, RedirectAttributes rttr, @RequestParam("obId") Long obId, HttpSession session)  throws IOException{
 		//데이터가 잘 전달됐는지 확인하기위한 로그
 		System.out.println("title: " + notice.getObTitle()); 
 		System.out.println("Id: " + notice.getObId());
@@ -96,6 +120,22 @@ public class NoticeController {
 //		if (service.modify(notice)) {
 //			rttr.addFlashAttribute("result" + "success");
 //		}
+		log.info("파일 이름 : " + notice.getObFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = notice.getObFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+		}else {
+			notice.setFileName("null");
+		}
+		notice.setFileName(fileName);
+		// 파일처리 end
 		service.modify(notice);
 		//리퀘스트 파람으로 번호를 받아와 출력
 		return "redirect:/notice/noticedetail?obId="+ notice.getObId();
@@ -128,6 +168,8 @@ public class NoticeController {
 		log.info("부서 게시판 띄웁니다");
 		
 		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("nowEmployeeInfo");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		dto.setOfficeId(officeVO.getOfficeId());
 		dto.setEmployeeId(employeeDTO.getEmployeeId());
 		dto.setDepartmentId(employeeDTO.getDepartmentId());
 		dto.setDepartmentName(employeeDTO.getEmployeeDepartment());

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
@@ -62,129 +63,117 @@
 	      dayMaxEvents: true, // allow "more" link when too many events
 	      events: [
 	          {
-		          title:'test',
-		          start:'2021-12-22',
+		          title:'go to Google',
+		          start:'2021-12-01',
 //	 	     	  2020-09-13T07:00:00
-// 		          url: 'http://google.com/',
-		          end: '2021-12-22',
-// 		          allDay  : true
-		        },
-	        /* {
-	          title: 'All Day Event',
-	          start: '2020-09-01'
-	        },
-	        {
-	          title: 'Long Event',
-	          start: '2020-09-07',
-	          end: '2020-09-10'
-	        },
-	        {
-	          groupId: 999,
-	          title: 'Repeating Event',
-	          start: '2020-09-09T16:00:00'
-	        },
-	        {
-	          groupId: 999,
-	          title: 'Repeating Event',
-	          start: '2020-09-16T16:00:00'
-	        },
-	        {
-	          title: 'Conference',
-	          start: '2020-09-11',
-	          end: '2020-09-13'
-	        },
-	        {
-	          title: 'Meeting',
-	          start: '2020-09-12T10:30:00',
-	          end: '2020-09-12T12:30:00'
-	        },
-	        {
-	          title: 'Lunch',
-	          start: '2020-09-12T12:00:00'
-	        },
-	        {
-	          title: 'Meeting',
-	          start: '2020-09-12T14:30:00'
-	        },
-	        {
-	          title: 'Happy Hour',
-	          start: '2020-09-12T17:30:00'
-	        },
-	        {
-	          title: 'Dinner',
-	          start: '2020-09-12T20:00:00'
-	        },
-	        {
-	          title: 'Birthday Party',
-	          start: '2020-09-13T07:00:00'
-	        },
-	        {
-	          title: 'Click for Google',
-	          url: 'http://google.com/',
-	          start: '2020-09-28'
-	        }, */
-	      ]
-	    });
+ 		          url: 'http://google.com/',
+		          end: '2021-12-05',
+		          color: 'green',
+ 		          allDay  : true
+		     },
+	   
+			{
+				title : 'kosta223기 국비지원교육',
+				start : '2021-12-05',
+				end : '2021-12-11',
+				color : 'red',
+				allDay : true
+			}, {
+				title : '내 생일',
+				start : '2021-12-22',
+				end : '2021-12-22',
+				allDay : true
+			}, {
+				groupId : 999,
+				title : '운동가기',
+				start : '2021-12-13T16:00:00'
+			}, {
+				groupId : 999,
+				title : '운동가기',
+				start : '2021-12-16T16:00:00'
+			}, {
+				groupId : 999,
+				title : '운동가기',
+				start : '2021-12-18T16:00:00'
+			}, {
+				groupId : 999,
+				title : '운동가기',
+				start : '2021-12-21T16:00:00'
+			}, {
+				title : 'Merry christmas',
+				start : '2021-12-25',
+				end : '2021-12-26',
+				color : 'red',
+			}, {
+				title : '신정',
+				start : '2022-01-01',
+				color : 'green',
+			}, {
+				title : '연차',
+				start : '2021-12-27',
+				end : '2021-12-31',
+			},
 
-	    calendar.render();
-	  });
-	  
-	  document.addEventListener('DOMContentLoaded', function() {
+			]
+		});
 
-		    /* initialize the external events
-		    -----------------------------------------------------------------*/
+		calendar.render();
+	});
 
-		    var containerEl = document.getElementById('external-events-list');
-		    new FullCalendar.Draggable(containerEl, {
-		      itemSelector: '.fc-event',
-		      eventData: function(eventEl) {
-		        return {
-		          title: eventEl.innerText.trim()
-		        }
-		      }
-		    });
+	document.addEventListener('DOMContentLoaded', function() {
 
-		    //// the individual way to do it
-		    // var containerEl = document.getElementById('external-events-list');
-		    // var eventEls = Array.prototype.slice.call(
-		    //   containerEl.querySelectorAll('.fc-event')
-		    // );
-		    // eventEls.forEach(function(eventEl) {
-		    //   new FullCalendar.Draggable(eventEl, {
-		    //     eventData: {
-		    //       title: eventEl.innerText.trim(),
-		    //     }
-		    //   });
-		    // });
+		/* initialize the external events
+		-----------------------------------------------------------------*/
 
-		    /* initialize the calendar
-		    -----------------------------------------------------------------*/
+		var containerEl = document.getElementById('external-events-list');
+		new FullCalendar.Draggable(containerEl, {
+			itemSelector : '.fc-event',
+			eventData : function(eventEl) {
+				return {
+					title : eventEl.innerText.trim()
+				}
+			}
+		});
 
-		    var calendarEl = document.getElementById('calendar');
-		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		      headerToolbar: {
-		        left: 'prev,next today',
-		        center: 'title',
-		        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-		      },
-		      editable: true,
-		      droppable: true, // this allows things to be dropped onto the calendar
-		      drop: function(arg) {
-		        // is the "remove after drop" checkbox checked?
-		        if (document.getElementById('drop-remove').checked) {
-		          // if so, remove the element from the "Draggable Events" list
-		          arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-		        }
-		      }
-		    });
-		    calendar.render();
+		//// the individual way to do it
+		// var containerEl = document.getElementById('external-events-list');
+		// var eventEls = Array.prototype.slice.call(
+		//   containerEl.querySelectorAll('.fc-event')
+		// );
+		// eventEls.forEach(function(eventEl) {
+		//   new FullCalendar.Draggable(eventEl, {
+		//     eventData: {
+		//       title: eventEl.innerText.trim(),
+		//     }
+		//   });
+		// });
 
-		  });
-	  
-	  Calendar.addEvent()
-	  
-	  
-	</script>
+		/* initialize the calendar
+		-----------------------------------------------------------------*/
+
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			headerToolbar : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			},
+			editable : true,
+			droppable : true, // this allows things to be dropped onto the calendar
+			drop : function(arg) {
+				// is the "remove after drop" checkbox checked?
+				if (document.getElementById('drop-remove').checked) {
+					// if so, remove the element from the "Draggable Events" list
+					arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+				}
+			}
+		});
+		calendar.render();
+
+	});
+
+	Calendar.addEvent()
+</script>
 	
 	
 <style>
@@ -303,24 +292,21 @@
 								value='scheduleData.scheduleId' readonly="readonly">
 	                        <label>사원번호</label>
 	                        <input type="text" class="form-control" name="employeeId"
-	                        	value='scheduleData.employeeId' readonly="readonly">
+	                        	value='${sessionScope.nowEmployeeInfo.employeeId}' readonly="readonly">
 	                        <label>제목:</label>
 	                        <input type="text" class="form-control" name="scheduleTitle"
 	                            	value='scheduleData.scheduleTitle'>
-	                            	
+	                        <!--기간 형식 바꾸기 value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> -->
 	                        <label>시작시간</label>
-	                        <!--기간 형식 바꾸기 -->
 							 <input id="detail-start" type="text" class="form-control" name="scheduleStart"
 							 	value="scheduleData.scheduleStart"/>
-<%--  value='<fmt:formatDate pattern="yyyy-MM-dd" value ="${scheduleData.scheduleStart}"/>'> --%>
-
 	                        <label>종료시간</label>
 	                        <input id="detail-end" type="text" class="form-control" name="scheduleEnd"
-	                            value='scheduleData.scheduleEnd'>
+	                            value="scheduleData.scheduleEnd">
 	                            
 	                        <label>내용</label>
 	                        <input type="text" class="form-control" name="scheduleContent"
-	                            value='scheduleData.scheduleContent'>
+	                            value="scheduleData.scheduleContent">
 	                       	<label>중요도 </label>
 <!-- 	                       	<form> -->
 <!-- 								<select autofocus name="scheduleImportance" value ='scheduleData.scheduleImportance' > -->
@@ -330,11 +316,11 @@
 <!-- 								</select> -->
 <!-- 							</form> -->
 	                       	<input type="text"class="form-control"  name="scheduleImportance"  
-	                            value='scheduleData.scheduleImportance'>
+	                            value="scheduleData.scheduleImportance">
 	                            
 	                        <label>공사구분</label>
 	                        <input type="text" class="form-control" name="schedulePrivate"
-	                            value='scheduleData.schedulePrivate'>
+	                            value="scheduleData.schedulePrivate" placeholder="Y or N">
 <!-- 								<input type="radio" name="schedulePrivate" value="Y" id="yes">&nbsp;<label for="yes">Y</label> -->
 <!-- 			                    <input type="radio" name="schedulePrivate" value="N" id="no">&nbsp;<label for="no">N</label> -->
 	                     </div>
@@ -360,6 +346,7 @@
 				</div>
 					
 				<div class="table-container">
+				
 					<table class="board-list" style="text-align: center; border: 2px solid #dddddd;">
 						<!--style="-->
 						<tr>
@@ -388,13 +375,12 @@
 								<td><a class="save-btn" class="custom-btn" data-scheduleId="${schedule.scheduleId}"
  								data-bs-toggle="modal" data-bs-target="#modal-detail">
  								${schedule.scheduleTitle}</a></td>
- 								
- 								<td>${schedule.scheduleStart}.substr(0,10)</td>
-								<td>${schedule.scheduleEnd}</td>
-									
-<%-- 								<td><fmt:formatDate pattern="yyyy-MM-dd" --%>
-<%-- 									value="${schedule.scheduleEnd}"/> </td><!-- Date타입으로변경했을경우 --> --%>
-						
+ 								<td>${schedule.scheduleStart}</td>
+	                            <td>${schedule.scheduleEnd}</td>
+<%--  								<p><fmt:parseDate value="${schedule.scheduleStart}" var="schedule" pattern="yyyy-MM-dd"/></p> --%>
+<%--  								<p><fmt:parseDate value="${schedule.scheduleEnd}" var="schedule" pattern="yyyy-MM-dd"/></p> --%>
+								<!-- Date타입으로변경했을경우 -->
+<%-- 							<td><fmt:formatDate pattern="yyyy-MM-dd"value="${schedule.scheduleEnd}"/> </td> --%>
 								<td>${schedule.scheduleContent}</td>
 								<td>${schedule.scheduleImportance}</td>
 								<td>${schedule.schedulePrivate}</td>

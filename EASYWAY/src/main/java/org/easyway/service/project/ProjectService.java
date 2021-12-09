@@ -3,7 +3,9 @@ package org.easyway.service.project;
 import java.util.List;
 
 import org.easyway.domain.project.ProjectBoard;
+import org.easyway.domain.project.ProjectCriteria;
 import org.easyway.domain.project.ProjectPost;
+import org.easyway.domain.project.ProjectPostDTO;
 import org.easyway.domain.project.Project;
 
 public interface ProjectService {
@@ -33,5 +35,11 @@ public interface ProjectService {
 	public boolean modifyProjectPost(ProjectPost projectPost); // 게시물 수정
 	
 	public boolean removeProjectPost(Long projectBoardId, Long projectPostId); // 게시물 삭제
+	
+	public List<ProjectPostDTO> getListProjectPostDTO(Long projectId, Long projectBoardId); // 게시물DTO 목록
+	
+	public ProjectPostDTO getProjectPostDTO(Long projectBoardId, Long projectPostId); // 게시물DTO 상세
+	
+//	public int getTotalCount(Long projectId, Long projectBoardId, ProjectCriteria cri); // 게시물 개수
 	
 }

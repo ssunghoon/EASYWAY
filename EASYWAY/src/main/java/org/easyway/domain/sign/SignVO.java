@@ -1,6 +1,5 @@
 package org.easyway.domain.sign;
 
-import java.io.File;
 import java.io.Serializable;
 import java.sql.Date;
 
