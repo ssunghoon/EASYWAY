@@ -4,8 +4,7 @@
 // 페이지 새로고침 혹은 브라우저 창 닫기 시도시 경고 문구 출력 ----------------------------------
 // ----------------------------------------------------------------------------------------
 
-/* 주의! 귀찮아서 주석!!!!
-
+/* 
 window.onbeforeunload = function() {
 
 	event.preventDefault();
@@ -75,7 +74,7 @@ function widgetFunction(e) {
 		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
 
 		break;
-	case "결재함 목록":
+	case "결재함 건수":
 
 		console.log("결재차려 김나현!");
 		makeWidget("sign", 200, 400, getTest4);
@@ -159,19 +158,33 @@ function makeWidget(widgetId, widgetTop, widgetLeft, func) {
 	// 주의! 우선 테스트로 넣어둔 위치값과 너비, 높이 부분임. js로 변경도 하고 싶음.
 	var $widgetId = '#' + widgetId;
 	
-	console.log("widgetTop: " +widgetTop + "widgetLeft: " + widgetLeft);
+	console.log("widgetTop: " +widgetTop + " widgetLeft: " + widgetLeft);
 	
-	if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
-		$($widgetId).offset({
-			top: 200,
-			left: 400
-		}).width(250).height(150);
+	if(widgetId == "clock") {
+		if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
+			$($widgetId).offset({
+				top: 200,
+				left: 400
+			}).width(250).height(60);
+		}else{
+			$($widgetId).offset({
+				top: widgetTop,
+				left: widgetLeft
+			}).width(250).height(60);
+		}
+	}else{
+		if((widgetTop == null || widgetTop == 0) || (widgetLeft == null || widgetLeft == 0)){
+			$($widgetId).offset({
+				top: 200,
+				left: 400
+			}).width(400).height(280);
+		}else{
+			$($widgetId).offset({
+				top: widgetTop,
+				left: widgetLeft
+			}).width(400).height(280);
+		}
 	}
-	
-	$($widgetId).offset({
-		top: widgetTop,
-		left: widgetLeft
-	}).width(250).height(150);
 	
 	func();
 	
@@ -218,8 +231,97 @@ function setTime(){
 
 function getTest2(){
 	const notice = document.getElementById('notice').firstChild;
+	var noticeList = new Array();
+	var count = 0;
 	
-	notice.innerHTML = '공지사항 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/projectlist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		프로젝트 리스트`;
+				str += `	</div>`;
+				str += `	<div id="project-content" class="widget-content">`;
+				str += `	<table id="project-table">`;
+				str += `		<tr>`;
+				str += `			<th>프로젝트명</th>`;
+				str += `			<th>시작일</th>`;
+				str += `			<th>종료일</th>`;
+				str += `		</tr>`;
+				
+				data.forEach((projectList) => {
+					console.log("projects : " + projectList);
+					
+					if(count <3) {
+						
+						var projectStartLong = `${projectList.projectStart}`;
+						var projectStart = projectStartLong.substr(0, 10);
+					
+						var projectEndLong = `${projectList.projectEnd}`;
+						var projectEnd = projectEndLong.substr(0, 10);
+						
+						str += `			<tr>`;
+						str += `				<td>`;
+						str += `					<a href="projectboardlist?projectId=${projectList.projectId }">${projectList.projectName}</a>`;
+						str += `				</td>`;
+						str += `				<td>` + projectStart + `</td>`;
+						str += `				<td>` + projectEnd + `</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				project.innerHTML = str;
+				
+        }
+     });
+	
+	var str=``;
+	
+	str += `<div class="widget-title">`;
+	str += `		공지사항 목록`;
+	str += `	</div>`;
+	str += `	<div id="notice-content" class="widget-content">`;
+	str += `		<table id="notice-table">`;
+	str += `			<tr>`;
+	str += `				<th>제목</th>`;
+	str += `				<th>작성자</th>`;
+	str += `				<th>작성일</th>`;
+	str += `			</tr>`;
+	str += `			<tr>`;
+	str += `				<td>중요한 공지입니다.</td>`;
+	str += `				<td>이다혜</td>`;
+	str += `				<td>2021/12/07</td>`;
+	str += `			</tr>`;
+	str += `			<tr>`;
+	str += `				<td>중요한 공지입니다.</td>`;
+	str += `				<td>이다혜</td>`;
+	str += `				<td>2021/12/07</td>`;
+	str += `			</tr>`;
+	str += `			<tr>`;
+	str += `				<td>중요한 공지입니다.</td>`;
+	str += `				<td>이다혜</td>`;
+	str += `				<td>2021/12/07</td>`;
+	str += `			</tr>`;
+	str += `		</table>`;
+	str += `</div>`;
+	
+	notice.innerHTML = str;
 }
 
 
@@ -230,30 +332,47 @@ function getTest2(){
 function getTest3(){
 	const attendance = document.getElementById('attendance').firstChild;
 	
-	var str = "";
+	var str=``;
 	
-	str += "<div class='widget-title'>";
-	str += "출 / 퇴근 체크";
-	str += "</div>";
-	str += "<div class='widget-content'>";
-	str += "<div class='attendance-start'>";
-	str += "<div id='attendance-start-icon' class='attendance-icons'>";
-	str += "<i class='far fa-play-circle'></i>";
-	str += "</div>";
-	str += "<div id='attendance-start-time' class='attendance-time'>";
-	str += "</div>";
-	str += "</div>";
-	str += "<div class='attendance-end'>";
-	str += "<div id='attendance-end-icon' class='attendance-icons'>";
-	str += "<i class='far fa-stop-circle'></i>";
-	str += "</div>";
-	str += "<div id='attendance-end-time' class='attendance-time'>";
-	str += "</div>";
-	str += "</div>";
-	str += "</div>";
+	str += `<div class="widget-title">`;
+	str += `		출 / 퇴근 체크`;
+	str += `	</div>`;
+	str += `	<div id="attendance-content" class="widget-content">`;
+	str += `		<div id="attendance-start" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceStart">`;
+	str += `				<i class="far fa-play-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-start-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `		<div id="attendance-out" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceOut">`;
+	str += `				<i class="far fa-pause-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-pause-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `		<div id="attendance-end" class="attendance-check">`;
+	str += `			<a class="attendance-icons" href="/attendance/registerAttendanceEnd">`;
+	str += `				<i class="far fa-stop-circle"></i>`;
+	str += `			</a>`;
+	str += `			<div id="attendance-end-time" class="attendance-time">`;
+	str += `				`;
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `</div>`;
 					
 		attendance.innerHTML = str;
 	
+/*
+		 $(document).on("click", ".attendance-check", function (e) {
+			 var icon = $(this).children();
+			 console.log(icon);
+			 
+		  });
+	*/
 }
 
 
@@ -263,8 +382,62 @@ function getTest3(){
 
 function getTest4(){
 	const sign = document.getElementById('sign').firstChild;
+	var paymentList = new Array();
+	var count = 0;
 	
-	sign.innerHTML = '전자결재 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/paymentlist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		결재함 건수`;
+				str += `	</div>`;
+				str += `	<div id="sign-content" class="widget-content">`;
+				str += `		<table id="sign-table">`;
+				str += `			<tr>`;
+				str += `				<th>기안양식</th>`;
+				str += `				<th>제목</th>`;
+				str += `				<th>완료여부</th>`;
+				str += `			</tr>`;
+				
+				str += `		</table>`;
+				str += `</div>`;
+				
+				
+				data.forEach((paymentList) => {
+					console.log("paymentList : " + paymentList);
+					
+					if(count <3) {
+						
+						str += `			<tr>`;
+						str += `				<td>휴가 신청서</td>`;
+						str += `				<td>휴가 좀 줘요</td>`;
+						str += `				<td>결재전</td>`;
+						str += `			</tr>`;
+					
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				sign.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
@@ -274,8 +447,66 @@ function getTest4(){
 
 function getTest5(){
 	const project = document.getElementById('project').firstChild;
+	var projectList = new Array();
+	var count = 0;
 	
-	project.innerHTML = '프로젝트 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/projectlist",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		프로젝트 리스트`;
+				str += `	</div>`;
+				str += `	<div id="project-content" class="widget-content">`;
+				str += `	<table id="project-table">`;
+				str += `		<tr>`;
+				str += `			<th>프로젝트명</th>`;
+				str += `			<th>시작일</th>`;
+				str += `			<th>종료일</th>`;
+				str += `		</tr>`;
+				
+				data.forEach((projectList) => {
+					console.log("projects : " + projectList);
+					
+					if(count <3) {
+						
+						var projectStartLong = `${projectList.projectStart}`;
+						var projectStart = projectStartLong.substr(0, 10);
+					
+						var projectEndLong = `${projectList.projectEnd}`;
+						var projectEnd = projectEndLong.substr(0, 10);
+						
+						str += `			<tr>`;
+						str += `				<td>`;
+						str += `					<a href="projectboardlist?projectId=${projectList.projectId }">${projectList.projectName}</a>`;
+						str += `				</td>`;
+						str += `				<td>` + projectStart + `</td>`;
+						str += `				<td>` + projectEnd + `</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				project.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
@@ -285,8 +516,64 @@ function getTest5(){
 
 function getTest6(){
 	const calendar = document.getElementById('calendar').firstChild;
+	var todoList = new Array();
+	var count = 0;
 	
-	calendar.innerHTML = '캘린더 관련 들어갈 자리입니다';
+	 $.ajax({
+		 type: 'GET',
+         url:"/office/widget/schedulemain",
+         data: {},
+	     contentType: "application/json; charset=utf-8",
+         beforeSend: function (xhr) {
+          	  var $token = $("#token");
+          	  xhr.setRequestHeader($token.data("token-name"), $token.val());
+            },
+         dataType:"json",
+         success: function (data) {
+        	 
+			 var str=``;
+			 
+				str += `<div class="widget-title">`;
+				str += `		캘린더 일정`;
+				str += `	</div>`;
+				str += `	<div id="calendar-content" class="widget-content">`;
+				str += `		<table id="calendar-table">`;
+				str += `			<tr>`;
+				str += `				<th>제목</th>`;
+				str += `				<th>시작시간</th>`;
+				str += `				<th>마감시간</th>`;
+				str += `			</tr>`;
+				
+				data.forEach((todoList) => {
+					console.log("todoList : " + todoList);
+					
+					if(count <3) {
+						
+						var todoStartLong = `${todoList.scheduleStart}`;
+						var todoStart = todoStartLong.substr(0, 10);
+					
+						var todoEndLong = `${todoList.scheduleEnd}`;
+						var todoEnd = todoEndLong.substr(0, 10);
+						
+						str += `			<tr>`;
+						str += `				<td>${todoList.scheduleTitle}</td>`;
+						str += `				<td>` + todoStart + `</td>`;
+						str += `				<td>` + todoEnd + `</td>`;
+						str += `			</tr>`;
+						
+						count++;
+				
+					}
+				});
+				
+				str += `		</table>`;
+				str += `	</div>`;
+				
+				calendar.innerHTML = str;
+				
+        }
+     });
+	
 }
 
 
@@ -598,7 +885,7 @@ function removeWidget(selected) {
 		document.getElementById('thumb-attendance').classList.replace('selected', 'unselected');
 
 		break;
-	case "결재함 목록":
+	case "결재함 건수":
 
 		var widget = document.getElementById('sign');
 		widget.remove();

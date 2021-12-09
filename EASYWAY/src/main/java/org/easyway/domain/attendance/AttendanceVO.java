@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttendanceVO implements Serializable {
 
-	private int attendanceId;
-	private int employeeId;
+	private Long attendanceId;
+	private Long employeeId;
 	private String attendanceStart; // 출근
 	private String attendanceOut; // 외근
 	private String attendanceEnd; // 퇴근
