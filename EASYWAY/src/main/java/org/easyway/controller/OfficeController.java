@@ -13,6 +13,7 @@ import org.easyway.domain.employee.EmployeeDTO;
 import org.easyway.domain.member.MemberDTO;
 import org.easyway.domain.member.MemberVO;
 import org.easyway.domain.office.AnnualVacation;
+import org.easyway.domain.office.DepartmentVO;
 import org.easyway.domain.office.OfficeVO;
 import org.easyway.domain.office.PositionVO;
 import org.easyway.security.domain.CustomUser;
@@ -96,6 +97,17 @@ public class OfficeController {
 		model.addAttribute("departmentInfos", officeService.getDepartment(officeVO.getOfficeId()));
 	}
 	
+	@GetMapping("/admin/officesetting/departmentmodify")
+	public void departmentModify(HttpSession session, Model model){
+		log.info("admin/departmentsetting Page");
+		log.info("admin/positionsetting Page");
+		log.info("admin/vactionsetting Page");
+		OfficeVO officeVO = (OfficeVO)session.getAttribute("nowOfficeInfo");
+		log.info(officeVO);
+		model.addAttribute("departmentInfos", officeService.getDepartment(officeVO.getOfficeId()));
+	}
+	
+	
 	@GetMapping("/admin/officesetting/positionlist")
 	public void positionList(HttpSession session, Model model){
 		log.info("admin/positionsetting Page");
@@ -174,4 +186,14 @@ public class OfficeController {
 		return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 	}
 	
+	@PostMapping("/department/modify")
+	@ResponseBody
+	public ResponseEntity<?> departmentModify(@RequestBody List<DepartmentVO> departmentInfos){
+		log.info(departmentInfos);
+		
+		if(officeService.modifyDepartment(departmentInfos) > 0){
+			return new ResponseEntity<String>("ok", HttpStatus.OK);
+		};
+		return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
+	}
 }
