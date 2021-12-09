@@ -206,7 +206,7 @@
 	                    <!-- 이전 버튼은 page-prev, 이후 버튼은 page-next, 번호는 page-num 클래스를 넣어주면 됩니다 -->
 	                    <li class="page-prev"><a class="page-click" href="#">Prev</a></li>
 	                    <li class="page-num"><a class="page-click" href="#">1</a></li>
-	                    <li class="page-num active"><a class="page-click" href="#">2</a></li>
+	                    <li class="page-num"><a class="page-click" href="#">2</a></li>
 	                    <li class="page-num"><a class="page-click" href="#">3</a></li>
 	                    <li class="page-num"><a class="page-click" href="#">4</a></li>
 	                    <li class="page-num"><a class="page-click" href="#">5</a></li>

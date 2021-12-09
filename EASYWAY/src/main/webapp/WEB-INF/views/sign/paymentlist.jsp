@@ -141,7 +141,7 @@
 						</c:if>
 			
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-							<li class="page page-num  ${pageMaker.cri.pageNum == num ? "active":""} ">
+							<li class="page page-num  ${pageMaker.cri.pageNum == num ? "page-selected":""} ">
 								<a class="page-click" href="${num}">${num}</a>
 							</li>
 						</c:forEach>
