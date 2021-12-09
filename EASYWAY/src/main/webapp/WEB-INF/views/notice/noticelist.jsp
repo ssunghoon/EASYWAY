@@ -96,7 +96,8 @@
 							<ul class="submenu">
 								<li><a href="noticelist" class="submenuLink longLink">전체
 										공지사항</a></li>
-								<li><a href="departmentnoticelist?departmentId=${sessionScope.nowEmployeeInfo.departmentId}" class="submenuLink longLink">부서
+								<li><a href="departmentnoticelist?departmentId=${sessionScope.nowEmployeeInfo.departmentId}&officeId=${sessionScope.nowOfficeInfo.officeId}
+								" class="submenuLink longLink">부서
 										공지사항</a></li>
 							</ul>
 						</li>
@@ -242,9 +243,9 @@
 							<option class="dropdown-item" value="TC" 
 							<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected':''}"/>>제목+내용
 							</option>
-							<option class="dropdown-item" value="N"  
-							<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>작성자
-							</option>
+<!-- 							<option class="dropdown-item" value="N"   -->
+<%-- 							<c:out value="${pageMaker.cri.type eq 'N'?'selected':''}"/>>작성자 --%>
+<!-- 							</option> -->
 						</select> 
 						<input type='text' class="search-keyword" name='keyword'
 							value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
