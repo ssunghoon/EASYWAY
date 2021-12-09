@@ -26,6 +26,7 @@ function widgetFunction(e) {
 	
 	// 테스트 : 클릭한 썸네일과 썸네일의 클릭 상태 보고
 	var selected = e.target.firstChild.nodeValue;
+	console.log("selected : " + selected);
 	e.stopPropagation();
 	console.log(e.target.parentNode.classList.item(2));
 	
@@ -74,7 +75,7 @@ function widgetFunction(e) {
 		document.getElementById('thumb-attendance').classList.replace('unselected', 'selected');
 
 		break;
-	case "결재함 건수":
+	case "결재함 목록":
 
 		console.log("결재 위젯 만들기");
 		makeWidget("sign", 200, 400, makeSignWidget);
@@ -351,7 +352,7 @@ function makeSignWidget(){
 			 var str=``;
 			 
 			 	str += `<div class="widget-title">`;
-				str += `		결재함 건수`;
+				str += `		결재함 목록`;
 				str += `	</div>`;
 				str += `	<div id="sign-content" class="widget-content">`;
 				str += `		<table id="sign-table">`;
@@ -832,7 +833,7 @@ function removeWidget(selected) {
 		document.getElementById('thumb-attendance').classList.replace('selected', 'unselected');
 
 		break;
-	case "결재함 건수":
+	case "결재함 목록":
 
 		var widget = document.getElementById('sign');
 		widget.remove();
