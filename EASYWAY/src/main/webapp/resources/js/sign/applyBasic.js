@@ -35,7 +35,7 @@ $(document).ready(function () {
 	    let space = document.getElementById("search-name-list");
 	    let receivedBox = document.createElement("div");
 	    receivedBox.className = "search-employee-info";
-	    receivedBox.innerHTML = `<div style="display: flex;"><input type="radio" value="${data.employeeId }" name="employeeId" id="employeeId${data.employeeId }">
+	    receivedBox.innerHTML = `<br><div><input type="radio" value="${data.employeeId }" name="employeeId" id="employeeId${data.employeeId }">
     							 <label for="employeeId${data.employeeId }">${data.employeeName}</label><br></div>`;
 	    space.append(receivedBox);
 	    count++;
@@ -107,7 +107,7 @@ $(document).ready(function () {
 
   });
   
-  $(".clear-btn").pm("click", function () {
+  $(".btn-clear").on("click", function () {
 	  document.getElementById("firstResult").innerHTML = "";
 	  document.getElementById("secondResult").innerHTML = "";
 	  document.getElementById("thridResult").innerHTML = "";
@@ -121,8 +121,8 @@ $(document).ready(function () {
   $('#secondOut').on("click", function() {
 		document.getElementById("secondResult").innerHTML = "";
 	});
-  $('#thridOut').on("click", function() {
-		document.getElementById("thridResult").innerHTML = "";
+  $('#thirdOut').on("click", function() {
+		document.getElementById("thirdResult").innerHTML = "";
 	});
   $('#fourthOut').on("click", function() {
 		document.getElementById("fourthResult").innerHTML = "";
