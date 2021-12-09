@@ -122,6 +122,12 @@
 		position_name = #{positionName}
 		where position_id = #{positionId}
 	</update>
+	<update id="updateDepartment" parameterType="org.easyway.domain.office.DepartmentVO">
+		update
+		department set
+		department_name = #{departmentName}
+		where department_id = #{departmentId}
+	</update>
 </mapper>
 
 

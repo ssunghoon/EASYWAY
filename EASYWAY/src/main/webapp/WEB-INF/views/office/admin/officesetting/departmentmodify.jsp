@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,31 +79,91 @@
 						<!-- 8번째 easyway-board-item : 게시판 목록 (테이블 태그) 들어갈 자리 -->
 						<!-- 임의의 5열 x 15줄 태그 (th포함하면 16줄) -->
 						<table class="position-list">
-							<tr>
-								<th>부서번호</th>
-								<th>부서명</th>
-							</tr>
-							<c:forEach var="department" items="${departmentInfos}">
+								<tr>
+									<th>부서번호</th>
+									<th>부서명</th>
+								</tr>
+								<c:forEach var="department" items="${departmentInfos}">
 									<tr>
 										<td>${department.departmentId}</td>
-										<td>${department.departmentName}</td>
+										<td class="department-box">
+										<input type="hidden" name="positionId" value="${department.departmentId}">
+										<input type="hidden" name="officeId" value="${sessionScope.nowOfficeInfo.officeId}">										
+										<input id="textOnchange" type="text" name="departmentName" value="${department.departmentName}">
+										</td>
 									</tr>
-								</c:forEach>
-						</table>
-
+								</c:forEach>								
+							</table>
+							<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-
 </body>
 <script type="text/javascript">
-$(".easyway-btn").on("click", function name() {
-	location.href="/office/admin/officesetting/departmentmodify";
-})
+	$(document).ready(function() {
+		var departmentList = new Array();
+		var Listener = function() {
+			  alert('Hello!');
+			};
+		$(document).on("propertychange change keyup paste input","#textOnchange", function() {
+			
+			window.onbeforeunload = function(e) {
+				var dialogText = 'Dialog text here';
+				e.returnValue = dialogText;
+				return dialogText;
+			};	
+		});
+		
+		
+		function scanPositionValue() {			
+			window.onbeforeunload = null;
+			$(".department-box").each(function(idx) {
+				
+				// 해당 체크박스의 Value 가져오기
+				var departmentId = $(this).children().eq("0").val();
+				var officeId = $(this).children().eq("1").val();
+				var departmentName = $(this).children().eq("2").val();
 
+				departmentList.push({
+					"departmentId" : departmentId,
+					"officeId" : officeId,
+					"departmentName" : departmentName,
+				});
+			});
+			console.log(departmentList);
+		}
+		function modifiyDepartment(departmentList) {
+			if(confirm("정말 등록하시겠습니까 ?") == true){
+		    }
+		    else{
+		        return;
+		    }
+		  $.ajax({
+		      type: "post",
+		      url: "/office/department/modify",
+		      data: JSON.stringify(departmentList),
+		      contentType: "application/json; charset=utf-8",
+		      beforeSend: function (xhr) {
+		        var $token = $("#token");
+		        xhr.setRequestHeader($token.data("token-name"), $token.val());
+		      },
+		      success: function (result, status, xhr) {
+		    	  alert("부서 정보 변경 성공!");
+		    	  location.href="/office/admin/officesetting/departmentsetting";
+		      },
+		      error: function (xhr, status, er) {
+		        alert("실패....");
+		      },
+		    });	  	
+		}
+		$(".easyway-btn").on("click", function(e) {
+		scanPositionValue();
+		modifiyDepartment(departmentList);
+		});
+	});
 </script>
 
 </html>

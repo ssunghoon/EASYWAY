@@ -31,4 +31,5 @@ public interface OfficeMapper {
 	public int updateVacation(AnnualVacation vacation); //휴가일수 업데이트
 	public List<OfficeVO> getListByEmployee(Long memberId); //일반member계정의 오피스 리스트 (사원 id로 찾음)
 	public int updatePosition(PositionVO position);
+	public int updateDepartment(DepartmentVO department);
 }

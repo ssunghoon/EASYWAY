@@ -29,4 +29,6 @@ public interface OfficeService {
 	//update
 	public int modifyPosition(List<PositionVO> positionInfos);
 	public int modifyVacation(List<AnnualVacation> vacationInfos);
+
+	public int modifyDepartment(List<DepartmentVO> departmentInfos);
 }
