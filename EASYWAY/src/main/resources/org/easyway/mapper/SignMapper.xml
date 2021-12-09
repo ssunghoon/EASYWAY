@@ -115,9 +115,10 @@
 	    	<include refid="search1"></include>
 			<include refid="search2"></include> 
 			<![CDATA[
+	    	order by sign_id desc
 	    	)
 	    	where rn > (#{pageNum} -1) * #{amount}
-	    	order by rownum desc
+	    	
 	    	]]>
 	</select>
 	
@@ -163,7 +164,7 @@
 	<!-- 결재함 상세 (기본기안서) -->
 	<select id="getPaymentBasic" resultType="org.easyway.domain.sign.BasicSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			B.SB_RANGE AS signBasicRange,B.SB_START AS signBasicStart ,B.SB_END AS signBasicEnd, B.SF_ID AS signFormId,
       		E.SL_CHECK AS signListCheck,
       		Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId
@@ -187,7 +188,7 @@
 	<!-- 결재함 상세 (지출결의서) -->
 	<select id="getPaymentSpend" resultType="org.easyway.domain.sign.SpendSignVO">
 		SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			C.SS_RANGE AS signSpendRange,C.SF_ID AS signFormId,
 	        E.SL_CHECK AS signListCheck,
 	        Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId
@@ -211,7 +212,7 @@
 	<!-- 결재함 상세 (휴가신청서) -->
 	<select id="getPaymentVacation" resultType="org.easyway.domain.sign.VacationSignVO">
       	SELECT
-			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,
+			A.SIGN_TITLE AS signTitle, A.SIGN_CONTENT AS signContent,A.SIGN_DATE AS signDates,A.SIGN_ID AS signId,A.SIGN_IMPORTANCE AS signImportance,A.FILE_NAME AS fileName,
 			D.SV_TYPE AS signVacationType, D.SV_START AS signVacationStart ,D.SV_END AS signVacationEnd ,D.SF_ID AS signFormId,
 	        E.SL_CHECK AS signListCheck,
 	        Z.EMPLOYEE_NAME AS employeeName, Z.EMPLOYEE_ID AS employeeId

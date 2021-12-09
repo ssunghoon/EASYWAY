@@ -105,6 +105,10 @@
 							<th class="sign-th">중요도</th>
 							<td>${basicSign.signImportance }</td>
 						</tr>
+						<tr>
+							<th class="sign-th">파일</th>
+							<td><a href="/filedownload?fileName=${basicSign.fileName}">${basicSign.fileName}</a></td>
+						</tr>
 						</table>
 					<input type="hidden"  value="${basicSign.signId }" name="signId">
 					<c:if test="${basicSign.signListCheck == 'N'}">
@@ -152,6 +156,10 @@
 							<th class="sign-th">중요도</th>
 							<td>${spendSign.signImportance }</td>
 						</tr>
+						<tr>
+							<th class="sign-th">파일</th>
+							<td><a href="/filedownload?fileName=${spendSign.fileName}">${spendSign.fileName}</a></td>
+						</tr>
 						</table>
 					<input type="hidden"  value="${spendSign.signId }" name="signId">
 					<c:if test="${spendSign.signListCheck == 'N'}">
@@ -173,14 +181,15 @@
 								<th class="col-lg-3 sign-th">제목</th>
 								<td>${vacationSign.signTitle }</td>
 							</tr>
-							<tr class="sign-content">
-								<th class="sign-th">내용</th>
-								<td><c:out value="${vacationSign.signContent }" escapeXml="false" /></td>
-							</tr>
 							<tr>
 								<th class="sign-th">작성자</th>
 								<td>${vacationSign.employeeName }</td>
 							</tr>
+							<tr class="sign-content">
+								<th class="sign-th">내용</th>
+								<td><c:out value="${vacationSign.signContent }" escapeXml="false" /></td>
+							</tr>
+							
 							<tr>
 								<th class="sign-th">종류</th>
 								<td>${vacationSign.signVacationType}</td>
@@ -195,6 +204,10 @@
 						<tr>
 							<th class="sign-th">중요도</th>
 							<td>${vacationSign.signImportance }</td>
+						</tr>
+						<tr>
+							<th class="sign-th">파일</th>
+							<td><a href="/filedownload?fileName=${vacationSign.fileName}">${vacationSign.fileName}</a></td>
 						</tr>
 						</table>
 					<input type="hidden"  value="${vacationSign.signId }" name="signId">
