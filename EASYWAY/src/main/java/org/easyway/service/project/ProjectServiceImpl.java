@@ -3,6 +3,7 @@ package org.easyway.service.project;
 import java.util.List;
 
 import org.easyway.domain.project.ProjectBoard;
+import org.easyway.domain.project.ProjectCriteria;
 import org.easyway.domain.project.ProjectPost;
 import org.easyway.domain.project.ProjectPostDTO;
 import org.easyway.domain.project.Project;
@@ -93,6 +94,12 @@ public class ProjectServiceImpl implements ProjectService{
 	public ProjectPostDTO getProjectPostDTO(Long projectBoardId, Long projectPostId) { // 게시물DTO 상세
 		return mapper.readProjectPostDTO(projectBoardId, projectPostId);
 	}
+
+
+//	@Override
+//	public int getTotalCount(Long projectId, Long projectBoardId, ProjectCriteria cri) { // 게시물 개수
+//		return mapper.getTotalCount(projectId, projectBoardId, cri);
+//	}
 
 
 

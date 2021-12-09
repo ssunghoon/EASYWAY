@@ -47,6 +47,13 @@
 		padding: 15px;
 		flex-direction: column;
 		}
+		.buttons {
+		    display: flex;
+		}
+		.buttons>form{
+			margin: 0 10px;
+		}
+		
 	</style>
 </head>
 
@@ -133,7 +140,7 @@
 		            		${projectPost.employeeName}
 		            	</div>
 		            	<div class="writer-department">
-		            		개발팀
+<!-- 		            		개발팀 -->
 		            	</div>
 	            	</div>
 
@@ -162,17 +169,23 @@
 	            	<!-- 게시물 세부 정보 : 작성 시간, 날짜 / 조회수 등 -->
 	            	<div class="info-time">
 	            		<i class="time-icon far fa-clock"></i>
-	            		2021-10-30
+	            		${projectPost.projectPostDate}
 	            	</div>
 	            	<div class="info-view">
-	            		<span class="info-view-label">조회수</span>
-	            		<span class="info-view-count">17</span>
+<!-- 	            		<span class="info-view-label">조회수</span> -->
+<!-- 	            		<span class="info-view-count">17</span> -->
 	            	</div>
 	            </div>
 	            <div class="easyway-boarddetail-content">
 	            	<!-- 게시물 내용 -->
 	            	${projectPost.projectPostContent }
 	            </div>
+	           <div>
+	           		<c:if test="${projectPost.projectPostFileName ne null}">
+						파일
+						<a href="/filedownload?fileName=${projectPost.projectPostFileName}">${projectPost.projectPostFileName}</a>
+					</c:if>
+	           </div>
 	        </div>
 	
 	    </div>

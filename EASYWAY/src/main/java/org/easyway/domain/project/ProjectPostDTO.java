@@ -1,5 +1,7 @@
 package org.easyway.domain.project;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +17,9 @@ public class ProjectPostDTO {
 	private String employeeName; // 사원이름
 	private String projectPostTitle; // 제목
 	private String projectPostContent; // 내용
-	private String projectPostFilePath; // 첨부파일
+	private MultipartFile projectPostFilePath; // 첨부파일
 	private String projectPostDate; // 작성일
 	private Long projectPostViews; // 조회 수
+	private String projectPostFileName; // 파일이름
 
 }

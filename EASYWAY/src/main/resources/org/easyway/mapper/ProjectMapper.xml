@@ -6,6 +6,23 @@
 <!-- 보드를 그냥쓰면 오류가 뜨기 때문에 콘피그에 typeAlias -->
 <mapper namespace="org.easyway.mapper.ProjectMapper">
 
+<!-- 	<sql id="criteria"> -->
+<!-- 		<trim prefix="(" suffix=") AND " prefixOverrides="OR"> -->
+<!-- 			<foreach item='type' collection="typeArr"> -->
+<!-- 				<trim prefix="OR"> -->
+<!-- 					<choose> -->
+<!-- 						<when test="type == 'T'.toString()"> -->
+<!-- 							PP_TITLE like '%'||#{keyword}||'%' </when> -->
+<!-- 						<when test="type == 'C'.toString()"> -->
+<!-- 							PP_CONTENT like '%'||#{keyword}||'%' </when> -->
+<!-- 						<when test="type == 'N'.toString()"> -->
+<!-- 							EMPLOYEE_NAME like '%'||#{keyword}||'%' </when> -->
+<!-- 					</choose> -->
+<!-- 				</trim> -->
+<!-- 			</foreach> -->
+<!-- 		</trim> -->
+<!-- 	</sql> -->
+
 	<insert id="insertProject">
 		insert into project(
 			project_id, project_name, project_start, project_end, project_content
@@ -71,7 +88,8 @@
 	
 	
 	<insert id="insertProjectPost">
-		INSERT INTO P_POST VALUES(P_POST_SEQ.nextval, #{projectBoardId}, #{projectId}, #{employeeId}, #{projectPostTitle}, #{projectPostContent}, #{projectPostFilePath}, SYSDATE, 0)
+		INSERT INTO P_POST(pp_id, pb_id, project_id, employee_id, pp_title, pp_content, pp_file_name, pp_date, pp_views)
+		VALUES(P_POST_SEQ.nextval, #{projectBoardId}, #{projectId}, #{employeeId}, #{projectPostTitle}, #{projectPostContent}, #{projectPostFileName, jdbcType=VARCHAR}, SYSDATE, 0)
 	</insert>
 
 	<select id="getListProjectPost" resultType="org.easyway.domain.project.ProjectPost">
@@ -82,7 +100,6 @@
 			employee_id AS employeeId,
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
-			pp_file_path AS projectPostFilePath,
 			pp_date AS projectPostDate,
 			pp_views AS projectPostViews
 		FROM
@@ -97,7 +114,6 @@
 			employee_id AS employeeId,
 			pp_title AS projectPostTitle,
 			pp_content AS projectPostContent,
-			pp_file_path AS projectPostFilePath,
 			pp_date AS projectPostDate,
 			pp_views AS projectPostViews
 		FROM
@@ -118,19 +134,64 @@
 	</delete>
 	
 	<select id="getListProjectPostDTO" resultType="org.easyway.domain.project.ProjectPostDTO">
- 		SELECT
-			pp.pp_id AS projectPostId,
-			pp.pb_id AS projectBoardId,
-			pp.project_id AS projectId,
-			e.employee_name AS employeeName,
-			pp.pp_title AS projectPostTitle,
-			pp.pp_content AS projectPostContent,
-			pp.pp_file_path AS projectPostFilePath,
-			pp.pp_date AS projectPostDate,
-			pp.pp_views AS projectPostViews
+	<!-- <![CDATA[
+		SELECT
+				pp_id AS projectPostId,
+				pb_id AS projectBoardId,
+				project_id AS projectId,
+				employee_name AS employeeName,
+				pp_title AS projectPostTitle,
+				pp_content AS projectPostContent,
+				pp_date AS projectPostDate,
+				pp_views AS projectPostViews
 		FROM
-			P_POST pp, EMPLOYEE e WHERE pp.EMPLOYEE_ID = e.EMPLOYEE_ID AND PB_ID = #{projectBoardId} AND PROJECT_ID = #{projectId}
+			(select
+			    rownum rn, pp.pp_id, pp.pb_id, pp.project_id, e.employee_name, pp.pp_title, pp.pp_content, pp.pp_date, pp.pp_views
+			 FROM 
+			    P_POST pp, EMPLOYEE e
+			  WHERE pp.EMPLOYEE_ID = e.EMPLOYEE_ID AND
+			    	 rownum <= #{pageNum} * #{amount}
+			AND PB_ID = #{projectBoardId}
+			AND PROJECT_ID = #{projectId}]]>
+				<include refid="criteria"></include>
+							<![CDATA[
+		ORDER BY
+			pp.pp_id DESC)where rn > (#{pageNum} -1) * #{amount}
+	]]> -->
+		SELECT
+			pp_id AS projectPostId,
+			pb_id AS projectBoardId,
+			project_id AS projectId,
+			employee_name AS employeeName,
+			pp_title AS projectPostTitle,
+			pp_content AS projectPostContent,
+			pp_date AS projectPostDate,
+			pp_views AS projectPostViews
+		FROM
+			P_POST pp, EMPLOYEE e
+		WHERE
+			pp.EMPLOYEE_ID = e.EMPLOYEE_ID
+		AND
+			PB_ID = #{projectBoardId}
+		AND
+			PROJECT_ID = #{projectId}
+		ORDER BY
+			pp.PP_ID desc
 	</select>
+	
+<!-- 	<select id="getTotalCount" resultType="int"> -->
+<!-- 		SELECT -->
+<!-- 	    	COUNT(pp.PP_ID)  -->
+<!-- 	    FROM  -->
+<!-- 	    	P_POST pp, EMPLOYEE e -->
+<!-- 	    WHERE -->
+<!-- 	    	pp.EMPLOYEE_ID = e.EMPLOYEE_ID -->
+<!-- 	    AND -->
+<!-- 	    	PB_ID = #{projectBoardId} -->
+<!-- 		AND -->
+<!-- 			PROJECT_ID = #{projectId} -->
+<!-- 		<include refid="criteria"></include> -->
+<!-- 	</select> -->
 	
 	<select id="readProjectPostDTO" resultType="org.easyway.domain.project.ProjectPostDTO">
 		SELECT
@@ -140,9 +201,9 @@
 			e.employee_name AS employeeName,
 			pp.pp_title AS projectPostTitle,
 			pp.pp_content AS projectPostContent,
-			pp.pp_file_path AS projectPostFilePath,
 			pp.pp_date AS projectPostDate,
-			pp.pp_views AS projectPostViews
+			pp.pp_views AS projectPostViews,
+			pp.pp_file_name AS projectPostFileName
 		FROM
 			P_POST pp, EMPLOYEE e WHERE pp.EMPLOYEE_ID = e.EMPLOYEE_ID AND PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
 	</select>
