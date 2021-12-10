@@ -42,4 +42,5 @@ public interface ProjectMapper {
 	public ProjectPostDTO readProjectPostDTO(@Param("projectBoardId") Long projectBoardId, @Param("projectPostId") Long projectPostId); // 게시물DTO 상세
 	
 //	public int getTotalCount(@Param("projectId") Long projectId, @Param("projectBoardId") Long projectBoardId, @Param("cri") ProjectCriteria cri); // 게시물 개수
+	
 }

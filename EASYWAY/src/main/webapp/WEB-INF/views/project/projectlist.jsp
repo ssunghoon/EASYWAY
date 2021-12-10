@@ -76,7 +76,7 @@
                            시작일 : <input type="date" name="projectStart"><br>
                            종료일 : <input type="date" name="projectEnd"><br>
                            프로젝트 설명 <br>
-                           <textarea rows="6" cols="50" name="projectContent"></textarea>
+                           <textarea rows="5" cols="34" name="projectContent"></textarea>
                            <br>
                            <!--                         <input type="submit" class="btn btn-primary mb-3" -->
                            <!--                            value="등록"> -->

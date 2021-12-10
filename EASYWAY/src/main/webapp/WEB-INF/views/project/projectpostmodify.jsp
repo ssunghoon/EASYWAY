@@ -90,7 +90,10 @@ input.easy-btn {
 .buttons>input:NTH-CHILD(1) {
 	margin-right: 10px;
 }
-
+#post-file-name{
+	border: 0px;
+	height: auto;
+}
 </style>
 
 </head>
@@ -110,14 +113,14 @@ input.easy-btn {
 	            <div class="easyway-boardapply-pagetitle">
 	                <!-- 게시물 작성 타이틀 -->
 	                <div class="easyway-title1">
-	                    게시글 작성
+	                    게시글 수정
 	                </div>
 	            </div>
 	            
 	            <!-- form -->
 	            <div class="easyway-boardapply-form">
 	            
-		            <form class="form-container" action="projectpostmodify" method="post">
+		            <form class="form-container" action="projectpostmodify" method="post" enctype="multipart/form-data">
 		            	<input type="hidden" id="token" name="${_csrf.parameterName}" data-token-name="${_csrf.headerName}" value="${_csrf.token}" />
 		            	<input type="hidden" name="projectId" value="${projectId}">
 		            	<input type="hidden" name="projectPostId" value="${projectPost.projectPostId }">
@@ -149,7 +152,7 @@ input.easy-btn {
 			            </div>
 			            <div class="form-file-input">
 			            	<!-- 첨부 파일 -->
-			            	<input type="text" name="projectPostFilePath">
+			            	<input id="post-file-name" type="file" name="projectPostFilePath">
 			            </div>
 			            
 			            <div class="form-content">
@@ -167,7 +170,7 @@ input.easy-btn {
 			            	<!-- 등록 버튼 -->
 			            	<div class="buttons">
 			            		<input type="submit" class="easyway-btn" value="등록">
-			            		<input type="reset" class="easyway-btn" value="취소">
+			            		<input type="button" class="easyway-btn" value="취소" onclick="location.href='projectpostlist?projectId=${projectId}&&projectBoardId=${projectBoardId}'">
 			            	</div>
 			            	
 			            </div>

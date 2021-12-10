@@ -124,7 +124,7 @@
 		UPDATE
 			P_POST
 		SET
-			PP_TITLE = #{projectPostTitle}, PP_CONTENT = #{projectPostContent}, PP_FILE_PATH = #{projectPostFilePath}
+			PP_TITLE = #{projectPostTitle}, PP_CONTENT = #{projectPostContent}, pp_file_name = #{projectPostFileName, jdbcType=VARCHAR}
 		WHERE 
 			PB_ID = #{projectBoardId} AND PP_ID = #{projectPostId}
 	</update>
