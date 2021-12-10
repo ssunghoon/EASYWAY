@@ -112,7 +112,7 @@ public class ProjectController {
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
 			fileName=uuid+"."+ext;
-			uploadFile.transferTo(new File("C:\\upload\\" + fileName));
+			uploadFile.transferTo(new File("/Users/sunghoonlee/upload/" + fileName));
 			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@"+uploadFile);
 		}else {
 			projectPost.setProjectPostFileName("null");
@@ -161,11 +161,32 @@ public class ProjectController {
 	
 	// 게시물 수정
 	@PostMapping("/projectpostmodify")
-	public String projectPostPostModify(ProjectPost projectPost, RedirectAttributes rttr) {
+	public String projectPostPostModify(ProjectPost projectPost, RedirectAttributes rttr) throws IOException {
 		rttr.addAttribute("projectId", projectPost.getProjectId());
 		rttr.addAttribute("projectBoardId", projectPost.getProjectBoardId());
 		rttr.addAttribute("projectPostId", projectPost.getProjectPostId());
+		
+		// 파일처리 begin
+		log.info("파일 이름 : " + projectPost.getProjectPostFilePath());
+		String fileName = null;
+		MultipartFile uploadFile = projectPost.getProjectPostFilePath();
+		
+		if (!uploadFile.isEmpty()) {
+			
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("/Users/sunghoonlee/upload/" + fileName));
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@"+uploadFile);
+		}else {
+			projectPost.setProjectPostFileName("null");
+		}
+		projectPost.setProjectPostFileName(fileName);
+		
 		service.modifyProjectPost(projectPost);
+		
+		
 		return "redirect:/project/projectpostlist";
 	}
 	
