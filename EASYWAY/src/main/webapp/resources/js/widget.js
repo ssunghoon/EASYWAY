@@ -14,7 +14,6 @@ window.onbeforeunload = function() {
 	
 	return "";
 };	    	
-
 */
 
 
@@ -435,7 +434,7 @@ function makeProjectWidget(){
 						
 						str += `			<tr>`;
 						str += `				<td>`;
-						str += `					<a href="projectboardlist?projectId=${projectList.projectId }">${projectList.projectName}</a>`;
+						str += `					<a href="/project/projectboardlist?projectId=${projectList.projectId }">${projectList.projectName}</a>`;
 						str += `				</td>`;
 						str += `				<td>` + projectStart + `</td>`;
 						str += `				<td>` + projectEnd + `</td>`;

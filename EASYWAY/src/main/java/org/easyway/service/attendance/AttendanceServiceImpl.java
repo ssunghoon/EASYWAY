@@ -38,10 +38,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String startTime = sdf.format(timestamp);
 		//지각 계산하기
-		String onlyTime = startTime.substring(startTime.length()-8, startTime.length());
-		onlyTime.split(":");
+		//String onlyTime = startTime.substring(startTime.length()-8, startTime.length());
+		//onlyTime.split(":");
 		
-		log.info("stratTime : " + onlyTime);
+		//log.info("stratTime : " + onlyTime);
 		
 
 		attendance.setAttendanceStart(startTime);
