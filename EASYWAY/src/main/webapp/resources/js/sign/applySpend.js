@@ -94,7 +94,7 @@ $(document).ready(function () {
 	  //alert("firstVal : " + thirdVal);
 	  //alert("label값 : " +output);
 	  document.getElementById("thirdResult").innerHTML =  `<input type="hidden"  id="employee3" value="`+thirdVal+`"/><p align="center">`+output+`</p>`;
-	  document.getElementById("thirdEmployee").innerHTML = `<input type="hidden" name="employeeId3" value="`+secondVal+`"/>`;
+	  document.getElementById("thirdEmployee").innerHTML = `<input type="hidden" name="employeeId3" value="`+thirdVal+`"/>`;
 
   });
   $(document).on("click","#fourthIn", function() {
@@ -103,7 +103,7 @@ $(document).ready(function () {
 	  //alert("firstVal : " + fourthVal);
 	  //alert("label값 : " +output);
 	  document.getElementById("fourthResult").innerHTML =  `<input type="hidden"  id="employee4" value="`+fourthVal+`"/><p align="center">`+output+`</p>`;
-	  document.getElementById("fourthEmployee").innerHTML = `<input type="hidden" name="employeeId4" value="`+secondVal+`"/>`;
+	  document.getElementById("fourthEmployee").innerHTML = `<input type="hidden" name="employeeId4" value="`+fourthVal+`"/>`;
 
   });
   
